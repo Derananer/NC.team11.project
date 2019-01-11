@@ -15,12 +15,20 @@ public class Employee {
     private String secondName;
     private String organisationId;
 
-  /*  Employee(String firstName, String lastName, String secondName, String organisationId){
+    Employee(){
+        this.id = null;
+        this.firstName = null;
+        this.lastName =null;
+        this.secondName = null;
+        this.organisationId = null;
+    }
+
+    Employee(String firstName, String lastName, String secondName, String organisationId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
         this.organisationId = organisationId;
-    }*/
+    }
     public String getId() {
         return id;
     }
