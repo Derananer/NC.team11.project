@@ -2,10 +2,7 @@ package com.company.employeeMicroservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +21,17 @@ public class MainController {
 
     @RequestMapping("/getEmployees")
     public Employee[] getEmployee(){
-        ArrayList<Employee> emps= employeeRepository.findByOrganisationId(organisationRepository.findByOrganisationName("ООО СКС").getId());
+        List<Employee> emps= employeeRepository.findAll();
         return emps.toArray(new Employee[emps.size()]);
+    }
+    @PostMapping("/addEmployee")
+    public Employee addEmployee(
+            @RequestBody Employee emp
+
+    ){
+        System.out.println(emp.toString());
+        emp = employeeRepository.save(emp);
+        return emp;
     }
 
 

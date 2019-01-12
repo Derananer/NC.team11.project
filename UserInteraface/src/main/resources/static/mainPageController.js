@@ -12,11 +12,17 @@ mainPage.controller('EmployeeList', function($scope,$http){
             $scope.employees = data;
 
     });
-    $scope.addEmployee = function(firstName, lastName, secondName){
-        console.log(firstName, lastName, secondName);
-        $http.post('http://localhost:8079/services/employees/addEmployee', firstName)
+    $scope.addEmployee = function(employee){
+        console.log(employee);
+        /*$http({
+            method: 'POST',
+            url: "http://localhost:8079/services/employees/addEmployee",
+            data: $scope.employee,
+        }).success(function () {});*/
+        $http.post('http://localhost:8079/services/employees/addEmployee', employee)
             .success(function(result){
-                console.log('Book successfully added');
+                console.log('emp successfully added');
+                $scope.employees.push(result);
         });
     };
 
