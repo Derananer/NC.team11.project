@@ -25,5 +25,12 @@ mainPage.controller('EmployeeList', function($scope,$http){
                 $scope.employees.push(result);
         });
     };
+    $scope.updateEmployee = function(){
+        $http.post('http://localhost:8079/services/employees/updateEmployee', $scope.employees[0])
+            .success(function(result){
+                console.log('emp successfully update');
+                $scope.employees[0]=result;
+            });
+    };
 
 });

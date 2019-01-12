@@ -27,12 +27,19 @@ public class MainController {
     @PostMapping("/addEmployee")
     public Employee addEmployee(
             @RequestBody Employee emp
-
     ){
         System.out.println(emp.toString());
         emp = employeeRepository.save(emp);
         return emp;
     }
-
-
+    @PostMapping("/updateEmployee")
+    public Employee updateEmployee(
+            @RequestBody Employee emp
+    ){
+        System.out.println(emp);
+        employeeRepository.deleteById(emp.getId());
+        emp.setId(null);
+        employeeRepository.save(emp);
+        return emp;
+    }
 }
