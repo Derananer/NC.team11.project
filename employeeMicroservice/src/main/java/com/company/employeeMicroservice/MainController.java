@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class MainController {
 
     @Autowired
@@ -27,15 +27,6 @@ public class MainController {
         ArrayList<Employee> emps= employeeRepository.findByOrganisationId(organisationRepository.findByOrganisationName("ООО СКС").getId());
         return emps.toArray(new Employee[emps.size()]);
     }
-    @PostMapping("/addEmployee")
-    public void addEmployee(
-            //@RequestParam(value="firstName")String firstName,
-            //@RequestParam(value="lastName")String lastName,
-            //@RequestParam(value="secondName")String secondName
-            @RequestParam Employee emp
-    ){
 
-       //Employee emp = new Employee(firstName, lastName, secondName, null);
-        System.out.println("get " + emp.toString());
-    }
+
 }

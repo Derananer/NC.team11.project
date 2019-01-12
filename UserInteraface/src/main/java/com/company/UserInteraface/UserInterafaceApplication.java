@@ -2,11 +2,13 @@ package com.company.UserInteraface;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EnableZuulProxy
 @SpringBootApplication
 public class UserInterafaceApplication {
 

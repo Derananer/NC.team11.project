@@ -15,6 +15,11 @@
 
 </div>
 <div ng-controller="EmployeeList">
+    <p>New employee</p>
+    <input type='text' ng-model="firstName">
+    <input type='text' ng-model="lastName">
+    <input type='text' ng-model="secondName">
+    <input type="button" ng-click="addEmployee(firstName, lastName, secondName)" value="Add employee">
     <ul>
         <li ng-repeat="employee in employees" >
             <span>{{employee.id}}</span>

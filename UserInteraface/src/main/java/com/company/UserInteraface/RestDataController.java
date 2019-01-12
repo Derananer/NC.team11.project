@@ -21,22 +21,4 @@ public class RestDataController {
         return new Greeting(counter.incrementAndGet(), "fuck u");
     }
 
-    @RequestMapping("/getEmployees")
-    public Employee[] getEmployees(){
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject("http://localhost:6969/getEmployees", Employee[].class);
-
-    }
-    @RequestMapping("/addEmployee")
-    public String addEmployee(
-            //@RequestParam(value="firstName")String firstName,
-            //@RequestParam(value="lastName")String lastName,
-            //@RequestParam(value="secondName")String secondName
-    ){
-        Employee emp = new Employee("Антон", "Лисецкий", "Анатольевич", null);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject("http://localhost:6969/addEmployee",emp,Employee.class);
-        //return emp;
-    }
-
 }
