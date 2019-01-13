@@ -12,21 +12,24 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String secondName;
-    private String organisationId;
+    private String departmentId;
 
-    public Employee(){}
-    public Employee(String firstName, String lastName, String secondName, String organisationId){
+    Employee(){
+        this.id = null;
+        this.firstName = null;
+        this.lastName =null;
+        this.secondName = null;
+        this.departmentId = null;
+    }
+
+    Employee(String firstName, String lastName, String secondName, String departmentId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
-        this.organisationId = organisationId;
+        this.departmentId = departmentId;
     }
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -37,8 +40,8 @@ public class Employee {
         return lastName;
     }
 
-    public String getOrganisationId() {
-        return organisationId;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
     public String getSecondName() {
@@ -53,18 +56,22 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public void setOrganisationId(String organisationId) {
-        this.organisationId = organisationId;
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString(){
         return String.format(
-                "Employee[id=%s, firstName='%s', lastName='%s', secondName='%s', organisationId='%s']",
-                id, firstName, lastName, secondName, organisationId);
+                "Employee[id=%s, firstName='%s', lastName='%s', secondName='%s', departmentId='%s']",
+                id, firstName, lastName, secondName, departmentId);
     }
 }

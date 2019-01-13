@@ -15,7 +15,7 @@ public class MainController {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private OrganisationRepository organisationRepository;
+    private DepartmentRepository departmentRepository;
 
     @Autowired
     private VacationRepository vacationRepository;

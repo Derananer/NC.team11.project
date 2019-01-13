@@ -1,17 +1,16 @@
 var mainPage = angular.module('mainPage', []);
 mainPage.controller('Hello', function($scope,$http){
-    $http.get('http://localhost:8079/greeting').
+    $http.get('/greeting').
     success(function(data) {
         $scope.greeting = data;
     });
 })
-mainPage.controller('EmployeeList', function($scope,$http){
-    $http.get('http://localhost:8079/services/employees/getEmployees').
+mainPage.controller('EmployeeListCtrl', function($scope,$http){
+    $http.get('/services/employee-service/employees').
         success(function (data) {
         console.log(data);
             $scope.employees = data;
-
-    });
+        });
     $scope.addEmployee = function(employee){
         console.log(employee);
         /*$http({
@@ -19,14 +18,14 @@ mainPage.controller('EmployeeList', function($scope,$http){
             url: "http://localhost:8079/services/employees/addEmployee",
             data: $scope.employee,
         }).success(function () {});*/
-        $http.post('http://localhost:8079/services/employees/addEmployee', employee)
+        $http.post('/services/employee-service/add-employee', employee)
             .success(function(result){
                 console.log('emp successfully added');
                 $scope.employees.push(result);
         });
     };
     $scope.updateEmployee = function(){
-        $http.post('http://localhost:8079/services/employees/updateEmployee', $scope.employees[0])
+        $http.post('/services/employee-service/update-employee', $scope.employees[0])
             .success(function(result){
                 console.log('emp successfully update');
                 $scope.employees[0]=result;
@@ -34,3 +33,11 @@ mainPage.controller('EmployeeList', function($scope,$http){
     };
 
 });
+
+mainPage.controller('GroupListCtrl', function($scope, $http){
+    $http.get('/services/rule-service/rules')
+        .success(function(data){
+            $scope.rules = data;
+        });
+
+})

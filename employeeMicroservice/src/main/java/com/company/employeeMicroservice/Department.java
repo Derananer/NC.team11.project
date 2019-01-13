@@ -2,31 +2,30 @@ package com.company.employeeMicroservice;
 
 import org.springframework.data.annotation.Id;
 
-public class Organisation {
+public class Department {
     @Id
     private String id;
-
-    private String organisationName;
+    private String departmentName;
     private String someInfo;
 
-    Organisation(String organisationName, String someInfo){
-        this.organisationName = organisationName;
+    Department(String departmentName, String someInfo){
+        this.departmentName = departmentName;
         this.someInfo = someInfo;
     }
     public String getId() {
         return id;
     }
 
-    public String getOrganisationName() {
-        return organisationName;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
     public String getSomeInfo() {
         return someInfo;
     }
 
-    public void setOrganisationName(String organisationName) {
-        this.organisationName = organisationName;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public void setSomeInfo(String someInfo) {
@@ -36,7 +35,7 @@ public class Organisation {
     @Override
     public String toString(){
         return String.format(
-                "Organisation[id=%s, organisationName='%s', someInfo='%s']",
-                id, organisationName, someInfo);
+                "Organisation[id=%s, departmentName='%s', someInfo='%s']",
+                id, departmentName, someInfo);
     }
 }

@@ -1,4 +1,4 @@
-package com.company.ruleservice;
+package com.example.ruleservice;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ public class MainController {
 
     @Autowired
     GroupRepository groupRepository;
+
 
     @RequestMapping(value = "/rule", method = RequestMethod.GET)
     public Rule getRule(
@@ -44,6 +45,12 @@ public class MainController {
             employeeIds.add(i.getEmployeeId());
         }
         return employeeIds.toArray(new String[employeeIds.size()]);
+    }
+
+    @RequestMapping(value = "/get-groups", method = RequestMethod.GET)
+    public Group[] getGroups(){
+        List<Group> groups = groupRepository.findAll();
+        return groups.toArray(new Group[groups.size()]);
     }
 
     @RequestMapping(value = "/create-group", method = RequestMethod.GET)

@@ -13,21 +13,21 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String secondName;
-    private String organisationId;
+    private String departmentId;
 
     Employee(){
         this.id = null;
         this.firstName = null;
         this.lastName =null;
         this.secondName = null;
-        this.organisationId = null;
+        this.departmentId = null;
     }
 
-    Employee(String firstName, String lastName, String secondName, String organisationId){
+    Employee(String firstName, String lastName, String secondName, String departmentId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
-        this.organisationId = organisationId;
+        this.departmentId = departmentId;
     }
     public String getId() {
         return id;
@@ -41,8 +41,8 @@ public class Employee {
         return lastName;
     }
 
-    public String getOrganisationId() {
-        return organisationId;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
     public String getSecondName() {
@@ -57,8 +57,8 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public void setOrganisationId(String organisationId) {
-        this.organisationId = organisationId;
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 
     public void setSecondName(String secondName) {
@@ -68,7 +68,7 @@ public class Employee {
     @Override
     public String toString(){
         return String.format(
-                "Employee[id=%s, firstName='%s', lastName='%s', secondName='%s', organisationId='%s']",
-                id, firstName, lastName, secondName, organisationId);
+                "Employee[id=%s, firstName='%s', lastName='%s', secondName='%s', departmentId='%s']",
+                id, firstName, lastName, secondName, departmentId);
     }
 }

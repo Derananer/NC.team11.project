@@ -16,7 +16,7 @@ public class EmployeeMicroserviceApplication implements CommandLineRunner {
 	private EmployeeRepository employeeRepository;
 
 	@Autowired
-	private OrganisationRepository organisationRepository;
+	private DepartmentRepository departmentRepository;
 
 	@Autowired
 	private VacationRepository vacationRepository;
@@ -33,12 +33,12 @@ public class EmployeeMicroserviceApplication implements CommandLineRunner {
 		//emps.add(new Employee("Вася","Пупкин", "Антонович", organisationRepository.findByOrganisationName("ООО СКС").getId()));
 		//emps.add(new Employee("Илья","Лисецкий", "Ильич", organisationRepository.findByOrganisationName("ООО СКС").getId()));
 		//emps.add(new Employee("Ваня","Хуюпкин", "Александрович", organisationRepository.findByOrganisationName("ООО СКС").getId()));
-		organisationRepository.deleteAll();
+		departmentRepository.deleteAll();
 		employeeRepository.deleteAll();
-		organisationRepository.save(new Organisation("ООО СКС", null));
-		employeeRepository.save(new Employee("Вася","Пупкин", "Антонович", organisationRepository.findByOrganisationName("ООО СКС").getId()));
-		employeeRepository.save(new Employee("Илья","Лисецкий", "Ильич", organisationRepository.findByOrganisationName("ООО СКС").getId()));
-		employeeRepository.save(new Employee("Ваня","Хуюпкин", "Александрович", organisationRepository.findByOrganisationName("ООО СКС").getId()));
+		departmentRepository.save(new Department("ООО СКС", null));
+		employeeRepository.save(new Employee("Вася","Пупкин", "Антонович", departmentRepository.findByDepartmentName("ООО СКС").getId()));
+		employeeRepository.save(new Employee("Илья","Лисецкий", "Ильич", departmentRepository.findByDepartmentName("ООО СКС").getId()));
+		employeeRepository.save(new Employee("Ваня","Хуюпкин", "Александрович", departmentRepository.findByDepartmentName("ООО СКС").getId()));
 		ArrayList<Employee> emps = new ArrayList<>();
 		emps.addAll(employeeRepository.findAll());
 		int j = 0;
@@ -48,8 +48,8 @@ public class EmployeeMicroserviceApplication implements CommandLineRunner {
 			vacationRepository.save(new Vacation(i.getId(), new Date(2019,0,7+j), 15));
 			j+=15;
 		}
-		for (Organisation i:
-				organisationRepository.findAll()
+		for (Department i:
+				departmentRepository.findAll()
 			 ) {
 			System.out.println(i.toString() + "\n");
 		}

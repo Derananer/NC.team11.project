@@ -1,13 +1,13 @@
-package com.company.ruleservice;
+package com.company.authorisationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RuleServiceApplication {
+public class AuthorisationServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RuleServiceApplication.class, args);
+		SpringApplication.run(AuthorisationServiceApplication.class, args);
 	}
 
 }

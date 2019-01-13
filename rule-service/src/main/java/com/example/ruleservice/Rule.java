@@ -1,4 +1,4 @@
-package com.company.ruleservice;
+package com.example.ruleservice;
 
 import org.springframework.data.annotation.Id;
 
@@ -7,10 +7,16 @@ public class Rule {
     @Id
     private String id;
 
-    @Id
     private String ruleName;
 
     private String description;
+
+    public Rule(){}
+
+    public Rule(String ruleName, String description){
+        this.ruleName = ruleName;
+        this.description = description;
+    }
 
     public String getId() {
         return id;

@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 
-public interface OrganisationRepository extends MongoRepository<Organisation, String> {
+public interface DepartmentRepository extends MongoRepository<Department, String> {
 
-    Organisation findByOrganisationName(String organisationName);
+    Department findByDepartmentName(String departmentName);
 
 }
