@@ -1,18 +1,20 @@
-package com.company.authorisationservice;
+package service.interaction.security;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class GetTokenService {
 
-    public static final int TOKEN_DAYS_ALIVE = 15;
 
     public String getToken(String username, String password) throws Exception {
         if (username == null || password == null)
@@ -36,5 +38,4 @@ public class GetTokenService {
             throw new Exception("Authentication error");
         }
     }
-
 }
