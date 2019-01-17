@@ -1,5 +1,5 @@
 package com.company.employeeMicroservice.security;
-
+/*
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -71,4 +71,4 @@ public class TokenAuthentication implements Authentication {
         else
             return null;
     }
-}
+}*/

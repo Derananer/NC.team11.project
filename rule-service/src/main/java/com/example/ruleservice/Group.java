@@ -7,19 +7,23 @@ public class Group {
     @Id
     private String id;
 
-    private String organisationId;
+    private String departmentId;
 
     private String ruleId;
 
     public Group(){}
 
-    public Group(String organisationId, String ruleId){
-        this.organisationId = organisationId;
-        this.ruleId = ruleId;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
-    public String getOrganisationId() {
-        return organisationId;
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Group(String departmentId, String ruleId) {
+        this.departmentId = departmentId;
+        this.ruleId = ruleId;
     }
 
     public String getRuleId() {
@@ -30,8 +34,11 @@ public class Group {
         return id;
     }
 
-    public void setOrganisationId(String organisationId) {
-        this.organisationId = organisationId;
+    @Override
+    public String toString() {
+        return String.format(
+                "Group[id=%s, departmentId='%s', ruleId='%s']",
+                id, departmentId, ruleId);
     }
 
     public void setRuleId(String ruleId) {

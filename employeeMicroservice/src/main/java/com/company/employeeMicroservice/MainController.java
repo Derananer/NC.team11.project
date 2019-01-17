@@ -21,7 +21,7 @@ public class MainController {
     private VacationRepository vacationRepository;
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public Employee[] getEmployee(){
+    public Employee[] getEmployees(){
         List<Employee> emps = employeeRepository.findAll();
         return emps.toArray(new Employee[emps.size()]);
     }

@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface GroupRepository extends MongoRepository<Group, String> {
 
-    List<Group> findByOrganisationId(String organisationId);
+    List<Group> findByDepartmentId(String departmentId);
 }

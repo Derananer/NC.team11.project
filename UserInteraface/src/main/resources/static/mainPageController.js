@@ -39,5 +39,21 @@ mainPage.controller('GroupListCtrl', function($scope, $http){
         .success(function(data){
             $scope.rules = data;
         });
+    $http.get('/services/rule-service/groups')
+        .success(function(data){
+            $scope.groups = data;
+        });
+
+    $scope.createGroup = function(newGroup){
+        $http.post('services/rule-service/create-group',newGroup)
+            .success(function (result) {
+                console.log('group successfully added');
+                $scope.groups.push(result);
+            });
+
+    }
+    $scope.addEmpToGroup = function(){
+        console.log('addEmpToGroup');
+    }
 
 })

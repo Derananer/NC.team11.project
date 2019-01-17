@@ -47,18 +47,18 @@ public class MainController {
         return employeeIds.toArray(new String[employeeIds.size()]);
     }
 
-    @RequestMapping(value = "/get-groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public Group[] getGroups(){
         List<Group> groups = groupRepository.findAll();
         return groups.toArray(new Group[groups.size()]);
     }
 
-    @RequestMapping(value = "/create-group", method = RequestMethod.GET)
+    @RequestMapping(value = "/create-group", method = RequestMethod.POST)
     public Group createGroup(
-            @RequestParam String organisationId,
-            @RequestParam String ruleId
+            @RequestBody Group newGroup
     ){
-        return groupRepository.save(new Group(organisationId, ruleId));
+        System.out.println(newGroup.toString());
+        return groupRepository.save(newGroup);
     }
 
     @RequestMapping(value = "/add-groupelem", method = RequestMethod.GET)
