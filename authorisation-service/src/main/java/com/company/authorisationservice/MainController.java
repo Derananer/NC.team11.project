@@ -24,7 +24,7 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/sing-in", method = RequestMethod.POST)
     public String login(
             @RequestParam(value = "userName") String loginString,
             @RequestParam(value = "password") String password

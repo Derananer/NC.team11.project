@@ -32,8 +32,8 @@ public class AuthorisationServiceApplication extends WebSecurityConfigurerAdapte
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .addFilterAfter(restTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/rest/*").authenticated();
+                .authorizeRequests();
+                //.antMatchers("/rest/*").authenticated();
     }
 
     @Bean(name = "tokenAuthenticationFilter")

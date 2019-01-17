@@ -39,7 +39,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
             HttpServletRequest request,
             HttpServletResponse response
     )
-            throws AuthenticationException, IOException, ServletException {
+            throws AuthenticationException {
         String token = request.getHeader(TokenData.TOKEN.getValue());
         if (token == null)
             token = request.getParameter(TokenData.TOKEN.getValue());

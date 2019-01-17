@@ -1,29 +1,29 @@
 package com.company.employeeMicroservice;
 
-//import com.company.employeeMicroservice.security.TokenAuthenticationFilter;
-//import com.company.employeeMicroservice.security.TokenAuthenticationManager;
+import com.company.employeeMicroservice.security.TokenAuthenticationFilter;
+import com.company.employeeMicroservice.security.TokenAuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true)
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 @SpringBootApplication
 public class EmployeeMicroserviceApplication
-		//extends WebSecurityConfigurerAdapter
+		extends WebSecurityConfigurerAdapter
 		implements CommandLineRunner {
 
 	@Autowired
@@ -76,7 +76,7 @@ public class EmployeeMicroserviceApplication
 
 	}
 
-	/*@Autowired
+	@Autowired
 	TokenAuthenticationManager tokenAuthenticationManager;
 
 	@Override
@@ -86,7 +86,8 @@ public class EmployeeMicroserviceApplication
 				.and()
 				.addFilterAfter(restTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				.antMatchers("/rest/*").authenticated();
+				.antMatchers("/employees").authenticated();
+
 	}
 
 	@Bean(name = "tokenAuthenticationFilter")
@@ -94,6 +95,6 @@ public class EmployeeMicroserviceApplication
 		TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
 		tokenAuthenticationFilter.setAuthenticationManager(tokenAuthenticationManager);
 		return tokenAuthenticationFilter;
-	}*/
+	}
 }
 

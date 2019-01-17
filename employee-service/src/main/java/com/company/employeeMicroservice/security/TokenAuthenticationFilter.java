@@ -1,6 +1,6 @@
 package com.company.employeeMicroservice.security;
 
-/*
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 
 
     public TokenAuthenticationFilter(){
-        super("/services/**");
+        super("/");
         setAuthenticationSuccessHandler((request, response, authentication)->
         {
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -58,4 +58,4 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
                          FilterChain chain) throws IOException, ServletException {
         super.doFilter(request, response, chain);
     }
-}*/
+}

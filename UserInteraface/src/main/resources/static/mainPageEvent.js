@@ -1,15 +1,25 @@
-var mainPage = angular.module('mainPage', []);
-mainPage.controller('Hello', function($scope,$http){
-    $http.get('/greeting').
-    success(function(data) {
-        $scope.greeting = data;
-    });
-})
+var mainPage = angular.module('mainPage', ['ngRoute']);
+
+
+mainPage.config(function ($routeProvider){
+   $routeProvider
+       .when('/login', {
+           templateUrl: 'loginPage.html'
+       })
+});
+
 mainPage.controller('EmployeeListCtrl', function($scope,$http){
-    $http.get('/services/employee-service/employees').
-        success(function (data) {
+    var token;
+    var config = {headers:{
+        'token' : token
+        }
+    }
+    $http.get('/services/employee-service/employees')
+        .success(function (data) {
         console.log(data);
             $scope.employees = data;
+        })
+        .error(function (result) {
         });
     $scope.addEmployee = function(employee){
         console.log(employee);
@@ -17,12 +27,17 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http){
             method: 'POST',
             url: "http://localhost:8079/services/employees/addEmployee",
             data: $scope.employee,
+            config:
+
         }).success(function () {});*/
         $http.post('/services/employee-service/add-employee', employee)
             .success(function(result){
                 console.log('emp successfully added');
                 $scope.employees.push(result);
-        });
+            })
+            .error(function (result) {
+                console.log(result)
+            });
     };
     $scope.updateEmployee = function(){
         $http.post('/services/employee-service/update-employee', $scope.employees[0])
@@ -35,6 +50,11 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http){
 });
 
 mainPage.controller('GroupListCtrl', function($scope, $http){
+    var token;
+    var config = {headers:{
+            'token' : token
+        }
+    }
     $http.get('/services/rule-service/rules')
         .success(function(data){
             $scope.rules = data;
@@ -45,7 +65,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http){
         });
 
     $scope.createGroup = function(newGroup){
-        $http.post('services/rule-service/create-group',newGroup)
+        $http.post('services/rule-service/create-group',newGroup,config)
             .success(function (result) {
                 console.log('group successfully added');
                 $scope.groups.push(result);

@@ -28,7 +28,7 @@ public class MainController {
 
     @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
     public Employee[] getEmployee(
-            @RequestBody int groupNumber
+            @RequestParam int groupNumber
     ){
         RestTemplate restTemplate = new RestTemplate();
         String[] empsId = restTemplate.getForObject("http://localhost:8080/services/rule-service/emp-ids-by-group", String[].class, groupNumber);
