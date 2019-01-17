@@ -1,4 +1,4 @@
-package service.interaction.security;
+package com.company.employeeMicroservice.security;
 
 public class TokenUser {
     private final String userName;
@@ -25,4 +25,3 @@ public class TokenUser {
         return permission;
     }
 }
-

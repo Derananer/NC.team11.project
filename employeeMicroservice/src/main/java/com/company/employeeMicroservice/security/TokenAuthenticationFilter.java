@@ -1,11 +1,15 @@
-package com.company.authorisationservice;
+package com.company.employeeMicroservice.security;
+
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,9 +40,9 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
             HttpServletResponse response
     )
             throws AuthenticationException, IOException, ServletException {
-        String token = request.getHeader("token");
+        String token = request.getHeader(TokenData.TOKEN.getValue());
         if (token == null)
-            token = request.getParameter("token");
+            token = request.getParameter(TokenData.TOKEN.getValue());
         if (token == null) {
             TokenAuthentication authentication = new TokenAuthentication(null);
             authentication.setAuthenticated(false);
@@ -47,5 +51,11 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
         TokenAuthentication tokenAuthentication = new TokenAuthentication(token);
         Authentication authentication = getAuthenticationManager().authenticate(tokenAuthentication);
         return authentication;
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+                         FilterChain chain) throws IOException, ServletException {
+        super.doFilter(request, response, chain);
     }
 }

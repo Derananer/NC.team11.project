@@ -1,19 +1,15 @@
-package service.interaction.security;
+package com.company.authorisationservice.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import service.interaction.security.TokenAuthentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
 
+@Service
 public class TokenAuthenticationManager implements AuthenticationManager {
 
 
@@ -41,7 +37,7 @@ public class TokenAuthenticationManager implements AuthenticationManager {
             throw new AuthenticationServiceException("Token corrupted");
         }
         //if (claims.get(TokenData.EXPIRATION_DATE.getValue(), String.class) == null)
-         //   throw new AuthenticationServiceException("Invalid token");
+        //   throw new AuthenticationServiceException("Invalid token");
         //Date expiredDate = new Date(claims.get("TOKEN_EXPIRATION_DATE", Long.class));
         //if (expiredDate.after(new Date()))
         //    return new TokenAuthentication(authentication.getToken(),  true, (TokenUser)authentication.getPrincipal());
@@ -61,4 +57,3 @@ public class TokenAuthenticationManager implements AuthenticationManager {
 
     }
 }
-

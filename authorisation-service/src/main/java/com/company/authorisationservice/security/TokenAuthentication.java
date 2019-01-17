@@ -1,14 +1,14 @@
-package com.company.authorisationservice;
+package com.company.authorisationservice.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
 public class TokenAuthentication implements Authentication {
+
     private String token;
     private Collection<? extends GrantedAuthority> authorities;
     private boolean isAuthenticated;
@@ -30,6 +30,9 @@ public class TokenAuthentication implements Authentication {
         this.principal = principal;
     }
 
+    public String getToken() {
+        return token;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
