@@ -10,8 +10,8 @@ public class MainController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public User add(
+    @RequestMapping(value = "/sing-up", method = RequestMethod.POST)
+    public User singUp(
             @RequestBody UserCreation userCreation
             ){
         User user = null;
@@ -25,10 +25,18 @@ public class MainController {
     }
 
     @RequestMapping(value = "/sing-in", method = RequestMethod.POST)
-    public String login(
-            @RequestParam(value = "userName") String loginString,
-            @RequestParam(value = "password") String password
+    public UserL singIn(
+            @RequestBody UserL userL
     ){
-        return login(loginString, password);
+        String token = null;
+        System.out.println("userName : " + userL.userName + " password : " + userL.password);
+        try {
+            token =  userService.logIn(userL.userName, userL.password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("token : " + token);
+        userL.token = token;
+        return userL;
     }
 }

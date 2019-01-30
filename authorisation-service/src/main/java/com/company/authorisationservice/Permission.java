@@ -1,9 +1,19 @@
 package com.company.authorisationservice;
 
-public final class Permission {
+public enum Permission {
 
-    public static final String USER = "user";
-    public static final String ADMIN = "admin";
-    public static final String VIEWER = "viewer";
+    USER("user"),
+    ADMIN("admin"),
+    VIEWER("viewer");
+
+    private final String value;
+
+    Permission(final String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 
 }

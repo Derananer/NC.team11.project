@@ -28,12 +28,15 @@ public class TokenAuthenticationManager implements AuthenticationManager {
 
     private TokenAuthentication processAuthentication(TokenAuthentication authentication) throws AuthenticationException {
         String token = authentication.getToken();
-        String key = "key123";
+        String key = "aaaa123456789aaaa123456789aaaa123456789aaaa123456789aaaa123456789";
         DefaultClaims claims;
         try {
+            System.out.println("token : " + token);
             claims = (DefaultClaims) Jwts.parser().setSigningKey(key).parse(token).getBody();
+            System.out.println("claims : " + claims.toString());
             return buildFullTokenAuthentication(authentication, claims);
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new AuthenticationServiceException("Token corrupted");
         }
         //if (claims.get(TokenData.EXPIRATION_DATE.getValue(), String.class) == null)

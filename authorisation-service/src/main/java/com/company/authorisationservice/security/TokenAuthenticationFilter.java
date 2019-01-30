@@ -1,5 +1,5 @@
 package com.company.authorisationservice.security;
-
+/*
 import com.company.authorisationservice.security.TokenAuthentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -58,4 +58,4 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
                          FilterChain chain) throws IOException, ServletException {
         super.doFilter(request, response, chain);
     }
-}
+}*/

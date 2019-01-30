@@ -18,7 +18,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 
 
     public TokenAuthenticationFilter(){
-        super("/");
+        super("/**");
         setAuthenticationSuccessHandler((request, response, authentication)->
         {
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -56,6 +56,6 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        super.doFilter(request, response, chain);
+        chain.doFilter(request,response);
     }
 }

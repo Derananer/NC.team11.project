@@ -1,43 +1,50 @@
-var mainPage = angular.module('mainPage', ['ngRoute']);
+var mainPage = angular.module('mainPage', ['ngRoute', 'ngCookies']);
 
 
-mainPage.config(function ($routeProvider){
+/*loginPage.config(function ($routeProvider){
    $routeProvider
        .when('/login', {
            templateUrl: 'loginPage.html'
        })
-});
+});*/
 
-mainPage.controller('EmployeeListCtrl', function($scope,$http){
-    var token;
-    var config = {headers:{
-        'token' : token
+mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
+    var token = $cookies.token;
+    console.log(token);
+    $http({
+        method: 'GET',
+        url: "/services/employee-service/employees",
+        headers : {
+            'token' : token
         }
-    }
-    $http.get('/services/employee-service/employees')
+    })
         .success(function (data) {
-        console.log(data);
+            console.log(data);
             $scope.employees = data;
-        })
-        .error(function (result) {
         });
+
     $scope.addEmployee = function(employee){
         console.log(employee);
-        /*$http({
+        $http({
             method: 'POST',
-            url: "http://localhost:8079/services/employees/addEmployee",
-            data: $scope.employee,
-            config:
+            url: "/services/employee-service/add-employee",
+            data: employee,
+            headers : {
+                'token' : token
+            }
 
-        }).success(function () {});*/
-        $http.post('/services/employee-service/add-employee', employee)
+        }).success(function (result) {
+            console.log('emp successfully added');
+            $scope.employees.push(result);
+        });
+        /*$http.post('/services/employee-service/add-employee', employee, config)
             .success(function(result){
                 console.log('emp successfully added');
                 $scope.employees.push(result);
             })
             .error(function (result) {
                 console.log(result)
-            });
+            });*/
     };
     $scope.updateEmployee = function(){
         $http.post('/services/employee-service/update-employee', $scope.employees[0])

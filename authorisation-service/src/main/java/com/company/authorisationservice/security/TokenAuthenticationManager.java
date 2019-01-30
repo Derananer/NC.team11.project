@@ -1,5 +1,5 @@
 package com.company.authorisationservice.security;
-
+/*
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 
-@Service
+//@Service
 public class TokenAuthenticationManager implements AuthenticationManager {
 
 
@@ -54,6 +54,6 @@ public class TokenAuthenticationManager implements AuthenticationManager {
         TokenAuthentication fullTokenAuthentication =
                 new TokenAuthentication(authentication.getToken(), true, tokenUser);
         return fullTokenAuthentication;
-
     }
 }
+*/

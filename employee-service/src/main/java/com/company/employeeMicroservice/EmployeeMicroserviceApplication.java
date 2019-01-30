@@ -86,7 +86,7 @@ public class EmployeeMicroserviceApplication
 				.and()
 				.addFilterAfter(restTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				.antMatchers("/employees").authenticated();
+				.antMatchers("/*").authenticated();
 
 	}
 

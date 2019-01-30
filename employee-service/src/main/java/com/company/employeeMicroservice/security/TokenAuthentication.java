@@ -25,7 +25,7 @@ public class TokenAuthentication implements Authentication {
             TokenUser principal
     ) {
         this.token = token;
-        this.authorities = Collections.singletonList(new SimpleGrantedAuthority(principal.getDepartmentId()));
+        this.authorities = Collections.singletonList(new SimpleGrantedAuthority(null));
         this.isAuthenticated = isAuthenticated;
         this.principal = principal;
     }

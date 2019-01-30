@@ -1,29 +1,29 @@
 package com.company.authorisationservice;
 
-import com.company.authorisationservice.security.TokenAuthenticationFilter;
-import com.company.authorisationservice.security.TokenAuthenticationManager;
+//import com.company.authorisationservice.security.TokenAuthenticationFilter;
+//import com.company.authorisationservice.security.TokenAuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @SpringBootApplication
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
-public class AuthorisationServiceApplication extends WebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(securedEnabled = true)
+public class AuthorisationServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuthorisationServiceApplication.class, args);
 	}
 
-    @Autowired
+    /*@Autowired
     TokenAuthenticationManager tokenAuthenticationManager;
 
     @Override
@@ -41,6 +41,6 @@ public class AuthorisationServiceApplication extends WebSecurityConfigurerAdapte
         TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
         tokenAuthenticationFilter.setAuthenticationManager(tokenAuthenticationManager);
         return tokenAuthenticationFilter;
-    }
+    }*/
 }
 
