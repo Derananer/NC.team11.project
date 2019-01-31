@@ -1,5 +1,5 @@
 package com.company.employeeMicroservice.interaction;
-
+/*
 import com.company.employeeMicroservice.security.TokenData;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -41,4 +41,4 @@ abstract class Client {
         HttpEntity<E> entity = new HttpEntity<>(object, headers);
         return rest.postForObject(serviceFullPath + path, entity, type);
     }
-}
+}*/

@@ -1,5 +1,5 @@
 package com.company.employeeMicroservice.interaction;
-
+/*
 public class RuleClient extends Client {
 
     public RuleClient(String servicePath) {
@@ -7,3 +7,4 @@ public class RuleClient extends Client {
     }
 
 }
+*/

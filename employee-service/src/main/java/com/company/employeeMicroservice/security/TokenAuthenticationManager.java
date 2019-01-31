@@ -1,5 +1,5 @@
 package com.company.employeeMicroservice.security;
-
+/*
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,5 +59,5 @@ public class TokenAuthenticationManager implements AuthenticationManager {
         return fullTokenAuthentication;
 
     }
-}
+}*/
 

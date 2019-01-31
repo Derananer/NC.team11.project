@@ -39,4 +39,9 @@ public class MainController {
         userL.token = token;
         return userL;
     }
+
+    @RequestMapping(value = "/sing-in", method = RequestMethod.GET)
+    public String sing(){
+        return "hello";
+    }
 }

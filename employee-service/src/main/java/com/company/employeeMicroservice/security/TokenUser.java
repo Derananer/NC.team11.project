@@ -1,5 +1,7 @@
 package com.company.employeeMicroservice.security;
 
+
+/*
 public class TokenUser {
     private final String userName;
     private final String departmentId;
@@ -25,3 +27,4 @@ public class TokenUser {
         return permission;
     }
 }
+*/

@@ -1,5 +1,6 @@
 package com.company.employeeMicroservice.security;
 
+/*
 public enum TokenData {
     TOKEN("token"),
     ID("id"),
@@ -18,4 +19,4 @@ public enum TokenData {
     public String getValue() {
         return value;
     }
-}
+}*/

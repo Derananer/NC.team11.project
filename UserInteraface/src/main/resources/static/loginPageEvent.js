@@ -10,7 +10,7 @@ loginPage.config(function ($routeProvider){
 loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
     $scope.singIn = function (user){
         console.log("send");
-        $http.post("/services/authorisation-service/sing-in", user)
+        $http.post("http://localhost:8079/services/authorisation-service/sing-in", user)
             .success(function (result) {
                 console.log(result);
                 $cookies.token = result.token;
@@ -24,7 +24,7 @@ loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
         });
     };
     $scope.singUp = function (userCreation) {
-        $http.post("/services/authorisation-service/sing-up", userCreation)
+        $http.post("http://localhost:8079/services/authorisation-service/sing-up", userCreation)
             .success(function (result){
                 console.log(result);
             })

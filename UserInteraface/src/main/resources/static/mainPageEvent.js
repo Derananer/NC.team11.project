@@ -13,10 +13,10 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
     console.log(token);
     $http({
         method: 'GET',
-        url: "/services/employee-service/employees",
-        headers : {
+        url: "http://localhost:8079/services/employee-service/employees",
+        /*headers : {
             'token' : token
-        }
+        }*/
     })
         .success(function (data) {
             console.log(data);
@@ -27,11 +27,11 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
         console.log(employee);
         $http({
             method: 'POST',
-            url: "/services/employee-service/add-employee",
+            url: "http://localhost:8079/services/employee-service/add-employee",
             data: employee,
-            headers : {
+            /*headers : {
                 'token' : token
-            }
+            }*/
 
         }).success(function (result) {
             console.log('emp successfully added');
@@ -47,7 +47,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
             });*/
     };
     $scope.updateEmployee = function(){
-        $http.post('/services/employee-service/update-employee', $scope.employees[0])
+        $http.post('http://localhost:8079/services/employee-service/update-employee', $scope.employees[0])
             .success(function(result){
                 console.log('emp successfully update');
                 $scope.employees[0]=result;
@@ -62,11 +62,11 @@ mainPage.controller('GroupListCtrl', function($scope, $http){
             'token' : token
         }
     }
-    $http.get('/services/rule-service/rules')
+    $http.get('http://localhost:8079/services/rule-service/rules')
         .success(function(data){
             $scope.rules = data;
         });
-    $http.get('/services/rule-service/groups')
+    $http.get('http://localhost:8079/services/rule-service/groups')
         .success(function(data){
             $scope.groups = data;
         });
