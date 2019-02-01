@@ -18,7 +18,6 @@ loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
             //url : "http://localhost:8083/login",
             data : user,
             headers : {
-
                 "token" : "" ,
                 "Content-type" : "application/json"
             }
@@ -28,9 +27,7 @@ loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
                 console.log(response.headers());
                 $cookies.token = response.headers()['token'];
                 console.log("token" + $cookies.token);
-
-
-
+                $http.get("/");
         });
     };
     $scope.singUp = function (userCreation) {

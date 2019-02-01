@@ -61,13 +61,13 @@ public class MainController {
         return groupRepository.save(newGroup);
     }
 
-    @RequestMapping(value = "/add-groupelem", method = RequestMethod.GET)
+    @RequestMapping(value = "/add-groupelem", method = RequestMethod.POST)
     public GroupElement addGroupElem(
-            @RequestParam String groupId,
-            @RequestParam String employeeId
+            @RequestBody GroupElement groupElement
 
     ){
-        return groupElementRepository.save(new GroupElement(groupId, employeeId));
+        System.out.println(groupElement.toString());
+        return groupElementRepository.save(groupElement);
     }
 }
 
