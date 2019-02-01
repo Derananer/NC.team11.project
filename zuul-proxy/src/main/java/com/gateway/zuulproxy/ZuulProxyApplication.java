@@ -3,7 +3,7 @@ package com.gateway.zuulproxy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @EnableZuulProxy
 @SpringBootApplication

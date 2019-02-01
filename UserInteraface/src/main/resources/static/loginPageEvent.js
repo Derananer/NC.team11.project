@@ -8,18 +8,26 @@ loginPage.config(function ($routeProvider){
 });
 
 loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
+    var token;
     $scope.singIn = function (user){
         console.log("send");
-        $http.post("http://localhost:8079/services/authorisation-service/sing-in", user)
-            .success(function (result) {
-                console.log(result);
-                $cookies.token = result.token;
-                console.log("token");
-                console.log($cookies.token);
+        //$http.post("http://localhost:8079/services/authorisation-service/login", user)
+        $http({
+            method: 'POST',
+            url: "http://localhost:8079/services/authorisation-service/login",
+            data:user,
+            headers: {
+                "token": "bearer " ,
+                "Content-type": "application/json"
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                console.log(response.config);
+                $cookies.token = response.headers();
+                console.log("token" + $cookies.token);
 
-            })
-            .error(function (result) {
-            console.log(result);
+
 
         });
     };

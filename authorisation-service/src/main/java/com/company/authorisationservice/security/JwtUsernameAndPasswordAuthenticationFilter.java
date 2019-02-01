@@ -37,7 +37,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
         // In our case, we use "/auth". So, we need to override the defaults.
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getUri(), "POST"));
+        //this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getUri(), "POST"));
     }
 
     @Override
@@ -57,6 +57,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             return authManager.authenticate(authToken);
 
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -80,7 +81,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .compact();
 
         // Add token to header
+        System.out.println(token);
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+        System.out.println(response.getHeader(jwtConfig.getHeader()));
     }
 
     // A (temporary) class just to represent the user credentials
@@ -101,6 +104,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         public void setPassword(String password) {
             this.password = password;
+        }
+
+        @Override
+        public String toString() {
+            return username + " " + password;
         }
     }
 }
