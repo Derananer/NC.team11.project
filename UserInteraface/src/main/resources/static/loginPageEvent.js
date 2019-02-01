@@ -13,18 +13,20 @@ loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
         console.log("send");
         //$http.post("http://localhost:8079/services/authorisation-service/login", user)
         $http({
-            method: 'POST',
+            method : 'POST',
             url: "http://localhost:8079/services/authorisation-service/login",
-            data:user,
-            headers: {
-                "token": "bearer " ,
-                "Content-type": "application/json"
+            //url : "http://localhost:8083/login",
+            data : user,
+            headers : {
+
+                "token" : "" ,
+                "Content-type" : "application/json"
             }
         })
             .then(function (response) {
                 console.log(response);
-                console.log(response.config);
-                $cookies.token = response.headers();
+                console.log(response.headers());
+                $cookies.token = response.headers()['token'];
                 console.log("token" + $cookies.token);
 
 

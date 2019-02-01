@@ -15,7 +15,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
         method: 'GET',
         url: "http://localhost:8079/services/employee-service/employees",
         headers : {
-            'Authorization': token
+            'token': token
         }
     })
         .success(function (data) {
