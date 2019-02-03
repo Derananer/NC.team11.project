@@ -4,7 +4,7 @@ import com.company.authorisationservice.UserApp;
 import com.company.authorisationservice.UserAppRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service   // It has to be annotated with @Service.
@@ -45,12 +43,15 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
         // The "User" class is provided by Spring and represents a model class for user to be returned by UserDetailsService
             // And used by auth manager to verify and check user authentication.
         System.out.println(userApp);
-        return new User(userApp.getUsername(), userApp.getPassword(), grantedAuthorities);
+        return new DepartmentUser(userApp.getUsername(), userApp.getPassword(), grantedAuthorities,userApp.getDepartmentId());
         }
 
         // If user not found. Throw this exception.
         throw new UsernameNotFoundException("Username: " + username + " not found");
     }
+
+
+
 
     // A (temporary) class represent the user saved in the database.
    /* private static class AppUser {

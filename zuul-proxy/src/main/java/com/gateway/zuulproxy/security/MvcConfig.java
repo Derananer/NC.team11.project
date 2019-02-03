@@ -23,7 +23,7 @@ public class MvcConfig
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowCredentials(true)
-                        .exposedHeaders("token");
+                        .exposedHeaders("token", "department");
             }
         };
     }

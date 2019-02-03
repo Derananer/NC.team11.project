@@ -9,7 +9,10 @@ public class JwtConfig {
     private String Uri;
 
     @Value("${security.jwt.header:token}")
-    private String header;
+    private String tokenHeader;
+
+    @Value("${security.jwt.header:department}")
+    private String departmentIdHeader;
 
     @Value("${security.jwt.prefix:Bearer }")
     private String prefix;
@@ -24,12 +27,16 @@ public class JwtConfig {
         return Uri;
     }
 
-    public String getHeader() {
-        return header;
+    public String getTokenHeader() {
+        return tokenHeader;
     }
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public String getDepartmentIdHeader() {
+        return departmentIdHeader;
     }
 
     public int getExpiration() {

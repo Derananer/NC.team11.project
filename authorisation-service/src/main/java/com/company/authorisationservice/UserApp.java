@@ -30,7 +30,19 @@ public class UserApp {
             @NotNull
             String username,
             @NotNull
-            String password) {
+            String password
+    ) throws Exception {
+        if(email == null)
+            throw new Exception("please enter email");
+
+        if(departmentId == null)
+            throw new Exception();
+        if (username == null)
+            throw new Exception("please enter username");
+
+        if( password == null)
+            throw new Exception("please enter password");
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;

@@ -76,16 +76,17 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 // This is important because it affects the way we get them back in the Gateway.
                 .claim("authorities", auth.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                //.claim("department", auth.getPrincipal()
+                .claim("departmentId", ((DepartmentUser)auth.getPrincipal()).getDepartmentId())
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
                 .compact();
-        System.out.println(auth.getPrincipal().toString());
+        System.out.println("user auth : " + auth.getPrincipal().toString());
         // Add token to header
         System.out.println(token);
-        response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
-        System.out.println(response.getHeader(jwtConfig.getHeader()));
+        response.addHeader(jwtConfig.getTokenHeader(), jwtConfig.getPrefix() + token);
+        response.addHeader(jwtConfig.getDepartmentIdHeader(), ((DepartmentUser)auth.getPrincipal()).getDepartmentId());
+        System.out.println(response.getHeader(jwtConfig.getTokenHeader()));
     }
 
     // A (temporary) class just to represent the user credentials

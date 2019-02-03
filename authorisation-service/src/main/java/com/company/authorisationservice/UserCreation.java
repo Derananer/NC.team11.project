@@ -7,7 +7,7 @@ public class UserCreation {
     public String firstName;
     public String lastName;
     public String secondName;
-    public String departmentId;
+    public String departmentName;
     public String email;
     public String username;
     public String password;

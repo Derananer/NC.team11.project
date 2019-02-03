@@ -21,7 +21,8 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         method: 'GET',
         url: "http://localhost:8079/services/employee-service/employees",
         headers : {
-            token: token
+            token: token,
+            department : $cookies.department
         }
     })
         .success(function (data) {
@@ -36,7 +37,8 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
             url: "http://localhost:8079/services/employee-service/add-employee",
             data: employee,
             headers : {
-                'token' : token
+                token : token,
+                department : $cookies.department
             }
 
         }).success(function (result) {
@@ -59,7 +61,8 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
             method: 'POST',
             url: "http://localhost:8079/services/rule-service/add-groupelem",
             headers: {
-                'token': token
+                token : token,
+                department : $cookies.department
             },
             data: {
                 'groupId': groupFactory.group.id,
@@ -81,7 +84,8 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
         method: 'GET',
         url: "http://localhost:8079/services/rule-service/rules",
         headers : {
-            token : token
+            token : token,
+            department : $cookies.department
         }
     })
         .success(function(data){
@@ -92,7 +96,8 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
         method: 'GET',
         url: "http://localhost:8079/services/rule-service/groups",
         headers : {
-            token : token
+            token : token,
+            department : $cookies.department
         }
     })
         .success(function(result) {
@@ -104,7 +109,8 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
             method : 'GET',
             url : "http://localhost:8079/services/employee-service/employees-by-group",
             headers : {
-                token : token
+                token : token,
+                department : $cookies.department
             },
             params : {
                 groupId: group.id
@@ -150,7 +156,8 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
             method: 'POST',
             url: "http://localhost:8079/services/rule-service/create-group",
             headers : {
-                token : token
+                token : token,
+                department : $cookies.department
             },
             data : newGroup
         })
@@ -206,14 +213,16 @@ mainPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
             },
             headers : {
                 "token" : "" ,
+                department : "",
                 "Content-type" : "application/json"
             }
         })
             .then(function (response) {
-                console.log(response);
-                console.log(response.headers());
                 $cookies.token = response.headers()['token'];
+                $cookies.department = response.headers()['department'];
+                console.log(response.headers());
                 console.log("token" + $cookies.token);
+                console.log("department" + $cookies.department);
                 $http.get("/");
             });
     };
@@ -230,9 +239,9 @@ mainPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
     };
     $scope.logOut = function (){
         $cookies.token = "";
+        $cookies.departmentId = "";
+
     }
-
-
 });
 
 
