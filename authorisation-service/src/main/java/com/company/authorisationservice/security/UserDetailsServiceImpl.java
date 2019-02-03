@@ -1,5 +1,7 @@
 package com.company.authorisationservice.security;
 
+import com.company.authorisationservice.UserApp;
+import com.company.authorisationservice.UserAppRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Arrays;
@@ -20,32 +22,30 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
 
 
     @Autowired
-    private BCryptPasswordEncoder encoder;
+    UserAppRepository userAppRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // hard coding the users. All passwords must be encoded.
         System.out.println(username);
-        final List<AppUser> users = Arrays.asList(
+        UserApp userApp = userAppRepository.findByUsername(username);
+        System.out.println(userApp.toString());
+        if (userApp != null){
+        /*final List<AppUser> users = Arrays.asList(
                 new AppUser(1, "ilya", encoder.encode("163rus"), "USER"),
                 new AppUser(2, "admin", encoder.encode("12345"), "ADMIN")
-        );
+        );*/
+        // Remember that Spring needs roles to be in this format: "ROLE_" + userRole (i.e. "ROLE_ADMIN")
+        // So, we need to set it to that format, so we can verify and compare roles (i.e. hasRole("ADMIN")).
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_" + userApp.getRole());
 
-
-        for(AppUser appUser: users) {
-            if(appUser.getUsername().equals(username)) {
-
-                // Remember that Spring needs roles to be in this format: "ROLE_" + userRole (i.e. "ROLE_ADMIN")
-                // So, we need to set it to that format, so we can verify and compare roles (i.e. hasRole("ADMIN")).
-                List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                        .commaSeparatedStringToAuthorityList("ROLE_" + appUser.getRole());
-
-                // The "User" class is provided by Spring and represents a model class for user to be returned by UserDetailsService
-                // And used by auth manager to verify and check user authentication.
-                System.out.println(appUser);
-                return new User(appUser.getUsername(), appUser.getPassword(), grantedAuthorities);
-            }
+        // The "User" class is provided by Spring and represents a model class for user to be returned by UserDetailsService
+            // And used by auth manager to verify and check user authentication.
+        System.out.println(userApp);
+        return new User(userApp.getUsername(), userApp.getPassword(), grantedAuthorities);
         }
 
         // If user not found. Throw this exception.
@@ -53,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
     }
 
     // A (temporary) class represent the user saved in the database.
-    private static class AppUser {
+   /* private static class AppUser {
         private Integer id;
         private String username, password;
         private String role;
@@ -103,5 +103,5 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
         public String toString() {
             return "appUser : " + username + " " + password;
         }
-    }
+    }*/
 }

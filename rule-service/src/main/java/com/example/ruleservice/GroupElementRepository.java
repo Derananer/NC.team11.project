@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface GroupElementRepository extends MongoRepository<GroupElement, String> {
 
-    List<GroupElement> findByEmployeeId(String employeeId);
+    GroupElement findByGroupIdAndEmployeeId(String groupId, String employeeId);
     List<GroupElement> findByGroupId(String groupId);
 }

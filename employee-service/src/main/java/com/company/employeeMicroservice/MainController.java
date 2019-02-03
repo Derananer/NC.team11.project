@@ -1,6 +1,7 @@
 package com.company.employeeMicroservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -27,11 +28,16 @@ public class MainController {
     }
 
     @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
-    public Employee[] getEmployee(
-            @RequestParam int groupNumber
+    public Employee[] getEmployeeByGroup(
+            @RequestParam String groupId,
+            @RequestHeader("token") String token
     ){
         RestTemplate restTemplate = new RestTemplate();
-        String[] empsId = restTemplate.getForObject("http://localhost:8080/services/rule-service/emp-ids-by-group", String[].class, groupNumber);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("token", token);
+        String[] empsId = restTemplate.getForObject(
+                //"http://localhost:8079/services/rule-service/emp-ids-by-group",
+                "http://localhost:8082/emp-ids-by-group?groupId={groupId}", String[].class, groupId);
         ArrayList<Employee> employees = new ArrayList<>();
         for (String empId:
                 empsId

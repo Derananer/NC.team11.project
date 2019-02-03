@@ -9,6 +9,6 @@ public class UserCreation {
     public String secondName;
     public String departmentId;
     public String email;
-    public String userName;
+    public String username;
     public String password;
 }

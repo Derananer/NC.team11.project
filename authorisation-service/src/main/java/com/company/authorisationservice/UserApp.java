@@ -2,26 +2,26 @@ package com.company.authorisationservice;
 
 import org.springframework.data.annotation.Id;
 
-public class User {
+public class UserApp {
 
     @Id
     private String id;
     private String firstName;
     private String lastName;
     private String secondName;
-    private String permission;
+    private String role;
     private String departmentId;
     private String email;
-    private String userName;
+    private String username;
     private String password;
 
-    public User(String firstName, String lastName, String secondName, String departmentId, String email, String userName, String password) {
+    public UserApp(String firstName, String lastName, String secondName, String departmentId, String email, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
         this.departmentId = departmentId;
         this.email = email;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
     }
 
@@ -37,6 +37,21 @@ public class User {
         return secondName;
     }
 
+    @Override
+    public String toString() {
+        return "UserApp{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", role='" + role + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -45,17 +60,10 @@ public class User {
         return firstName;
     }
 
-    public String getPermission() {
-        return permission;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
     public String getPassword() {
         return password;
@@ -85,16 +93,24 @@ public class User {
         this.email = email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setPermission(String permission) {
-        this.permission = permission;
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

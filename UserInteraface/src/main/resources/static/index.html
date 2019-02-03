@@ -24,29 +24,34 @@
     <ul>
 
         <li ng-repeat="employee in employees" ng-click="addEmpToGroup(employee)">
-            {{employee.id}}
             {{employee.firstName}}
             {{employee.lastName}}
+            {{employee.secondName}}
         </li>
     </ul>
 </div>
-<div ng-controller="GroupListCtrl">
 
+<div ng-controller="GroupListCtrl">
+    <p>Rules list</p>
     <ul>
         <li ng-repeat="rule in rules" >
-            {{rule.id}}
             {{rule.ruleName}}
-            <p>{{rule.description}}</p>
+            {{rule.description}}
         </li>
     </ul>
     <input type='text' ng-model="newGroup.departmentId">
     <input type='text' ng-model="newGroup.ruleId">
     <input type="button" ng-click="createGroup(newGroup)" value="Add group">
-    <div ng-repeat="group in groups">
-            {{group.id}}
-            {{group.departmentId}}
-            {{group.ruleId}}
-        <input type="button" ng-click="addEmpsToGroup(group.id)" value="add emp">
+    <div ng-repeat="group in groups" >
+        <p><div ng-click="groupInfo(group)">{{group.departmentId}} {{group.ruleId}}</div>
+            <input type="button" ng-click="addEmpsToGroup(group)" value="add emp"></p>
+        <ul>
+            <li ng-repeat="employee in group.employees">
+                {{employee.firstName}}
+                {{employee.lastName}}
+                {{employee.secondName}}
+            </li>
+        </ul>
     </div>
 
 </div>

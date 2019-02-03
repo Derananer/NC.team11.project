@@ -65,9 +65,11 @@ public class MainController {
     public GroupElement addGroupElem(
             @RequestBody GroupElement groupElement
 
-    ){
+    ) throws Exception {
         System.out.println(groupElement.toString());
-        return groupElementRepository.save(groupElement);
+        if(groupElementRepository.findByGroupIdAndEmployeeId(groupElement.getGroupId(), groupElement.getEmployeeId()) == null)
+            return groupElementRepository.save(groupElement);
+        else throw new Exception("already exist");
     }
 }
 

@@ -8,7 +8,6 @@ loginPage.config(function ($routeProvider){
 });
 
 loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
-    var token;
     $scope.singIn = function (user){
         console.log("send");
         //$http.post("http://localhost:8079/services/authorisation-service/login", user)
@@ -16,7 +15,10 @@ loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
             method : 'POST',
             url: "http://localhost:8079/services/authorisation-service/login",
             //url : "http://localhost:8083/login",
-            data : user,
+            data : {
+                username : user.username,
+                password : user.password
+            },
             headers : {
                 "token" : "" ,
                 "Content-type" : "application/json"
@@ -41,6 +43,9 @@ loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
             });
 
     };
+    $scope.logOut = function (){
+        $cookies.token = "";
+    }
 
 
 });

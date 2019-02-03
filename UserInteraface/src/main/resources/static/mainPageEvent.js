@@ -1,6 +1,6 @@
 var mainPage = angular.module('mainPage', ['ngRoute', 'ngCookies']);
 
-var gId;
+
 /*loginPage.config(function ($routeProvider){
    $routeProvider
        .when('/login', {
@@ -8,18 +8,18 @@ var gId;
        })
 });*/
 
-mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
+mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFactory){
     var token = $cookies.token;
     console.log(token);
     $http({
         method: 'GET',
         url: "http://localhost:8079/services/employee-service/employees",
         headers : {
-            'token': token
+            token: token
         }
     })
         .success(function (data) {
-            console.log(data);
+            //console.log(data);
             $scope.employees = data;
         });
 
@@ -37,14 +37,6 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
             console.log('emp successfully added');
             $scope.employees.push(result);
         });
-        /*$http.post('/services/employee-service/add-employee', employee, config)
-            .success(function(result){
-                console.log('emp successfully added');
-                $scope.employees.push(result);
-            })
-            .error(function (result) {
-                console.log(result)
-            });*/
     };
     $scope.updateEmployee = function(){
         $http.post('http://localhost:8079/services/employee-service/update-employee', $scope.employees[0])
@@ -54,7 +46,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
             });
     };
     $scope.addEmpToGroup = function(employee) {
-        console.log(employee);
+        //console.log(employee);
         $http({
             method: 'POST',
             url: "http://localhost:8079/services/rule-service/add-groupelem",
@@ -62,56 +54,95 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies){
                 'token': token
             },
             data: {
-                'groupId': gId,
+                'groupId': groupFactory.group.id,
                 'employeeId': employee.id
             }
 
         })
             .success(function (result) {
-                console.log('groupElem successfully added');
-                $scope.groups.push(result);
-            })
+                console.log('groupElem successfully added' + result);
+                groupFactory.group.employees.push(employee);
+            });
     }
 
 });
 
-mainPage.controller('GroupListCtrl', function($scope, $http, $cookies){
+mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFactory){
     var token = $cookies.token;
-
-    /*$http.get('http://localhost:8079/services/rule-service/rules')
-        .success(function(data){
-            $scope.rules = data;
-        });*/
     $http({
         method: 'GET',
         url: "http://localhost:8079/services/rule-service/rules",
         headers : {
-            'token': token
+            token : token
         }
     })
         .success(function(data){
         $scope.rules = data;
     });
 
-    //$http.get('http://localhost:8079/services/rule-service/groups')
     $http({
         method: 'GET',
         url: "http://localhost:8079/services/rule-service/groups",
         headers : {
-            'token': token
+            token : token
         }
     })
-        .success(function(data){
-            $scope.groups = data;
+        .success(function(result) {
+            $scope.groups = result;
         });
+    $scope.groupInfo = function (group){
+        console.log("groupId : " + group.id);
+        $http({
+            method : 'GET',
+            url : "http://localhost:8079/services/employee-service/employees-by-group",
+            headers : {
+                token : token
+            },
+            params : {
+                groupId: group.id
+            }
+        })
+            .success(function(result){
+                console.log("result of employees-by-group: " + result);
+                group.employees = result;
+            });
+
+    };
+            /*var fullGroup;
+            $scope.fullGroups = new Array();
+            var iGr =0;
+            for (var group in $scope.groups){
+                console.log("groupNumber : " + group);
+                console.log($scope.groups[group]);
+                $scope.fullGroups.push({
+                    groupInfo : $scope.groups[group],
+                    employees : ""
+                });
+                $http({
+                    method : 'GET',
+                    url : "http://localhost:8079/services/employee-service/employees-by-group",
+                    headers : {
+                        token : token
+                    },
+                    params : {
+                        groupId: $scope.groups[group].id
+                    }
+                })
+                    .success(function(result){
+                        console.log("result of employees-by-group: " + result);
+                        $scope.fullGroups[iGr].employees = result;
+                        iGr++;
+                    });
+                console.log("fullGroupElem: " + group);
+                //console.log("fullGroup: " + fullGroup);
+            }*/
 
     $scope.createGroup = function(newGroup){
-        //$http.post('http://localhost:8079/services/rule-service/create-group',newGroup,config)
         $http({
             method: 'POST',
             url: "http://localhost:8079/services/rule-service/create-group",
             headers : {
-                'token': token
+                token : token
             },
             data : newGroup
         })
@@ -120,18 +151,18 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies){
                 $scope.groups.push(result);
             });
 
-    }
-    $scope.addEmpToGroup = function(employee){
+    };
+    /*$scope.addEmpToGroup = function(employee){
         console.log(employee);
         $http({
             method: 'POST',
             url: "http://localhost:8079/services/rule-service/add-groupelem",
             headers : {
-                'token': token
+                token: token
             },
             data : {
-                'groupId' : gId,
-                'employeeId' : employee.id
+                groupId : groupFactory.groupId,
+                employeeId : employee.id
             }
 
         })
@@ -139,10 +170,18 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies){
                 console.log('groupElem successfully added');
                 $scope.groups.push(result);
             });
-    }
-    $scope.addEmpsToGroup = function(groupId){
-        gId = groupId;
+    };*/
+    $scope.addEmpsToGroup = function(group){
+        groupFactory.group = group;
     }
 
 
-})
+});
+
+mainPage.factory('groupFactory', function(){
+    return {
+        group : ""
+    };
+});
+
+
