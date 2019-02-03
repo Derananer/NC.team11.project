@@ -50,6 +50,7 @@ public class MainController {
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public Group[] getGroups(){
         List<Group> groups = groupRepository.findAll();
+        System.out.println(groupRepository.findAll());
         return groups.toArray(new Group[groups.size()]);
     }
 

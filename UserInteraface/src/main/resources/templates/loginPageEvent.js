@@ -1,11 +1,11 @@
 var loginPage = angular.module('loginPage', ['ngRoute','ngCookies']);
 
-loginPage.config(function ($routeProvider){
+/*loginPage.config(function ($routeProvider){
     $routeProvider
         .when('/sing-up', {
             templateUrl: 'singUp.html'
         })
-});
+});*/
 
 loginPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
     $scope.singIn = function (user){

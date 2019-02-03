@@ -1,12 +1,18 @@
 var mainPage = angular.module('mainPage', ['ngRoute', 'ngCookies']);
 
 
-/*loginPage.config(function ($routeProvider){
+mainPage.config(function ($routeProvider){
    $routeProvider
+       .when('/home', {
+           templateUrl:'mainPage.html'
+       })
        .when('/login', {
            templateUrl: 'loginPage.html'
        })
-});*/
+       .when('/sing-up', {
+           templateUrl : 'singUp.html'
+       })
+});
 
 mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFactory){
     var token = $cookies.token;
@@ -47,6 +53,8 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
     };
     $scope.addEmpToGroup = function(employee) {
         //console.log(employee);
+
+        //have to add if for group!!!!!!!!!!!!!
         $http({
             method: 'POST',
             url: "http://localhost:8079/services/rule-service/add-groupelem",
@@ -182,6 +190,49 @@ mainPage.factory('groupFactory', function(){
     return {
         group : ""
     };
+});
+
+mainPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
+    $scope.singIn = function (user){
+        console.log("send");
+        //$http.post("http://localhost:8079/services/authorisation-service/login", user)
+        $http({
+            method : 'POST',
+            url: "http://localhost:8079/services/authorisation-service/login",
+            //url : "http://localhost:8083/login",
+            data : {
+                username : user.username,
+                password : user.password
+            },
+            headers : {
+                "token" : "" ,
+                "Content-type" : "application/json"
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                console.log(response.headers());
+                $cookies.token = response.headers()['token'];
+                console.log("token" + $cookies.token);
+                $http.get("/");
+            });
+    };
+    $scope.singUp = function (userCreation) {
+        $http.post("http://localhost:8079/services/authorisation-service/sing-up", userCreation)
+            .success(function (result){
+                console.log(result);
+            })
+            .error(function (result) {
+                console.log(result);
+
+            });
+
+    };
+    $scope.logOut = function (){
+        $cookies.token = "";
+    }
+
+
 });
 
 
