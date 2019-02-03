@@ -18,6 +18,10 @@ public class MainController {
     public void singUp(
             @RequestBody UserCreation userCreation
             ) throws Exception {
+        if(userAppRepository.findByUsername(userCreation.username) != null)
+            throw new Exception("user name already exist");
+        if(userAppRepository.findByEmail(userCreation.email) != null)
+            throw new Exception("email already exist");
         UserApp userApp = new UserApp(
                 userCreation.firstName,
                 userCreation.lastName,
