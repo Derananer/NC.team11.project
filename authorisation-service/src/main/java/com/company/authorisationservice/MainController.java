@@ -26,7 +26,7 @@ public class MainController {
                 userCreation.firstName,
                 userCreation.lastName,
                 userCreation.secondName,
-                userCreation.departmentId,
+                new String(" 34"),
                 userCreation.email,
                 userCreation.username,
                 encoder.encode(userCreation.password)

@@ -21,6 +21,20 @@ public class MainController {
     @Autowired
     private VacationRepository vacationRepository;
 
+    @RequestMapping(value = "/create-new-department", method = RequestMethod.GET)
+    public String createDepartment(
+            @RequestParam(value = "name") String departmentName,
+            @RequestParam(value = "info") String someInfo
+    ) throws Exception {
+        Department dep = departmentRepository.save(new Department(departmentName, someInfo));
+        if( dep == null)
+            throw new Exception("didn`t save");
+        else return dep.getId();
+
+
+
+    }
+
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public Employee[] getEmployees(){
         List<Employee> emps = employeeRepository.findAll();

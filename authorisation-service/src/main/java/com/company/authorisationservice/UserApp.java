@@ -2,6 +2,8 @@ package com.company.authorisationservice;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotNull;
+
 public class UserApp {
 
     @Id
@@ -15,7 +17,20 @@ public class UserApp {
     private String username;
     private String password;
 
-    public UserApp(String firstName, String lastName, String secondName, String departmentId, String email, String username, String password) {
+    public UserApp(
+            @NotNull
+            String firstName,
+            @NotNull
+            String lastName,
+            String secondName,
+            @NotNull
+            String departmentId,
+            @NotNull
+            String email,
+            @NotNull
+            String username,
+            @NotNull
+            String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
