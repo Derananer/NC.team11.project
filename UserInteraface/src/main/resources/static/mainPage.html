@@ -29,7 +29,8 @@
         <input type="button" ng-click="createGroup(newGroup)" value="Add group">
         <div ng-repeat="group in groups" >
             <p><div ng-click="groupInfo(group)">{{group.departmentId}} {{group.ruleId}}</div>
-            <input type="button" ng-click="addEmpsToGroup(group)" value="add emp"></p>
+                <!-- your code -->
+            <input type="button" class="button3" ng-click="addEmpsToGroup(group, this)" ng-style="group.customStyle" value="add emp" ></p>
             <ul>
                 <li ng-repeat="employee in group.employees">
                     {{employee.firstName}}

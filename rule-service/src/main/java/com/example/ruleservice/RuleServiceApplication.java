@@ -38,7 +38,7 @@ public class RuleServiceApplication implements CommandLineRunner {
 		);
 		ruleRepository.save(new Rule(
 						"Chtoto",
-						"могут сосат"
+						"могут чото"
 				)
 		);
 	}
