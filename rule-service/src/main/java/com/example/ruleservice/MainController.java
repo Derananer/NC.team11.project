@@ -48,16 +48,20 @@ public class MainController {
     }
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public Group[] getGroups(){
-        List<Group> groups = groupRepository.findAll();
+    public Group[] getGroups(
+            @RequestHeader("department") String departmentId
+    ){
+        List<Group> groups = groupRepository.findByDepartmentId(departmentId);
         System.out.println(groupRepository.findAll());
         return groups.toArray(new Group[groups.size()]);
     }
 
     @RequestMapping(value = "/create-group", method = RequestMethod.POST)
     public Group createGroup(
-            @RequestBody Group newGroup
+            @RequestBody Group newGroup,
+            @RequestHeader("department") String departmentId
     ){
+        newGroup.setDepartmentId(departmentId);
         System.out.println(newGroup.toString());
         return groupRepository.save(newGroup);
     }
@@ -68,8 +72,9 @@ public class MainController {
 
     ) throws Exception {
         System.out.println(groupElement.toString());
-        if(groupElementRepository.findByGroupIdAndEmployeeId(groupElement.getGroupId(), groupElement.getEmployeeId()) == null)
+        if(groupElementRepository.findByGroupIdAndEmployeeId(groupElement.getGroupId(), groupElement.getEmployeeId()) == null){
             return groupElementRepository.save(groupElement);
+        }
         else throw new Exception("already exist");
     }
 }

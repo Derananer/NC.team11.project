@@ -42,15 +42,4 @@ public class MainController {
 
     }
 
-    @RequestMapping(value = "/sing-in", method = RequestMethod.POST)
-    public UserL singIn(
-            @RequestBody UserL userL
-    ){
-        return userL;
-    }
-
-    @RequestMapping(value = "/sing-in", method = RequestMethod.GET)
-    public String sing(){
-        return "hello";
-    }
 }

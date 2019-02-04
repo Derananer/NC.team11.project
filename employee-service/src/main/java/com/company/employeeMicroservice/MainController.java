@@ -60,7 +60,7 @@ public class MainController {
         for (String empId:
                 empsId
              ) {
-            employees.add(employeeRepository.findById(empId).get());
+            employees.add(employeeRepository.findByIdAndDepartmentId(empId, departmentId));
         }
         return employees.toArray(new Employee[employees.size()]);
     }
@@ -70,7 +70,7 @@ public class MainController {
             @RequestParam String id,
             @RequestHeader("department") String departmentId
     ){
-        return employeeRepository.findById(id).get();
+        return employeeRepository.findByIdAndDepartmentId(id, departmentId);
     }
 
     @PostMapping("/add-employee")
@@ -79,6 +79,7 @@ public class MainController {
             @RequestHeader("department") String departmentId
     ){
         System.out.println(emp.toString());
+        emp.setDepartmentId(departmentId);
         emp = employeeRepository.save(emp);
         return emp;
     }
