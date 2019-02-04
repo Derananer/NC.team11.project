@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MainController {
@@ -48,22 +49,35 @@ public class MainController {
     }
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public Group[] getGroups(
+    public RuledGroup[] getGroups(
             @RequestHeader("department") String departmentId
     ){
         List<Group> groups = groupRepository.findByDepartmentId(departmentId);
         System.out.println(groupRepository.findAll());
-        return groups.toArray(new Group[groups.size()]);
+        ArrayList<RuledGroup> ruledGroups = new ArrayList<>();
+        for (Group group:
+                groups
+             ) {
+            Optional<Rule> rule = ruleRepository.findById(group.getRuleId());
+            if(rule.isPresent())
+                ruledGroups.add(new RuledGroup(group,rule.get().getRuleName()));
+        }
+        System.out.println(ruledGroups);
+        return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
 
     @RequestMapping(value = "/create-group", method = RequestMethod.POST)
-    public Group createGroup(
-            @RequestBody Group newGroup,
+    public RuledGroup createGroup(
+            @RequestBody String ruleId,
             @RequestHeader("department") String departmentId
-    ){
-        newGroup.setDepartmentId(departmentId);
-        System.out.println(newGroup.toString());
-        return groupRepository.save(newGroup);
+    ) throws Exception {
+        Group newGroup = new Group(departmentId,ruleId);
+        //newGroup.setDepartmentId(departmentId);
+        System.out.println("new Group" + newGroup.toString());
+        newGroup = groupRepository.save(newGroup);
+        Optional<Rule> rule = ruleRepository.findById(newGroup.getRuleId());
+        if(rule.isPresent())return new RuledGroup(groupRepository.save(newGroup),rule.get().getRuleName());
+        else throw new Exception("no such rule");
     }
 
     @RequestMapping(value = "/add-groupelem", method = RequestMethod.POST)

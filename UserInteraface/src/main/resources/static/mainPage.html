@@ -19,16 +19,14 @@
 <div id="grooper">
     <div ng-controller="GroupListCtrl">
         <p>Rules list</p>
-        <ul>
-            <li ng-repeat="rule in rules" >
-                {{rule.ruleName}}
-                {{rule.description}}
-            </li>
-        </ul>
-        <input type='text' ng-model="newGroup.ruleId">
-        <input type="button" ng-click="createGroup(newGroup)" value="Add group">
+        <div ng-repeat="rule in rules">
+            {{rule.ruleName}}
+            {{rule.description}}
+            <input type="button" ng-click="createGroup(rule)" value="Add group">
+        </div>
+        <p>Groups</p>
         <div ng-repeat="group in groups" >
-            <p><div ng-click="groupInfo(group)">{{group.departmentId}} {{group.ruleId}}</div>
+            <p><div ng-click="groupInfo(group)">{{group.ruleName}}</div>
                 <!-- your code -->
             <input type="button" class="button3" ng-click="addEmpsToGroup(group, this)" ng-style="group.customStyle" value="add emp" ></p>
             <ul>

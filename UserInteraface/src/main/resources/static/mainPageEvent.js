@@ -65,7 +65,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
                     department: $cookies.department
                 },
                 data: {
-                    'groupId': groupFactory.group.id,
+                    'groupId': groupFactory.group.group.id,
                     'employeeId': employee.id
                 }
 
@@ -102,6 +102,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
         }
     })
         .success(function(result) {
+            console.log(result);
             $scope.groups = result;
         });
     $scope.groupInfo = function (group){
@@ -114,7 +115,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
                 department : $cookies.department
             },
             params : {
-                groupId: group.id
+                groupId: group.group.id
             }
         })
             .success(function(result){
@@ -152,7 +153,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
                 //console.log("fullGroup: " + fullGroup);
             }*/
 
-    $scope.createGroup = function(newGroup){
+    $scope.createGroup = function(rule){
         $http({
             method: 'POST',
             url: "http://192.168.0.104:8079/services/rule-service/create-group",
@@ -160,7 +161,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
                 token : token,
                 department : $cookies.department
             },
-            data : newGroup
+            data : rule.id
         })
             .success(function (result) {
                 console.log('group successfully added');
