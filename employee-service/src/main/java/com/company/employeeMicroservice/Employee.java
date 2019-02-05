@@ -17,7 +17,7 @@ public class Employee {
     Employee(){
         this.id = null;
         this.firstName = null;
-        this.lastName =null;
+        this.lastName = null;
         this.secondName = null;
         this.departmentId = null;
     }
