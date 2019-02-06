@@ -7,16 +7,16 @@
         <input type="button" ng-click="addEmployee(employee)" value="Add employee">
         <input type="button" ng-click="updateEmployee()" value="Update employee">
         <ul>
-
             <li ng-repeat="employee in employees" ng-click="addEmpToGroup(employee)">
                 {{employee.firstName}}
                 {{employee.lastName}}
                 {{employee.secondName}}
             </li>
         </ul>
+        <input type="button" class="button3" ng-click="generate()" value="generate">
     </div>
 </div>
-<div id="grooper">
+<div id="grooper" ng-controller="EmployeeListCtrl">
     <div ng-controller="GroupListCtrl">
         <p>Rules list</p>
         <div ng-repeat="rule in rules">

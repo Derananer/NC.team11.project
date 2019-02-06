@@ -22,7 +22,18 @@
     height: 100vh;
 
 }
+#vacEmpl
+{
+    background: rgba(0, 191, 255, 0.2);
 
+    color: black;
+
+    float: none;
+
+    width: 33%;
+
+    height: 100vh;
+}
 
 #grooper
 {

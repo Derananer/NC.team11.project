@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface VacationRepository extends MongoRepository<Vacation, String> {
 
-    Vacation findByEmployeeId(String employeeId);
+    List<Vacation> findByEmployeeId(String employeeId);
 }

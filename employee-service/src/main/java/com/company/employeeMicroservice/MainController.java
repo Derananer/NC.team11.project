@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,9 @@ public class MainController {
     @Autowired
     private VacationRepository vacationRepository;
 
+
+
+
     @RequestMapping(value = "/create-new-department", method = RequestMethod.GET)
     public String createDepartment(
             @RequestParam(value = "name") String departmentName
@@ -33,6 +37,32 @@ public class MainController {
 
 
 
+    }
+
+    @RequestMapping(value = "/vacation-employees", method = RequestMethod.GET)
+    public VacationedEmployee[] vacationedEmployees(
+            @RequestHeader("department") String departmentId
+    ){
+
+        ArrayList<VacationedEmployee> vacationedEmployees = new ArrayList<>();
+        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
+        for (Employee employee:
+                employees
+             ) {
+            List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
+            Date[] vacationDates = new Date[vacations.size()];
+            int[] numbersOfVacationDays = new int[vacations.size()];
+            int i = 0;
+            for (Vacation vacation:
+                    vacations
+                 ) {
+                vacationDates[i] = vacation.getVacationDate();
+                numbersOfVacationDays[i++] = vacation.getNumberOfDays();
+            }
+
+            vacationedEmployees.add(new VacationedEmployee(employee.getId(),departmentId,vacationDates,numbersOfVacationDays,));
+        }
+        return vacationedEmployees.toArray(new VacationedEmployee[0]);
     }
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)

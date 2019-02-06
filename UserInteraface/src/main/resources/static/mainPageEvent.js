@@ -30,6 +30,20 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
             $scope.employees = data;
         });
 
+    $scope.generate = function(){
+        console.log("generating");
+        $http({
+            method: 'GET',
+            url: "http://192.168.0.104:8079/services/vacation-algo-service/generate-vacation",
+            headers : {
+                token : token,
+                department : $cookies.department
+            }
+        }).success(function (result) {
+            console.log('successfully generate');
+        });
+
+    };
     $scope.addEmployee = function(employee){
         console.log(employee);
         $http({

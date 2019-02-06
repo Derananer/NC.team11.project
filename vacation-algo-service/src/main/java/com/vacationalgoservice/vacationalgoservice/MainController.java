@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 public class MainController {
 
@@ -39,8 +36,8 @@ public class MainController {
 */
 
         HttpEntity entity = new HttpEntity(headers);
-        HttpEntity<Employee[]> response = restTemplate.exchange("http://localhost:8081/employees", HttpMethod.GET, entity, Employee[].class);
-        for (Employee emp:
+        HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8081/vacation-employees", HttpMethod.GET, entity, VacationedEmployee[].class);
+        for (VacationedEmployee emp:
                 response.getBody()
              ) {
             System.out.println(emp.toString());

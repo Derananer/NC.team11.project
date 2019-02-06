@@ -44,22 +44,22 @@ public class EmployeeMicroserviceApplication {
 	public void run(String... args) throws Exception {
 
 		//ArrayList<Employee> emps = new ArrayList<>();
-		//emps.add(new Employee("Вася","Пупкин", "Антонович", organisationRepository.findByOrganisationName("ООО СКС").getId()));
-		//emps.add(new Employee("Илья","Лисецкий", "Ильич", organisationRepository.findByOrganisationName("ООО СКС").getId()));
-		//emps.add(new Employee("Ваня","Хуюпкин", "Александрович", organisationRepository.findByOrganisationName("ООО СКС").getId()));
+		//emps.add(new Employee("Вася","Пупкин", "Антонович", organisationRepository.findByOrganisationName("ООО СКС").getEmployeeId()));
+		//emps.add(new Employee("Илья","Лисецкий", "Ильич", organisationRepository.findByOrganisationName("ООО СКС").getEmployeeId()));
+		//emps.add(new Employee("Ваня","Хуюпкин", "Александрович", organisationRepository.findByOrganisationName("ООО СКС").getEmployeeId()));
 		departmentRepository.deleteAll();
 		employeeRepository.deleteAll();
 		departmentRepository.save(new Department("ООО СКС", null));
-		employeeRepository.save(new Employee("Вася","Пупкин", "Антонович", departmentRepository.findByDepartmentName("ООО СКС").getId()));
-		employeeRepository.save(new Employee("Илья","Лисецкий", "Ильич", departmentRepository.findByDepartmentName("ООО СКС").getId()));
-		employeeRepository.save(new Employee("Ваня","Хуюпкин", "Александрович", departmentRepository.findByDepartmentName("ООО СКС").getId()));
+		employeeRepository.save(new Employee("Вася","Пупкин", "Антонович", departmentRepository.findByDepartmentName("ООО СКС").getEmployeeId()));
+		employeeRepository.save(new Employee("Илья","Лисецкий", "Ильич", departmentRepository.findByDepartmentName("ООО СКС").getEmployeeId()));
+		employeeRepository.save(new Employee("Ваня","Хуюпкин", "Александрович", departmentRepository.findByDepartmentName("ООО СКС").getEmployeeId()));
 		ArrayList<Employee> emps = new ArrayList<>();
 		emps.addAll(employeeRepository.findAll());
 		int j = 0;
 		for (Employee i :
 				emps
 			 ) {
-			vacationRepository.save(new Vacation(i.getId(), new Date(2019,0,7+j), 15));
+			vacationRepository.save(new Vacation(i.getEmployeeId(), new Date(2019,0,7+j), 15));
 			j+=15;
 		}
 		for (Department i:
@@ -71,7 +71,7 @@ public class EmployeeMicroserviceApplication {
 		for (Employee i:
 				emps
 		) {
-			System.out.println(i.toString() + "\n    " + vacationRepository.findByEmployeeId(i.getId()).toString());
+			System.out.println(i.toString() + "\n    " + vacationRepository.findByEmployeeId(i.getEmployeeId()).toString());
 		}
 
 	}
