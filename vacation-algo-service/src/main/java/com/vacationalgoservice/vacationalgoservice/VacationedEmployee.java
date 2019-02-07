@@ -2,6 +2,7 @@ package com.vacationalgoservice.vacationalgoservice;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.deploy.security.ruleset.RuleId;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -13,15 +14,37 @@ public class VacationedEmployee {
     private String departmentId;
     private Date[] vacationDate;
     private int[] numberOfDays;
+    private int rule;
+    private String groupId;
+
+    public int getRule() {
+        return rule;
+    }
+
+    public void setRule(int rule) {
+        this.rule = rule;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+
 
     public VacationedEmployee() {
     }
 
-    public VacationedEmployee(String id, String departmentId, Date[] vacationDate, int[] numberOfDays) {
-        this.employeeId = id;
+    public VacationedEmployee(String employeeId, String departmentId, Date[] vacationDate, int[] numberOfDays, int rule, String groupId) {
+        this.employeeId = employeeId;
         this.departmentId = departmentId;
         this.vacationDate = vacationDate;
         this.numberOfDays = numberOfDays;
+        this.rule = rule;
+        this.groupId = groupId;
     }
 
     public String getEmployeeId() {
@@ -63,6 +86,8 @@ public class VacationedEmployee {
                 ", departmentId='" + departmentId + '\'' +
                 ", vacationDate=" + Arrays.toString(vacationDate) +
                 ", numberOfDays=" + Arrays.toString(numberOfDays) +
+                ", rule=" + rule +
+                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }

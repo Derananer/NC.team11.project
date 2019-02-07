@@ -1,7 +1,10 @@
 package com.company.employeeMicroservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +25,8 @@ public class MainController {
     @Autowired
     private VacationRepository vacationRepository;
 
-
+    @Autowired
+    RestTemplate restTemplate;
 
 
     @RequestMapping(value = "/create-new-department", method = RequestMethod.GET)
@@ -43,7 +47,15 @@ public class MainController {
     public VacationedEmployee[] vacationedEmployees(
             @RequestHeader("department") String departmentId
     ){
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("department", departmentId);
+        HttpEntity entity = new HttpEntity(headers);
+        HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, VacationedEmployee[].class);
+        for (VacationedEmployee emp:
+                response.getBody()
+        ) {
+            System.out.println(emp.toString());
+        }
         ArrayList<VacationedEmployee> vacationedEmployees = new ArrayList<>();
         List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
         for (Employee employee:
@@ -79,7 +91,6 @@ public class MainController {
             @RequestHeader("token") String token,
             @RequestHeader("department") String departmentId
     ){
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("token", token);
         System.out.println("token from eployees-by=groups : " + token);
@@ -124,5 +135,11 @@ public class MainController {
         emp.setId(null);
         employeeRepository.save(emp);
         return emp;
+    }
+
+
+    @Bean(name = "restTemplate")
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 }

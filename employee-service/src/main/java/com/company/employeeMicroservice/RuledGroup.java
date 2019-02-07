@@ -1,4 +1,4 @@
-package com.example.ruleservice;
+package com.company.employeeMicroservice;
 
 public class RuledGroup {
 

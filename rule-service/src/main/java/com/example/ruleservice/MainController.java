@@ -60,7 +60,7 @@ public class MainController {
              ) {
             Optional<Rule> rule = ruleRepository.findById(group.getRuleId());
             if(rule.isPresent())
-                ruledGroups.add(new RuledGroup(group,rule.get().getRuleName()));
+                ruledGroups.add(new RuledGroup(group.getId(),rule.get().getRuleName(),rule.get().getDescription()));
         }
         System.out.println(ruledGroups);
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);

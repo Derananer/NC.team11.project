@@ -12,24 +12,24 @@ public class VacationedEmployee {
     private String departmentId;
     private Date[] vacationDate;
     private int[] numberOfDays;
-    private String ruleId;
+    private int rule;
     private String groupId;
 
-    public VacationedEmployee(String employeeId, String departmentId, Date[] vacationDate, int[] numberOfDays, String ruleId, String groupId) {
+    public VacationedEmployee(String employeeId, String departmentId, Date[] vacationDate, int[] numberOfDays, int rule, String groupId) {
         this.employeeId = employeeId;
         this.departmentId = departmentId;
         this.vacationDate = vacationDate;
         this.numberOfDays = numberOfDays;
-        this.ruleId = ruleId;
+        this.rule = rule;
         this.groupId = groupId;
     }
 
-    public String getRuleId() {
-        return ruleId;
+    public int getRule() {
+        return rule;
     }
 
-    public void setRuleId(String ruleId) {
-        this.ruleId = ruleId;
+    public void setRule(int rule) {
+        this.rule = rule;
     }
 
     public String getGroupId() {
@@ -83,6 +83,8 @@ public class VacationedEmployee {
                 ", departmentId='" + departmentId + '\'' +
                 ", vacationDate=" + Arrays.toString(vacationDate) +
                 ", numberOfDays=" + Arrays.toString(numberOfDays) +
+                ", rule=" + rule +
+                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }
