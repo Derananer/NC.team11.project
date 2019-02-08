@@ -2,7 +2,6 @@ package com.vacationalgoservice.vacationalgoservice;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.deploy.security.ruleset.RuleId;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -14,15 +13,15 @@ public class VacationedEmployee {
     private String departmentId;
     private Date[] vacationDate;
     private int[] numberOfDays;
-    private int rule;
+    private int ruleNumber;
     private String groupId;
 
-    public int getRule() {
-        return rule;
+    public int getRuleNumber() {
+        return ruleNumber;
     }
 
-    public void setRule(int rule) {
-        this.rule = rule;
+    public void setRuleNumber(int ruleNumber) {
+        this.ruleNumber = ruleNumber;
     }
 
     public String getGroupId() {
@@ -43,7 +42,7 @@ public class VacationedEmployee {
         this.departmentId = departmentId;
         this.vacationDate = vacationDate;
         this.numberOfDays = numberOfDays;
-        this.rule = rule;
+        this.ruleNumber = rule;
         this.groupId = groupId;
     }
 
@@ -86,7 +85,7 @@ public class VacationedEmployee {
                 ", departmentId='" + departmentId + '\'' +
                 ", vacationDate=" + Arrays.toString(vacationDate) +
                 ", numberOfDays=" + Arrays.toString(numberOfDays) +
-                ", rule=" + rule +
+                ", ruleNumber=" + ruleNumber +
                 ", groupId='" + groupId + '\'' +
                 '}';
     }

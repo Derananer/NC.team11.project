@@ -79,7 +79,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
                     department: $cookies.department
                 },
                 data: {
-                    'groupId': groupFactory.group.group.id,
+                    'groupId': groupFactory.group.groupId,
                     'employeeId': employee.id
                 }
 
@@ -120,7 +120,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
             $scope.groups = result;
         });
     $scope.groupInfo = function (group){
-        console.log("groupId : " + group.id);
+        console.log("groupId : " + group.groupId);
         $http({
             method : 'GET',
             url : "http://192.168.0.104:8079/services/employee-service/employees-by-group",
@@ -129,7 +129,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
                 department : $cookies.department
             },
             params : {
-                groupId: group.group.id
+                groupId: group.groupId
             }
         })
             .success(function(result){

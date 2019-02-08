@@ -53,16 +53,19 @@ public class MainController {
             @RequestHeader("department") String departmentId
     ){
         List<Group> groups = groupRepository.findByDepartmentId(departmentId);
-        System.out.println(groupRepository.findAll());
+        System.out.println("groups " + groupRepository.findAll());
         ArrayList<RuledGroup> ruledGroups = new ArrayList<>();
         for (Group group:
                 groups
              ) {
             Optional<Rule> rule = ruleRepository.findById(group.getRuleId());
-            if(rule.isPresent())
-                ruledGroups.add(new RuledGroup(group.getId(),rule.get().getRuleName(),rule.get().getDescription()));
+            if(rule.isPresent()) {
+                ruledGroups.add(new RuledGroup(group.getId(), rule.get().getRuleName(), rule.get().getDescription(),rule.get().getRuleNumber()));
+                System.out.println("rule " + rule.get().toString());
+                System.out.println("ruledGroup " + ruledGroups.get(ruledGroups.size() - 1));
+            }
         }
-        System.out.println(ruledGroups);
+        System.out.println("ruledGroups " + ruledGroups);
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
 
@@ -76,7 +79,7 @@ public class MainController {
         System.out.println("new Group" + newGroup.toString());
         newGroup = groupRepository.save(newGroup);
         Optional<Rule> rule = ruleRepository.findById(newGroup.getRuleId());
-        if(rule.isPresent())return new RuledGroup(groupRepository.save(newGroup),rule.get().getRuleName());
+        if(rule.isPresent())return new RuledGroup(groupRepository.save(newGroup).getId(),rule.get().getRuleName(),rule.get().getDescription(),rule.get().getRuleNumber());
         else throw new Exception("no such rule");
     }
 

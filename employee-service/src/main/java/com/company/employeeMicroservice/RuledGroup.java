@@ -2,9 +2,25 @@ package com.company.employeeMicroservice;
 
 public class RuledGroup {
 
-    String groupId;
-    String ruleName;
-    String ruleDescription;
+    private String groupId;
+    private String ruleName;
+    private String ruleDescription;
+    private int ruleNumber;
+
+    public RuledGroup(String groupId, String ruleName, String ruleDescription, int ruleNumber) {
+        this.groupId = groupId;
+        this.ruleName = ruleName;
+        this.ruleDescription = ruleDescription;
+        this.ruleNumber = ruleNumber;
+    }
+
+    public int getRuleNumber() {
+        return ruleNumber;
+    }
+
+    public void setRuleNumber(int ruleNumber) {
+        this.ruleNumber = ruleNumber;
+    }
 
     public RuledGroup() {
     }

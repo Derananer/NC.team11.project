@@ -50,29 +50,34 @@ public class MainController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("department", departmentId);
         HttpEntity entity = new HttpEntity(headers);
-        HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, VacationedEmployee[].class);
-        for (VacationedEmployee emp:
+        HttpEntity<RuledGroup[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, RuledGroup[].class);
+        ArrayList<VacationedEmployee> vacationedEmployees = new ArrayList<>();
+        for (RuledGroup ruledGroup:
                 response.getBody()
         ) {
-            System.out.println(emp.toString());
-        }
-        ArrayList<VacationedEmployee> vacationedEmployees = new ArrayList<>();
-        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
-        for (Employee employee:
-                employees
-             ) {
-            List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
-            Date[] vacationDates = new Date[vacations.size()];
-            int[] numbersOfVacationDays = new int[vacations.size()];
-            int i = 0;
-            for (Vacation vacation:
-                    vacations
-                 ) {
-                vacationDates[i] = vacation.getVacationDate();
-                numbersOfVacationDays[i++] = vacation.getNumberOfDays();
+            for(Employee employee :
+                    getEmployeeByGroup(ruledGroup.getGroupId(),departmentId)
+            ) {
+                List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
+                Date[] vacationDates = new Date[vacations.size()];
+                int[] numbersOfVacationDays = new int[vacations.size()];
+                int i = 0;
+                for (Vacation vacation:
+                        vacations
+                ) {
+                    vacationDates[i] = vacation.getVacationDate();
+                    numbersOfVacationDays[i++] = vacation.getNumberOfDays();
+                }
+                vacationedEmployees.add(new VacationedEmployee(
+                        employee.getId(),
+                        departmentId,
+                        vacationDates,
+                        numbersOfVacationDays,
+                        ruledGroup.getRuleNumber(),
+                        ruledGroup.getGroupId()
+                        )
+                );
             }
-
-            vacationedEmployees.add(new VacationedEmployee(employee.getId(),departmentId,vacationDates,numbersOfVacationDays,));
         }
         return vacationedEmployees.toArray(new VacationedEmployee[0]);
     }
@@ -88,12 +93,12 @@ public class MainController {
     @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
     public Employee[] getEmployeeByGroup(
             @RequestParam String groupId,
-            @RequestHeader("token") String token,
+            //@RequestHeader("token") String token,
             @RequestHeader("department") String departmentId
     ){
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("token", token);
-        System.out.println("token from eployees-by=groups : " + token);
+        //HttpHeaders headers = new HttpHeaders();
+        //headers.set("token", token);
+        //System.out.println("token from eployees-by=groups : " + token);
         String[] empsId = restTemplate.getForObject(
                 //"http://localhost:8079/services/rule-service/emp-ids-by-group",
                 "http://localhost:8082/emp-ids-by-group?groupId={groupId}", String[].class, groupId);
@@ -136,6 +141,8 @@ public class MainController {
         employeeRepository.save(emp);
         return emp;
     }
+
+
 
 
     @Bean(name = "restTemplate")

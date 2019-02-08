@@ -6,7 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RuleServiceApplication implements CommandLineRunner {
+public class RuleServiceApplication
+		//implements CommandLineRunner
+{
 
 	@Autowired
 	RuleRepository ruleRepository;
@@ -20,27 +22,31 @@ public class RuleServiceApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(RuleServiceApplication.class, args);
 	}
-
+/*
 	@Override
 	public void run(String... args) throws Exception {
 
 		ruleRepository.deleteAll();
 
 		ruleRepository.save(new Rule(
+				1,
 				"onlyOneEmp",
 				"не могут пойти в отпуск вместе"
 				)
 		);
 		ruleRepository.save(new Rule(
-						"MaxEvenly",
-						"максимально равномерно"
+				2,
+				"MaxEvenly",
+				"максимально равномерно"
 				)
 		);
 		ruleRepository.save(new Rule(
-						"Chtoto",
-						"могут чото"
+				3,
+				"Chtoto",
+				"могут чото"
 				)
 		);
 	}
+	*/
 }
 

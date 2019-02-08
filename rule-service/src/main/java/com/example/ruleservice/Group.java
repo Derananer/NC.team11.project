@@ -9,9 +9,7 @@ public class Group {
 
     @Id
     private String id;
-
     private String departmentId;
-
     private String ruleId;
 
     public Group(){}
