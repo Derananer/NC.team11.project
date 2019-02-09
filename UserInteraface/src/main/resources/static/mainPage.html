@@ -7,11 +7,15 @@
         <input type="button" ng-click="addEmployee(employee)" value="Add employee">
         <input type="button" ng-click="updateEmployee()" value="Update employee">
         <ul>
-            <li ng-repeat="employee in employees" ng-click="addEmpToGroup(employee)">
-                {{employee.firstName}}
-                {{employee.lastName}}
-                {{employee.secondName}}
+            <li ng-repeat="employee in employees">
+                <span  ng-click="addEmpToGroup(employee)">
+                    {{employee.firstName}}
+                    {{employee.lastName}}
+                    {{employee.secondName}}
+                </span>
+                <input type="button" class="button3" ng-click="setDate(employee)" value="set date" >
             </li>
+
         </ul>
         <input type="button" class="button3" ng-click="generate()" value="generate">
     </div>

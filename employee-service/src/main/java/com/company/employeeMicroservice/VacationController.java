@@ -2,8 +2,10 @@ package com.company.employeeMicroservice;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/vacation")
@@ -19,9 +21,15 @@ public class VacationController {
     private VacationRepository vacationRepository;
 
 
-    @RequestMapping("/set-date")
-    public void setDate(
+    @RequestMapping(value = "/set-new-date", method = RequestMethod.POST)
+    public Vacation setDate(
+            @RequestHeader(value = "department") String departmentId,
+            @RequestBody Vacation vacation
+    ){
+        vacation = vacationRepository.save(vacation);
+        System.out.println(vacation);
+        return vacation;
+    }
 
-    )
 
 }

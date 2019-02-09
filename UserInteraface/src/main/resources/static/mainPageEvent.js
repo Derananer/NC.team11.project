@@ -44,6 +44,25 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         });
 
     };
+
+    $scope.setDate = function(employee){
+        $http({
+            method: 'POST',
+            url: "http://192.168.0.104:8079/services/employee-service/vacation/set-new-date",
+            headers : {
+                token : token,
+                department : $cookies.department
+            },
+            data : {
+                employeeId : employee.id,
+                vacationDate : new Date(2012, 8,15),
+                numberOfDays : 28
+            }
+        }).success(function (result) {
+            console.log("setDate " + result);
+        });
+    };
+
     $scope.addEmployee = function(employee){
         console.log(employee);
         $http({
