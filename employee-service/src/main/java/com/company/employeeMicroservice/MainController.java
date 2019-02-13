@@ -114,8 +114,9 @@ public class MainController {
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
     public Employee getEmployee(
-            @RequestParam String id,
-            @RequestHeader("department") String departmentId
+            @RequestHeader("department") String departmentId,
+            @RequestParam String id
+
     ){
         return employeeRepository.findByIdAndDepartmentId(id, departmentId);
     }
@@ -128,7 +129,7 @@ public class MainController {
         System.out.println(emp.toString());
         emp.setDepartmentId(departmentId);
         emp = employeeRepository.save(emp);
-        System.out.println(vacationController.addEmptyVacation(emp.getId()));
+        //System.out.println(vacationController.addEmptyVacation(emp.getId()));
         return emp;
     }
 

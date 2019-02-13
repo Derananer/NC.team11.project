@@ -41,6 +41,6 @@ public class Vacation {
     public String toString(){
         return String.format(
                 "Vacation[id=%s, employeeId='%s', vacationDate='%s', numberOfDays='%s']",
-                id, employeeId, vacationDate.toString(), numberOfDays);
+                id, employeeId, vacationDate == null ? "null" : vacationDate.toString(), numberOfDays);
     }
 }

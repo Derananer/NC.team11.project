@@ -18,9 +18,27 @@
 
         </ul>
     </div>
+    <div ng-controller="EmployeeListCtrl">
+        <div>
+            <input type='text' ng-model="days">
+            <input type="button" ng-click="setDaysForAll(days)">
+        </div>
+        <div>
+            <input type="button" class="button3" ng-click="generate()" value="generate">
+            <ul>
+                <li ng-repeat="emp in employeeAndVacation">
+                    {{emp.employee.firstName}}
+                    {{emp.employee.lastName}}
+                    {{emp.employee.secondName}}
+                    {{emp.vacations[0].vacationDate}}
+                    {{emp.vacations[0].numberOfDays}}
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
-<input type="button" class="button3" ng-click="generate()" value="generate">
+
 <div id="grooper" ng-controller="EmployeeListCtrl">
     <div ng-controller="GroupListCtrl">
         <p>Rules list</p>

@@ -30,18 +30,33 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
             $scope.employees = data;
         });
 
+    $scope.setDaysForAll = function(days){
+        $http({
+            method: 'GET',
+            url: "http://localhost:8079/services/employee-service/vacation/set-days-for-all-emps",
+            headers : {
+                token : token,
+                department : $cookies.department
+            },
+            params : {
+                days : days
+            }
+        }).success(function (result) {
+            console.log(result);
+        });
+    };
     $scope.generate = function(){
         console.log("generating");
         $http({
             method: 'GET',
-            url: "http://localhost:8079/services/vacation-algo-service/generate-vacation",
+            url: "http://localhost:8079/services/employee-service/vacation/generate-vacations",
             headers : {
                 token : token,
                 department : $cookies.department
             }
         }).success(function (result) {
-            $scope.vacationedEmployees = result;
-            console.log('successfully generate');
+            $scope.employeeAndVacation = result;
+            console.log(result);
         });
 
     };

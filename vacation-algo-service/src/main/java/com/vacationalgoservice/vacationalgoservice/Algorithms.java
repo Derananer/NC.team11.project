@@ -43,15 +43,20 @@ public class Algorithms {
             }
         }
         if(totalDaysCount > DAYS_IN_YEAR) throw new Exception("невозможна расставить");
-        int daysPool = DAYS_IN_YEAR / vacationedEmployees.size();
+        int daysPool = 0;
         int startVacation =0;
         for (VacationedEmployee emp :
                 vacationedEmployees
         ) {
             for (int i = 0; i < emp.getNumberOfDays().length; i++) {
-                koef = emp.getNumberOfDays()[i] / totalDaysCount;
+                koef = emp.getNumberOfDays()[i] / (double)totalDaysCount;
+                System.out.println("koef : " + koef);
                 daysPool = (int) Math.floor(koef * DAYS_IN_YEAR);
-                emp.getVacationDate()[i] = new Date(new Date(YEAR, 0, startVacation).getTime());
+                System.out.println("daysPool : " + daysPool);
+                System.out.println("startVacation : " + startVacation);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(this.YEAR,0,startVacation);
+                emp.getVacationDate()[i] = calendar.getTime();
                 startVacation += daysPool;
             }
         }
@@ -79,11 +84,11 @@ public class Algorithms {
 
             //groupIdSet.add(vacationedEmployee.getGroupId());
         }
-        for (List<VacationedEmployee> list:
+        /*for (List<VacationedEmployee> list:
                 map.values()
         ) {
             System.out.println(Arrays.toString(list.toArray(new VacationedEmployee[0])));
-        }
+        }*/
 
         //System.out.println("set of groupIds " + Arrays.toString(map.keySet().toArray(new String[0])));
         return map;

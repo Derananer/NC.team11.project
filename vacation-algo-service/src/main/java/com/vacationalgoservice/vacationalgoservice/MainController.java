@@ -19,7 +19,7 @@ public class MainController {
     public VacationedEmployee[] generate(
             @RequestBody VacationedEmployee[] vacationedEmployees
     ){
-        HttpHeaders headers = new HttpHeaders();
+        //HttpHeaders headers = new HttpHeaders();
         //headers.set("department", department);
 
         /*
@@ -32,18 +32,18 @@ public class MainController {
         params.put("applicationName", applicationName);
 */
 
-        HttpEntity entity = new HttpEntity(headers);
-        HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8081/vacation-employees", HttpMethod.GET, entity, VacationedEmployee[].class);
-        for (VacationedEmployee emp:
-                response.getBody()
-             ) {
-            System.out.println(emp.toString());
-        }
-        Algorithms algorithms = new Algorithms(response.getBody(), 2017);
+       // HttpEntity entity = new HttpEntity(headers);
+        //HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8081/vacation-employees", HttpMethod.GET, entity, VacationedEmployee[].class);
+        Algorithms algorithms = new Algorithms(vacationedEmployees, 2017);
         try {
             algorithms.setVacations();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        for (VacationedEmployee emp:
+                vacationedEmployees
+        ) {
+            System.out.println(emp.toString());
         }
         return algorithms.getVacationedEmployees();
         //System.out.println(response.getBody().toString());

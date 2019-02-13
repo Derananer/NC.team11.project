@@ -43,17 +43,30 @@ public class VacationController {
     @RequestMapping(value = "/set-days-for-all-emps", method = RequestMethod.GET)
     public void setDaysForAllEmployees(
             @RequestHeader(value = "department") String departmentId,
-            @RequestParam(value = "days") String countOfDays
+            @RequestParam(value = "days") int countOfDays
     ){
         Employee[] employees = mainController.getEmployees(departmentId);
         Map <String,List<Vacation>> empVacations = new HashMap<>();
         for (Employee emp:
                 employees
              ) {
-            empVacations.put(emp.getId(), vacationRepository.findByEmployeeId(emp.getId()));
+             List<Vacation> vacations = vacationRepository.deleteByEmployeeId(emp.getId());
+             System.out.println("deleted vac :" );
+             if(vacations.isEmpty() == false) {
+                 for (Vacation vacation :
+                         vacations
+                 ) {
+                     vacationRepository.save(new Vacation(vacation.getEmployeeId(), vacation.getVacationDate(), countOfDays));
+                 }
+             }
+             else{
+                 Vacation vacation = vacationRepository.save(new Vacation(emp.getId(), null, countOfDays));
+                 System.out.println("saved vac : " );
+             }
+
+
+
         }
-
-
 
     }
 
@@ -95,7 +108,20 @@ public class VacationController {
         }
         VacationedEmployee[] vacationedEmployees = vacationedEmpls.toArray(new VacationedEmployee[0]);
         vacationedEmployees = restTemplate.postForObject("http://localhost:8085/generate", vacationedEmployees, VacationedEmployee[].class);
-        
+        System.out.println("get from vacation-service : " +  Arrays.toString(vacationedEmployees));
+        List<EmployeeAndVacation> employeeAndVacations = new ArrayList<>();
+        for (VacationedEmployee emp:
+                vacationedEmployees
+             ) {
+            Vacation[] vacations = new Vacation[emp.getNumberOfDays().length];
+            for (int i = 0; i < emp.getNumberOfDays().length; i++) {
+                System.out.println("deleted vac : " + Arrays.toString(vacationRepository.deleteByEmployeeId(emp.getEmployeeId()).toArray(new Vacation[0])));
+                vacations[i] = vacationRepository.save(new Vacation(emp.getEmployeeId(), emp.getVacationDate()[i],emp.getNumberOfDays()[i]));
+                System.out.println(vacations[i].toString());
+            }
+            employeeAndVacations.add(new EmployeeAndVacation(mainController.getEmployee(departmentId, emp.getEmployeeId()), vacations));
+        }
+        return employeeAndVacations.toArray(new EmployeeAndVacation[0]);
     }
 
 
