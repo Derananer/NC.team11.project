@@ -6,10 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -18,12 +15,12 @@ public class MainController {
     @Autowired
     RestTemplate restTemplate;
 
-    @RequestMapping(value = "/generate-vacation",method = RequestMethod.GET)
-    public void generate(
-            @RequestHeader("department") String department
+    @RequestMapping(value = "/generate",method = RequestMethod.POST)
+    public VacationedEmployee[] generate(
+            @RequestBody VacationedEmployee[] vacationedEmployees
     ){
         HttpHeaders headers = new HttpHeaders();
-        headers.set("department", department);
+        //headers.set("department", department);
 
         /*
         Map<String, String> params = new HashMap<String, String>();
@@ -42,6 +39,13 @@ public class MainController {
              ) {
             System.out.println(emp.toString());
         }
+        Algorithms algorithms = new Algorithms(response.getBody(), 2017);
+        try {
+            algorithms.setVacations();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return algorithms.getVacationedEmployees();
         //System.out.println(response.getBody().toString());
     }
 

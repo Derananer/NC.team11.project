@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class RuleServiceApplication
-		//implements CommandLineRunner
+		implements CommandLineRunner
 {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class RuleServiceApplication
 	public static void main(String[] args) {
 		SpringApplication.run(RuleServiceApplication.class, args);
 	}
-/*
+
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -47,6 +47,6 @@ public class RuleServiceApplication
 				)
 		);
 	}
-	*/
+
 }
 

@@ -19,7 +19,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
     console.log(token);
     $http({
         method: 'GET',
-        url: "http://192.168.0.104:8079/services/employee-service/employees",
+        url: "http://localhost:8079/services/employee-service/employees",
         headers : {
             token: token,
             department : $cookies.department
@@ -34,12 +34,13 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         console.log("generating");
         $http({
             method: 'GET',
-            url: "http://192.168.0.104:8079/services/vacation-algo-service/generate-vacation",
+            url: "http://localhost:8079/services/vacation-algo-service/generate-vacation",
             headers : {
                 token : token,
                 department : $cookies.department
             }
         }).success(function (result) {
+            $scope.vacationedEmployees = result;
             console.log('successfully generate');
         });
 
@@ -48,7 +49,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
     $scope.setDate = function(employee){
         $http({
             method: 'POST',
-            url: "http://192.168.0.104:8079/services/employee-service/vacation/set-new-date",
+            url: "http://localhost:8079/services/employee-service/vacation/set-new-date",
             headers : {
                 token : token,
                 department : $cookies.department
@@ -67,7 +68,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         console.log(employee);
         $http({
             method: 'POST',
-            url: "http://192.168.0.104:8079/services/employee-service/add-employee",
+            url: "http://localhost:8079/services/employee-service/add-employee",
             data: employee,
             headers : {
                 token : token,
@@ -80,7 +81,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         });
     };
     $scope.updateEmployee = function(){
-        $http.post('http://192.168.0.104:8079/services/employee-service/update-employee', $scope.employees[0])
+        $http.post('http://localhost:8079/services/employee-service/update-employee', $scope.employees[0])
             .success(function(result){
                 console.log('emp successfully update');
                 $scope.employees[0]=result;
@@ -92,7 +93,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         if (groupFactory.group != "undef") {
             $http({
                 method: 'POST',
-                url: "http://192.168.0.104:8079/services/rule-service/add-groupelem",
+                url: "http://localhost:8079/services/rule-service/add-groupelem",
                 headers: {
                     token: token,
                     department: $cookies.department
@@ -116,7 +117,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
     var token = $cookies.token;
     $http({
         method: 'GET',
-        url: "http://192.168.0.104:8079/services/rule-service/rules",
+        url: "http://localhost:8079/services/rule-service/rules",
         headers : {
             token : token,
             department : $cookies.department
@@ -128,7 +129,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
 
     $http({
         method: 'GET',
-        url: "http://192.168.0.104:8079/services/rule-service/groups",
+        url: "http://localhost:8079/services/rule-service/groups",
         headers : {
             token : token,
             department : $cookies.department
@@ -142,7 +143,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
         console.log("groupId : " + group.groupId);
         $http({
             method : 'GET',
-            url : "http://192.168.0.104:8079/services/employee-service/employees-by-group",
+            url : "http://localhost:8079/services/employee-service/employees-by-group",
             headers : {
                 token : token,
                 department : $cookies.department
@@ -189,7 +190,7 @@ mainPage.controller('GroupListCtrl', function($scope, $http, $cookies, groupFact
     $scope.createGroup = function(rule){
         $http({
             method: 'POST',
-            url: "http://192.168.0.104:8079/services/rule-service/create-group",
+            url: "http://localhost:8079/services/rule-service/create-group",
             headers : {
                 token : token,
                 department : $cookies.department
@@ -254,7 +255,7 @@ mainPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
         //$http.post("http://localhost:8079/services/authorisation-service/login", user)
         $http({
             method : 'POST',
-            url: "http://192.168.0.104:8079/services/authorisation-service/login",
+            url: "http://localhost:8079/services/authorisation-service/login",
             //url : "http://localhost:8083/login",
             data : {
                 username : user.username,
@@ -275,7 +276,7 @@ mainPage.controller('SingInCtrl', function ($scope, $http, $cookies) {
             });
     };
     $scope.singUp = function (userCreation) {
-        $http.post("http://192.168.0.104:8079/services/authorisation-service/sing-up", userCreation)
+        $http.post("http://localhost:8079/services/authorisation-service/sing-up", userCreation)
             .success(function (result){
                 console.log(result);
             })

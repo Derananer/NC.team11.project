@@ -13,7 +13,11 @@ public class Vacation {
     private Date vacationDate;
     private int numberOfDays;
 
-    Vacation(String employeeId, Date vacationDate, int numberOfDays){
+
+    public Vacation() {
+    }
+
+    public Vacation(String employeeId, Date vacationDate, int numberOfDays){
         this.employeeId = employeeId;
         this.vacationDate = vacationDate;
         this.numberOfDays = numberOfDays;

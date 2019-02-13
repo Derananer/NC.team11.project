@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +15,8 @@ import java.util.List;
 @RestController
 public class MainController {
 
+    @Autowired
+    VacationController vacationController;
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -43,7 +44,7 @@ public class MainController {
 
     }
 
-    @RequestMapping(value = "/vacation-employees", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/vacation-employees", method = RequestMethod.GET)
     public VacationedEmployee[] vacationedEmployees(
             @RequestHeader("department") String departmentId
     ){
@@ -80,7 +81,7 @@ public class MainController {
             }
         }
         return vacationedEmployees.toArray(new VacationedEmployee[0]);
-    }
+    }*/
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public Employee[] getEmployees(
@@ -127,6 +128,7 @@ public class MainController {
         System.out.println(emp.toString());
         emp.setDepartmentId(departmentId);
         emp = employeeRepository.save(emp);
+        System.out.println(vacationController.addEmptyVacation(emp.getId()));
         return emp;
     }
 
