@@ -79,7 +79,7 @@ public class MainController {
         System.out.println("new Group" + newGroup.toString());
         newGroup = groupRepository.save(newGroup);
         Optional<Rule> rule = ruleRepository.findById(newGroup.getRuleId());
-        if(rule.isPresent())return new RuledGroup(groupRepository.save(newGroup).getId(),rule.get().getRuleName(),rule.get().getDescription(),rule.get().getRuleNumber());
+        if(rule.isPresent())return new RuledGroup(groupRepository.save(newGroup).getId(),rule.get().getRuleName(),rule.get().getDescription(),rule.get().getRuleNumber() );
         else throw new Exception("no such rule");
     }
 

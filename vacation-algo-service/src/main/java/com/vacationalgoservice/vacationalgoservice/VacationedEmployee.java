@@ -10,40 +10,16 @@ import java.util.Date;
 public class VacationedEmployee {
 
     private String employeeId;
-    private String departmentId;
     private Date[] vacationDate;
     private int[] numberOfDays;
-    private int ruleNumber;
-    private String groupId;
-
-    public int getRuleNumber() {
-        return ruleNumber;
-    }
-
-    public void setRuleNumber(int ruleNumber) {
-        this.ruleNumber = ruleNumber;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-
 
     public VacationedEmployee() {
     }
 
-    public VacationedEmployee(String employeeId, String departmentId, Date[] vacationDate, int[] numberOfDays, int rule, String groupId) {
+    public VacationedEmployee(String employeeId, Date[] vacationDate, int[] numberOfDays) {
         this.employeeId = employeeId;
-        this.departmentId = departmentId;
         this.vacationDate = vacationDate;
         this.numberOfDays = numberOfDays;
-        this.ruleNumber = rule;
-        this.groupId = groupId;
     }
 
     public String getEmployeeId() {
@@ -52,14 +28,6 @@ public class VacationedEmployee {
 
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
     }
 
     public Date[] getVacationDate() {
@@ -82,11 +50,8 @@ public class VacationedEmployee {
     public String toString() {
         return "VacationedEmployee{" +
                 "employeeId='" + employeeId + '\'' +
-                ", departmentId='" + departmentId + '\'' +
                 ", vacationDate=" + Arrays.toString(vacationDate) +
                 ", numberOfDays=" + Arrays.toString(numberOfDays) +
-                ", ruleNumber=" + ruleNumber +
-                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }

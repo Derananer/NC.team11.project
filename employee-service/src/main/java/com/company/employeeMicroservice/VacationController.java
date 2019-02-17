@@ -78,10 +78,10 @@ public class VacationController {
         headers.set("department", departmentId);
         HttpEntity entity = new HttpEntity(headers);
         HttpEntity<RuledGroup[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, RuledGroup[].class);
-        ArrayList<VacationedEmployee> vacationedEmpls = new ArrayList<>();
         for (RuledGroup ruledGroup:
                 response.getBody()
         ) {
+            ArrayList<VacationedEmployee> vacationedEmpls = new ArrayList<>();
             for(Employee employee :
                     mainController.getEmployeeByGroup(ruledGroup.getGroupId(),departmentId)
             ) {
@@ -97,19 +97,22 @@ public class VacationController {
                 }
                 vacationedEmpls.add(new VacationedEmployee(
                                 employee.getId(),
-                                departmentId,
                                 vacationDates,
-                                numbersOfVacationDays,
-                                ruledGroup.getRuleNumber(),
-                                ruledGroup.getGroupId()
+                                numbersOfVacationDays
                         )
                 );
             }
+            HttpHeaders headers1 = new HttpHeaders();
+            headers1.set("rule", Integer.toString(ruledGroup.getRuleNumber()));
+            VacationedEmployee[] vacationedEmployees = vacationedEmpls.toArray(new VacationedEmployee[0]);
+            HttpEntity entity1 = new HttpEntity(vacationedEmployees, headers1);
+            HttpEntity<VacationedEmployee[]> response1 = restTemplate.exchange("http://localhost:8085/generate", HttpMethod.POST, entity1, VacationedEmployee[].class);
+            vacationedEmployees = response1.getBody();
+            System.out.println("get from vacation-service : " +  Arrays.toString(vacationedEmployees));
         }
-        VacationedEmployee[] vacationedEmployees = vacationedEmpls.toArray(new VacationedEmployee[0]);
-        vacationedEmployees = restTemplate.postForObject("http://localhost:8085/generate", vacationedEmployees, VacationedEmployee[].class);
-        System.out.println("get from vacation-service : " +  Arrays.toString(vacationedEmployees));
+
         List<EmployeeAndVacation> employeeAndVacations = new ArrayList<>();
+/*
         for (VacationedEmployee emp:
                 vacationedEmployees
              ) {
@@ -120,7 +123,7 @@ public class VacationController {
                 System.out.println(vacations[i].toString());
             }
             employeeAndVacations.add(new EmployeeAndVacation(mainController.getEmployee(departmentId, emp.getEmployeeId()), vacations));
-        }
+        }*/
         return employeeAndVacations.toArray(new EmployeeAndVacation[0]);
     }
 

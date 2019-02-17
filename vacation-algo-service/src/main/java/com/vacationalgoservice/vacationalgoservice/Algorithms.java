@@ -7,6 +7,15 @@ public class Algorithms {
     final private int DAYS_IN_YEAR = 365;
     final private int YEAR;
 
+    public int getRuleNumber() {
+        return ruleNumber;
+    }
+
+    public void setRuleNumber(int ruleNumber) {
+        this.ruleNumber = ruleNumber;
+    }
+
+    private int ruleNumber;
     private List<VacationedEmployee> vacationedEmployees;
 
 
@@ -19,13 +28,8 @@ public class Algorithms {
 
 
     public void setVacations() throws Exception {
-        Map<String,List<VacationedEmployee>> map = sortByGroupId();
-        for (String key:
-                map.keySet()
-             ) {
-            if(map.get(key).get(0).getRuleNumber() == Rules.NO_REPETITIONS){
-                setWithNoRepetitions(map.get(key));
-            }
+        if (this.ruleNumber == Rules.NO_REPETITIONS) {
+            setWithNoRepetitions(this.vacationedEmployees);
         }
     }
 
@@ -67,6 +71,7 @@ public class Algorithms {
 
     }
 
+    /*
     private Map<String,List<VacationedEmployee>> sortByGroupId(){
         Map<String,List<VacationedEmployee>> map = new HashMap<>();
         Set<String> groupIdSet = new HashSet<>();
@@ -84,15 +89,15 @@ public class Algorithms {
 
             //groupIdSet.add(vacationedEmployee.getGroupId());
         }
-        /*for (List<VacationedEmployee> list:
+        for (List<VacationedEmployee> list:
                 map.values()
         ) {
             System.out.println(Arrays.toString(list.toArray(new VacationedEmployee[0])));
-        }*/
+        }
 
         //System.out.println("set of groupIds " + Arrays.toString(map.keySet().toArray(new String[0])));
         return map;
-    }
+    }*/
 
     public VacationedEmployee[] getVacationedEmployees() {
         return vacationedEmployees.toArray(new VacationedEmployee[0]);

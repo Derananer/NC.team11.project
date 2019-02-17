@@ -17,6 +17,7 @@ public class MainController {
 
     @RequestMapping(value = "/generate",method = RequestMethod.POST)
     public VacationedEmployee[] generate(
+            @RequestHeader(value = "rule") String ruleNumber,
             @RequestBody VacationedEmployee[] vacationedEmployees
     ){
         //HttpHeaders headers = new HttpHeaders();
@@ -35,6 +36,7 @@ public class MainController {
        // HttpEntity entity = new HttpEntity(headers);
         //HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8081/vacation-employees", HttpMethod.GET, entity, VacationedEmployee[].class);
         Algorithms algorithms = new Algorithms(vacationedEmployees, 2017);
+        algorithms.setRuleNumber(Integer.parseInt(ruleNumber));
         try {
             algorithms.setVacations();
         } catch (Exception e) {
