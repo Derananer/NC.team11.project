@@ -30,6 +30,31 @@ public class VacationController {
     private VacationRepository vacationRepository;
 
 
+    /*@RequestMapping(value = "/split-vacation", method = RequestMethod.POST)
+    public Vacation[] splitVacation(
+            @RequestHeader (value = "department") String departmentId,
+            @RequestParam (value = "employeeId") String employeeId,
+            @RequestParam (value = "splitDays1") String splitDays1,
+            @RequestParam (value = "splitDays2") String splitDays2
+    ) throws Exception {
+        List<Vacation> vacations = vacationRepository.deleteByEmployeeId(employeeId);
+        if(vacations.size() > 1) throw new Exception("splited already");
+        vacations.clear();
+        vacations.add(vacationRepository.save(new Vacation(employeeId, Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, Integer.parseInt(splitDays1))));
+        vacations.add(vacationRepository.save(new Vacation(employeeId, Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, Integer.parseInt(splitDays2))));
+        System.out.println("split vacs : " + Arrays.toString(vacations.toArray(new Vacation[0])));
+        return vacations.toArray(new Vacation[0]);
+    }*/
+    @RequestMapping(value = "/update-vac",method = RequestMethod.POST)
+    public Vacation updateVac(
+            @RequestHeader(value = "department") String departmentId,
+            @RequestBody Vacation vacation
+    ){
+        vacationRepository.deleteById(vacation.getId());
+        vacation = vacationRepository.save(vacation);
+        return vacation;
+    }
+
     @RequestMapping(value = "/set-new-date", method = RequestMethod.POST)
     public Vacation setDate(
             @RequestHeader(value = "department") String departmentId,
@@ -45,11 +70,11 @@ public class VacationController {
             @RequestHeader(value = "department") String departmentId,
             @RequestParam(value = "days") int countOfDays
     ){
-        Employee[] employees = mainController.getEmployees(departmentId);
-        for (Employee emp:
+        EmployeeAndVacation[] employees = mainController.getEmployees(departmentId);
+        for (EmployeeAndVacation emp:
                 employees
              ) {
-             List<Vacation> vacations = vacationRepository.deleteByEmployeeId(emp.getId());
+             List<Vacation> vacations = vacationRepository.deleteByEmployeeId(emp.employee.getId());
              System.out.println("deleted vac :" );
              if(vacations.isEmpty() == false) {
                  for (Vacation vacation :
@@ -59,7 +84,7 @@ public class VacationController {
                  }
              }
              else{
-                 Vacation vacation = vacationRepository.save(new Vacation(emp.getId(), Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, countOfDays));
+                 Vacation vacation = vacationRepository.save(new Vacation(emp.employee.getId(), Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, countOfDays));
                  System.out.println("saved vac : "  + vacation);
              }
         }

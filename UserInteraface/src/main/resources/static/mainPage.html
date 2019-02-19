@@ -7,16 +7,32 @@
         <input type="button" ng-click="addEmployee(employee)" value="Add employee">
         <input type="button" ng-click="updateEmployee()" value="Update employee">
         <ul>
-            <li ng-repeat="employee in employees">
-                <span  ng-click="addEmpToGroup(employee)">
-                    {{employee.firstName}}
-                    {{employee.lastName}}
-                    {{employee.secondName}}
+            <li ng-repeat="emp in employeeAndVacation">
+                <span  ng-click="addEmpToGroup(emp.employee)">
+                    {{emp.employee.firstName}}
+                    {{emp.employee.lastName}}
+                    {{emp.employee.secondName}}
+                    vac:
+                    <ul>
+                        <li ng-repeat="vac in emp.vacations">
+                        d{{vac.day}}
+                        m{{vac.month}}
+                        y{{vac.year}}
+                        nd{{vac.numberOfDays}}
+                            <input type='text' ng-model="vac.day">
+                <input type='text' ng-model="vac.month">
+                <input type='text' ng-model="vac.year">
+                <input type='text' ng-model="vac.count">
+                <input type="button" class="button3" ng-click="updateVac(vac)" value="up vac" >
+
+                        </li>
+                    </ul>
                 </span>
                 <input type='text' ng-model="vacation.day">
                 <input type='text' ng-model="vacation.month">
                 <input type='text' ng-model="vacation.year">
-                <input type="button" class="button3" ng-click="setDate(employee, vacation)" value="set date" >
+                <input type='text' ng-model="vacation.count">
+                <input type="button" class="button3" ng-click="setDate(emp,vacation)" value="set date" >
             </li>
 
         </ul>
@@ -33,8 +49,10 @@
                     {{emp.employee.firstName}}
                     {{emp.employee.lastName}}
                     {{emp.employee.secondName}}
-                    {{emp.vacations[0].vacationDate}}
-                    {{emp.vacations[0].numberOfDays}}
+                    d{{emp.vacations[0].day}}
+                    m{{emp.vacations[0].month}}
+                    y{{emp.vacations[0].year}}
+                    nd{{emp.vacations[0].numberOfDays}}
                 </li>
             </ul>
         </div>

@@ -27,7 +27,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
     })
         .success(function (data) {
             //console.log(data);
-            $scope.employees = data;
+            $scope.employeeAndVacation = data;
         });
 
     $scope.setDaysForAll = function(days){
@@ -61,6 +61,27 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
 
     };
 
+    $scope.updateVac = function(vacation){
+        $http({
+            method: 'POST',
+            url: "http://localhost:8079/services/employee-service/vacation/update-vac",
+            headers : {
+                token : token,
+                department : $cookies.department
+            },
+            data : {
+                employeeId : employee.employee.id,
+                day : vacation.day,
+                month : vacation.month,
+                year : vacation.year,
+                numberOfDays : vacation.count
+            }
+        }).success(function (result) {
+            vacation = result;
+            console.log("setDate " + result);
+        });
+    };
+
     $scope.setDate = function(employee, vacation){
         $http({
             method: 'POST',
@@ -70,13 +91,14 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
                 department : $cookies.department
             },
             data : {
-                employeeId : employee.id,
+                employeeId : employee.employee.id,
                 day : vacation.day,
                 month : vacation.month,
                 year : vacation.year,
-                numberOfDays : 28
+                numberOfDays : vacation.count
             }
         }).success(function (result) {
+            employee.vacation.push(result);
             console.log("setDate " + result);
         });
     };
@@ -94,7 +116,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
 
         }).success(function (result) {
             console.log('emp successfully added');
-            $scope.employees.push(result);
+            $scope.employeeAndVacation.push(result);
         });
     };
     $scope.updateEmployee = function(){

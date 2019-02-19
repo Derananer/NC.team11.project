@@ -6,6 +6,8 @@ import java.util.*;
 public class Algorithms {
     final private int DAYS_IN_YEAR = 365;
     final private int YEAR;
+    private int ruleNumber;
+    private List<VacationedEmployee> vacationedEmployees;
 
     public int getRuleNumber() {
         return ruleNumber;
@@ -15,8 +17,7 @@ public class Algorithms {
         this.ruleNumber = ruleNumber;
     }
 
-    private int ruleNumber;
-    private List<VacationedEmployee> vacationedEmployees;
+
 
 
     public Algorithms(VacationedEmployee[] vacationedEmployees, int year) {
@@ -35,7 +36,7 @@ public class Algorithms {
 
 
 
-    private void setWithNoRepetitions(List<VacationedEmployee> vacationedEmployees) throws Exception {
+    private void setWithNoRepetitions(@org.jetbrains.annotations.NotNull List<VacationedEmployee> vacationedEmployees) throws Exception {
         int totalDaysCount = 0;
         double koef = 0;
         //int totalVacationCount = 0;
@@ -66,10 +67,34 @@ public class Algorithms {
         }
 
     }
+    private boolean check(VacationedEmployee vacationedEmployee) {
 
-    private void setWithMaxmallyEven(){
+        for (Date date :
+                vacationedEmployee.getVacationDate()
+        ) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            for (VacationedEmployee emp :
+                    vacationedEmployees
+            ) {
 
+                for (int i = 0; i < emp.getVacationDate().length; i++) {
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.setTime(emp.getVacationDate()[i]);
+                    if (calendar.after(calendar1)) {
+                        calendar1.add(Calendar.DAY_OF_MONTH, emp.getNumberOfDays()[i]);
+                    }
+
+                }
+            }
+        }
     }
+
+
+
+    //private void setWithMaxmallyEven(){
+
+    //}
 
     /*
     private Map<String,List<VacationedEmployee>> sortByGroupId(){

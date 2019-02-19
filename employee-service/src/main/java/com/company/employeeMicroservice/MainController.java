@@ -83,12 +83,20 @@ public class MainController {
         return vacationedEmployees.toArray(new VacationedEmployee[0]);
     }*/
 
+
+
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public Employee[] getEmployees(
+    public EmployeeAndVacation[] getEmployees(
             @RequestHeader("department") String departmentId
     ){
         List<Employee> emps = employeeRepository.findByDepartmentId(departmentId);
-        return emps.toArray(new Employee[emps.size()]);
+        List<EmployeeAndVacation> employeeAndVacationList = new ArrayList<>();
+        for (Employee emp:
+                emps
+             ) {
+            employeeAndVacationList.add(new EmployeeAndVacation(emp, vacationRepository.findByEmployeeId(emp.getId()).toArray(new Vacation[0])));
+        }
+        return employeeAndVacationList.toArray(new EmployeeAndVacation[0]);
     }
 
     @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
@@ -122,7 +130,7 @@ public class MainController {
     }
 
     @PostMapping("/add-employee")
-    public Employee addEmployee(
+    public EmployeeAndVacation addEmployee(
             @RequestBody Employee emp,
             @RequestHeader("department") String departmentId
     ){
@@ -130,7 +138,8 @@ public class MainController {
         emp.setDepartmentId(departmentId);
         emp = employeeRepository.save(emp);
         //System.out.println(vacationController.addEmptyVacation(emp.getId()));
-        return emp;
+        EmployeeAndVacation employeeAndVacation = new EmployeeAndVacation(emp, null);
+        return employeeAndVacation;
     }
 
     @PostMapping("/update-employee")
@@ -144,6 +153,7 @@ public class MainController {
         employeeRepository.save(emp);
         return emp;
     }
+
 
 
 

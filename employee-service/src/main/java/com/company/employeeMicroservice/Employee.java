@@ -14,7 +14,7 @@ public class Employee {
     private String secondName;
     private String departmentId;
 
-    Employee(){
+    public Employee(){
         this.id = null;
         this.firstName = null;
         this.lastName = null;
@@ -22,7 +22,7 @@ public class Employee {
         this.departmentId = null;
     }
 
-    Employee(String firstName, String lastName, String secondName, String departmentId){
+    public Employee(String firstName, String lastName, String secondName, String departmentId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
