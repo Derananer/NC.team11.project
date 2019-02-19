@@ -48,7 +48,7 @@ public class Algorithms {
         }
         if(totalDaysCount > DAYS_IN_YEAR) throw new Exception("невозможна расставить");
         int daysPool = 0;
-        int startVacation =0;
+        int startVacation = 1;
         for (VacationedEmployee emp :
                 vacationedEmployees
         ) {
@@ -59,7 +59,7 @@ public class Algorithms {
                 System.out.println("daysPool : " + daysPool);
                 System.out.println("startVacation : " + startVacation);
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(this.YEAR,0,startVacation);
+                calendar.set(this.YEAR,Calendar.JANUARY ,startVacation);
                 emp.getVacationDate()[i] = calendar.getTime();
                 startVacation += daysPool;
             }

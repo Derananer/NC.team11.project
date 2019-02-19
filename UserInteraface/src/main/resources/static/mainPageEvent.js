@@ -61,7 +61,7 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
 
     };
 
-    $scope.setDate = function(employee){
+    $scope.setDate = function(employee, vacation){
         $http({
             method: 'POST',
             url: "http://localhost:8079/services/employee-service/vacation/set-new-date",
@@ -71,7 +71,9 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
             },
             data : {
                 employeeId : employee.id,
-                vacationDate : new Date(2012, 8,15),
+                day : vacation.day,
+                month : vacation.month,
+                year : vacation.year,
                 numberOfDays : 28
             }
         }).success(function (result) {
