@@ -80,14 +80,21 @@ public class Algorithms {
 
                 for (int i = 0; i < emp.getVacationDate().length; i++) {
                     Calendar calendar1 = Calendar.getInstance();
+                    Calendar calendar2 = Calendar.getInstance();
                     calendar1.setTime(emp.getVacationDate()[i]);
-                    if (calendar.after(calendar1)) {
-                        calendar1.add(Calendar.DAY_OF_MONTH, emp.getNumberOfDays()[i]);
+                    calendar2.setTime(emp.getVacationDate()[i]);
+                    calendar2.add(Calendar.DAY_OF_MONTH, emp.getNumberOfDays()[i]);
+                    if (calendar.after(calendar1) && calendar.before(calendar2)) {
+                        return false;
                     }
-
+                    calendar.add(Calendar.DAY_OF_MONTH,emp.getNumberOfDays()[i]);
+                    if (calendar.after(calendar1) && calendar.before(calendar2)) {
+                        return false;
+                    }
                 }
             }
         }
+        return true;
     }
 
 

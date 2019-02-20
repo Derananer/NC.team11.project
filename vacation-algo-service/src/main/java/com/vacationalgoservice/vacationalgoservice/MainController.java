@@ -15,6 +15,11 @@ public class MainController {
     @Autowired
     RestTemplate restTemplate;
 
+    @RequestMapping(value="/check", method = RequestMethod.POST)
+    public boolean check(
+
+    )
+
     @RequestMapping(value = "/generate",method = RequestMethod.POST)
     public VacationedEmployee[] generate(
             @RequestHeader(value = "rule") String ruleNumber,

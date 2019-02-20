@@ -25,15 +25,14 @@ public class RuleServiceApplication
 
 	@Override
 	public void run(String... args) throws Exception {
+		ruleRepository.deleteAll();
 
-		//ruleRepository.deleteAll();
-
-		/*ruleRepository.save(new Rule(
+		ruleRepository.save(new Rule(
 				1,
 				"onlyOneEmp",
 				"не могут пойти в отпуск вместе"
 				)
-		);*/
+		);
 	}
 
 }
