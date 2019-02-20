@@ -35,6 +35,9 @@ public class Algorithms {
     }
 
 
+    private void setOther(){
+
+    }
 
     private void setWithNoRepetitions(@org.jetbrains.annotations.NotNull List<VacationedEmployee> vacationedEmployees) throws Exception {
         int totalDaysCount = 0;

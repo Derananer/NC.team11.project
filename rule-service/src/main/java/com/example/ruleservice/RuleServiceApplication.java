@@ -25,15 +25,22 @@ public class RuleServiceApplication
 
 	@Override
 	public void run(String... args) throws Exception {
-		ruleRepository.deleteAll();
+        ruleRepository.deleteAll();
 
-		ruleRepository.save(new Rule(
-				1,
-				"onlyOneEmp",
-				"не могут пойти в отпуск вместе"
-				)
-		);
-	}
+        ruleRepository.save(new Rule(
+                        Rules.NO_REPETITIONS,
+                        "onlyOneEmp",
+                        "не могут пойти в отпуск вместе"
+                )
+        );
+
+        ruleRepository.save(new Rule(
+                        Rules.STANDART_RULE,
+                        "standard",
+                        ""
+                )
+        );
+    }
 
 }
 

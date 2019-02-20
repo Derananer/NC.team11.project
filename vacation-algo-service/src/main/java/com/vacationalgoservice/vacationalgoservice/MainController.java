@@ -18,7 +18,9 @@ public class MainController {
     @RequestMapping(value="/check", method = RequestMethod.POST)
     public boolean check(
 
-    )
+    ){
+        return true;
+    }
 
     @RequestMapping(value = "/generate",method = RequestMethod.POST)
     public VacationedEmployee[] generate(

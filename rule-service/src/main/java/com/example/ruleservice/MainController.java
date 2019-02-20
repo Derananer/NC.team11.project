@@ -69,6 +69,9 @@ public class MainController {
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
 
+    @RequestMapping(value = "/create-standard-group", method = RequestMethod.GET)
+    public
+
     @RequestMapping(value = "/create-group", method = RequestMethod.POST)
     public RuledGroup createGroup(
             @RequestBody String ruleId,

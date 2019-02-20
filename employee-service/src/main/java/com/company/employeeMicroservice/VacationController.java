@@ -97,6 +97,7 @@ public class VacationController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("department", departmentId);
         HttpEntity entity = new HttpEntity(headers);
+        List<EmployeeAndVacation> employeeAndVacationList = Arrays.asList(mainController.getEmployees(departmentId));
         HttpEntity<RuledGroup[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, RuledGroup[].class);
         for (RuledGroup ruledGroup:
                 response.getBody()
@@ -105,6 +106,7 @@ public class VacationController {
             for (Employee employee :
                     mainController.getEmployeeByGroup(ruledGroup.getGroupId(), departmentId)
             ) {
+                //employeeAndVacationList.
                 List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
                 Date[] vacationDates = new Date[vacations.size()];
                 int[] numbersOfVacationDays = new int[vacations.size()];
