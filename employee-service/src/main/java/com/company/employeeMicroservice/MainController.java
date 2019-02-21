@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -101,9 +102,9 @@ public class MainController {
 
     @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
     public Employee[] getEmployeeByGroup(
-            @RequestParam String groupId,
-            //@RequestHeader("token") String token,
-            @RequestHeader("department") String departmentId
+
+            @RequestHeader("department") String departmentId,
+            @RequestParam String groupId
     ){
         //HttpHeaders headers = new HttpHeaders();
         //headers.set("token", token);
@@ -131,31 +132,54 @@ public class MainController {
 
     @PostMapping("/add-employee")
     public EmployeeAndVacation addEmployee(
-            @RequestBody Employee emp,
-            @RequestHeader("department") String departmentId
+            @RequestHeader("department") String departmentId,
+            @RequestBody Employee employee
     ){
-        System.out.println(emp.toString());
-        emp.setDepartmentId(departmentId);
-        emp = employeeRepository.save(emp);
+        System.out.println(employee.toString());
+        employee.setDepartmentId(departmentId);
+        employee = employeeRepository.save(employee);
         //System.out.println(vacationController.addEmptyVacation(emp.getId()));
-        EmployeeAndVacation employeeAndVacation = new EmployeeAndVacation(emp, null);
+        EmployeeAndVacation employeeAndVacation = new EmployeeAndVacation(employee, null);
         return employeeAndVacation;
     }
 
     @PostMapping("/update-employee")
-    public Employee updateEmployee(
-            @RequestBody Employee emp,
-            @RequestHeader("department") String departmentId
+    public EmployeeAndVacation updateEmployee(
+            @RequestHeader("department") String departmentId,
+            @RequestBody EmployeeAndVacation employeeAndVacation
     ){
-        System.out.println(emp);
-        employeeRepository.deleteById(emp.getId());
-        emp.setId(null);
-        employeeRepository.save(emp);
-        return emp;
+        System.out.println(employeeAndVacation);
+        employeeRepository.deleteById(employeeAndVacation.employee.getId());
+        employeeAndVacation.employee = employeeRepository.save(employeeAndVacation.employee);
+        System.out.println(employeeAndVacation);
+        /*for (int i = 0; i < employeeAndVacation.vacations.length; i++) {
+            employeeAndVacation.vacations[i].setEmployeeId(employeeAndVacation.employee.getId());
+            employeeAndVacation.vacations[i] = vacationRepository.save(employeeAndVacation.vacations[i]);
+        }*/
+        return employeeAndVacation;
     }
 
-
-
+    @RequestMapping(value = "/delete-employee", method = RequestMethod.POST)
+    public Boolean deleteEmployee(
+            @RequestHeader(value = "department") String departmentId,
+            @RequestBody EmployeeAndVacation employeeAndVacation
+    ) throws Exception {
+        Employee employee = null;
+        if((employee = employeeRepository.findByIdAndDepartmentId(employeeAndVacation.employee.getId(), departmentId)) == null)
+            try {
+                throw new Exception("No such employee id=" + employeeAndVacation.employee.getId());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                throw e;
+            }
+        employeeRepository.deleteById(employee.getId());
+        vacationRepository.deleteByEmployeeId(employee.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("department", departmentId);
+        HttpEntity entity = new HttpEntity(headers);
+        HttpEntity<Boolean> response = restTemplate.exchange("http://localhost:8082/delete-groupelem", HttpMethod.GET, entity, Boolean.class, employee.getId());
+        return response.getBody();
+    }
 
 
     @Bean(name = "restTemplate")

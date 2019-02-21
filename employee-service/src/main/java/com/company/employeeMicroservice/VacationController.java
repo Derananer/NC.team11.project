@@ -45,7 +45,7 @@ public class VacationController {
         System.out.println("split vacs : " + Arrays.toString(vacations.toArray(new Vacation[0])));
         return vacations.toArray(new Vacation[0]);
     }*/
-    @RequestMapping(value = "/update-vac",method = RequestMethod.POST)
+    @RequestMapping(value = "/update-vac", method = RequestMethod.POST)
     public Vacation updateVac(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody Vacation vacation
@@ -55,14 +55,30 @@ public class VacationController {
         return vacation;
     }
 
+   @RequestMapping(value = "/delete-vac", method = RequestMethod.GET)
+   public boolean deleteVac(
+           @RequestHeader (value = "department") String departmentId,
+           @RequestBody Vacation vacation
+   ){
+        vacationRepository.deleteById(vacation.getId());
+        return true;
+   }
+
     @RequestMapping(value = "/set-new-date", method = RequestMethod.POST)
     public Vacation setDate(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody Vacation vacation
-    ){
-        vacation = vacationRepository.save(vacation);
-        System.out.println("set vacation : " + vacation.toString());
-        return vacation;
+    ) throws Exception {
+        try {
+            if (employeeRepository.findByIdAndDepartmentId(vacation.getEmployeeId(), departmentId) == null)
+                throw new Exception("Employee with id=" + vacation.getEmployeeId() + " does not exist.");
+            vacation = vacationRepository.save(vacation);
+            System.out.println("set vacation : " + vacation.toString());
+            return vacation;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 
     @RequestMapping(value = "/set-days-for-all-emps", method = RequestMethod.GET)
@@ -157,7 +173,14 @@ public class VacationController {
         return employeeAndVacations.toArray(new EmployeeAndVacation[0]);
     }
 
-
+    @RequestMapping(value = "/delete-vacation", method = RequestMethod.POST)
+    public boolean deleteVacation(
+            @RequestHeader (value = "department") String departmentId,
+            @RequestBody Vacation vacation
+    ){
+        vacationRepository.deleteById(vacation.getId());
+        return true;
+    }
     /*public Vacation addEmptyVacation(String employeeId){
         return vacationRepository.save(new Vacation(employeeId, null, 0));
     }*/

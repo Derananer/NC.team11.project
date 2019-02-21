@@ -35,7 +35,7 @@ public class RuleServiceApplication
         );
 
         ruleRepository.save(new Rule(
-                        Rules.STANDART_RULE,
+                        Rules.STANDARD_RULE,
                         "standard",
                         ""
                 )

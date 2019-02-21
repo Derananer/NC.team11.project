@@ -44,6 +44,10 @@ public class GroupElement {
 
     @Override
     public String toString() {
-        return "Group elem : " + this.id + " " + this.groupId + " " + this.employeeId;
+        return "GroupElement{" +
+                "id='" + id + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                '}';
     }
 }

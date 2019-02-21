@@ -69,13 +69,14 @@ public class MainController {
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
 
-    @RequestMapping(value = "/create-standard-group", method = RequestMethod.GET)
-    public
+    //@RequestMapping(value = "/create-standard-group", method = RequestMethod.GET)
+    //public
 
     @RequestMapping(value = "/create-group", method = RequestMethod.POST)
     public RuledGroup createGroup(
-            @RequestBody String ruleId,
-            @RequestHeader("department") String departmentId
+            @RequestHeader("department") String departmentId,
+            @RequestBody String ruleId
+
     ) throws Exception {
         Group newGroup = new Group(departmentId,ruleId);
         //newGroup.setDepartmentId(departmentId);
@@ -88,14 +89,44 @@ public class MainController {
 
     @RequestMapping(value = "/add-groupelem", method = RequestMethod.POST)
     public GroupElement addGroupElem(
+            @RequestHeader("department") String departmentId,
             @RequestBody GroupElement groupElement
 
     ) throws Exception {
-        System.out.println(groupElement.toString());
-        if(groupElementRepository.findByGroupIdAndEmployeeId(groupElement.getGroupId(), groupElement.getEmployeeId()) == null){
-            return groupElementRepository.save(groupElement);
+        GroupElement GE = null;
+        try {
+            System.out.println(groupElement.toString());
+            if ((GE = groupElementRepository.findByGroupIdAndEmployeeId(groupElement.getGroupId(), groupElement.getEmployeeId())) == null) {
+                GE = groupElementRepository.save(groupElement);
+                System.out.println("Group element added: " + GE.toString());
+                return GE;
+            } else throw new Exception("Group element already exist ");
+        }catch (Exception e){
+            System.out.println(e.getMessage() + ": " + GE.toString());
+            throw e;
         }
-        else throw new Exception("already exist");
+    }
+
+    @RequestMapping(value = "/delete-groupelem", method = RequestMethod.GET)
+    public Boolean deleteGroupElement(
+            @RequestHeader(value = "department") String departmentId,
+            @RequestParam String employeeId
+    ){
+        groupElementRepository.deleteByEmployeeId(employeeId);
+        List<GroupElement> groupElements = groupElementRepository.findByGroupId(employeeId);
+        System.out.println("delete group elem: is last: " + groupElements == null);
+        return true;
+    }
+
+    @RequestMapping(value = "/delete-groupelem", method = RequestMethod.POST)
+    public Boolean deleteGroupElement(
+            @RequestHeader(value = "department") String departmentId,
+            @RequestBody GroupElement groupElement
+    ){
+        groupElement = groupElementRepository.deleteByEmployeeId(groupElement.getEmployeeId());
+        List<GroupElement> groupElements = groupElementRepository.findByGroupId(groupElement.getGroupId());
+        System.out.println("delete group elem: is last: " + groupElements == null);
+        return true;
     }
 }
 

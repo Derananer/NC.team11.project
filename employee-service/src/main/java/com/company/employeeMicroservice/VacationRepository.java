@@ -8,5 +8,4 @@ public interface VacationRepository extends MongoRepository<Vacation, String> {
 
     List<Vacation> findByEmployeeId(String employeeId);
     List<Vacation> deleteByEmployeeId(String employeeId);
-    void deleteById(String Id);
 }

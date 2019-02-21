@@ -37,9 +37,11 @@ public class Group {
 
     @Override
     public String toString() {
-        return String.format(
-                "Group[id=%s, departmentId='%s', ruleId='%s']",
-                id, departmentId, ruleId);
+        return "Group{" +
+                "id='" + id + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", ruleId='" + ruleId + '\'' +
+                '}';
     }
 
     public void setRuleId(String ruleId) {

@@ -1,9 +1,11 @@
 package com.company.employeeMicroservice;
 
+import java.util.Arrays;
+
 public class EmployeeAndVacation {
 
-    Employee employee;
-    Vacation[] vacations;
+    public Employee employee;
+    public Vacation[] vacations;
 
     public EmployeeAndVacation(Employee employee, Vacation[] vacations) {
         this.employee = employee;
@@ -29,4 +31,11 @@ public class EmployeeAndVacation {
         this.vacations = vacations;
     }
 
+    @Override
+    public String toString() {
+        return "EmployeeAndVacation{" +
+                "employee=" + employee.toString() +
+                ", vacations=" + Arrays.toString(vacations) +
+                '}';
+    }
 }
