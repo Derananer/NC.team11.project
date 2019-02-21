@@ -44,6 +44,18 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
         }).success(function (result) {
             console.log(result);
         });
+        $http({
+            method: 'GET',
+            url: "http://localhost:8079/services/employee-service/employees",
+            headers : {
+                token: token,
+                department : $cookies.department
+            }
+        })
+            .success(function (data) {
+                //console.log(data);
+                $scope.employeeAndVacation = data;
+            });
     };
     $scope.generate = function(){
         console.log("generating");
@@ -83,6 +95,8 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
     };
 
     $scope.setDate = function(employee, vacation){
+        vacation.employeeId = employee.employee.id;
+        console.log(vacation);
         $http({
             method: 'POST',
             url: "http://localhost:8079/services/employee-service/vacation/set-new-date",
@@ -90,15 +104,9 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
                 token : token,
                 department : $cookies.department
             },
-            data : {
-                employeeId : employee.employee.id,
-                day : vacation.day,
-                month : vacation.month,
-                year : vacation.year,
-                numberOfDays : vacation.count
-            }
+            data : vacation
         }).success(function (result) {
-            employee.vacation.push(result);
+            employee.vacations.push(result);
             console.log("setDate " + result);
         });
     };
@@ -119,11 +127,19 @@ mainPage.controller('EmployeeListCtrl', function($scope,$http,$cookies,groupFact
             $scope.employeeAndVacation.push(result);
         });
     };
-    $scope.updateEmployee = function(){
-        $http.post('http://localhost:8079/services/employee-service/update-employee', $scope.employees[0])
+    $scope.updateEmployee = function(employee){
+        $http({
+            method: 'POST',
+            url: "http://localhost:8079/services/employee-service/update-employee",
+            data: employee,
+            headers: {
+                token: token,
+                department: $cookies.department
+            }
+        })
             .success(function(result){
                 console.log('emp successfully update');
-                $scope.employees[0]=result;
+                employee = result;
             });
     };
     $scope.addEmpToGroup = function(employee) {

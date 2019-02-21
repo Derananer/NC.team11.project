@@ -1,4 +1,4 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.department;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
@@ -10,7 +10,7 @@ public class Department {
     private String departmentName;
     private String someInfo;
 
-    Department(String departmentName, String someInfo){
+    public Department(String departmentName, String someInfo){
         this.departmentName = departmentName;
         this.someInfo = someInfo;
     }
@@ -35,9 +35,11 @@ public class Department {
     }
 
     @Override
-    public String toString(){
-        return String.format(
-                "Organisation[id=%s, departmentName='%s', someInfo='%s']",
-                id, departmentName, someInfo);
+    public String toString() {
+        return "Department{" +
+                "id='" + id + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", someInfo='" + someInfo + '\'' +
+                '}';
     }
 }

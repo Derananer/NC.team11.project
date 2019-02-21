@@ -1,4 +1,4 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.vacation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

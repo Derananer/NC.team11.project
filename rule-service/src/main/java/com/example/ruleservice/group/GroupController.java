@@ -1,15 +1,19 @@
-package com.example.ruleservice;
+package com.example.ruleservice.group;
 
-
+import com.example.ruleservice.*;
+import com.example.ruleservice.rule.Rule;
+import com.example.ruleservice.rule.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping(value = "/groups")
 @RestController
-public class MainController {
+public class GroupController {
 
     @Autowired
     RuleRepository ruleRepository;
@@ -20,35 +24,7 @@ public class MainController {
     @Autowired
     GroupRepository groupRepository;
 
-
-    @RequestMapping(value = "/rule", method = RequestMethod.GET)
-    public Rule getRule(
-            @RequestParam String id
-    ){
-        return ruleRepository.findById(id).get();
-    }
-
-    @RequestMapping(value = "/rules", method = RequestMethod.GET)
-    public Rule[] getRules(){
-        List<Rule> rules = ruleRepository.findAll();
-        return rules.toArray(new Rule[rules.size()]);
-    }
-
-    @RequestMapping(value = "/emp-ids-by-group", method = RequestMethod.GET)
-    public String[] getEmployeesByGroup(
-            @RequestParam String groupId
-    ){
-        List<GroupElement> groups = groupElementRepository.findByGroupId(groupId);
-        ArrayList<String> employeeIds = new ArrayList<>();
-        for (GroupElement i:
-                groups
-             ) {
-            employeeIds.add(i.getEmployeeId());
-        }
-        return employeeIds.toArray(new String[employeeIds.size()]);
-    }
-
-    @RequestMapping(value = "/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/all-groups", method = RequestMethod.GET)
     public RuledGroup[] getGroups(
             @RequestHeader("department") String departmentId
     ){
@@ -57,7 +33,7 @@ public class MainController {
         ArrayList<RuledGroup> ruledGroups = new ArrayList<>();
         for (Group group:
                 groups
-             ) {
+        ) {
             Optional<Rule> rule = ruleRepository.findById(group.getRuleId());
             if(rule.isPresent()) {
                 ruledGroups.add(new RuledGroup(group.getId(), rule.get().getRuleName(), rule.get().getDescription(),rule.get().getRuleNumber()));
@@ -68,9 +44,6 @@ public class MainController {
         System.out.println("ruledGroups " + ruledGroups);
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
-
-    //@RequestMapping(value = "/create-standard-group", method = RequestMethod.GET)
-    //public
 
     @RequestMapping(value = "/create-group", method = RequestMethod.POST)
     public RuledGroup createGroup(
@@ -87,7 +60,7 @@ public class MainController {
         else throw new Exception("no such rule");
     }
 
-    @RequestMapping(value = "/add-groupelem", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-group-elem", method = RequestMethod.POST)
     public GroupElement addGroupElem(
             @RequestHeader("department") String departmentId,
             @RequestBody GroupElement groupElement
@@ -107,7 +80,7 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "/delete-groupelem", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.GET)
     public Boolean deleteGroupElement(
             @RequestHeader(value = "department") String departmentId,
             @RequestParam String employeeId
@@ -118,7 +91,7 @@ public class MainController {
         return true;
     }
 
-    @RequestMapping(value = "/delete-groupelem", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.POST)
     public Boolean deleteGroupElement(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody GroupElement groupElement
@@ -128,5 +101,30 @@ public class MainController {
         System.out.println("delete group elem: is last: " + groupElements == null);
         return true;
     }
-}
 
+    @RequestMapping(value = "/emp-ids-by-group", method = RequestMethod.GET)
+    public String[] getEmployeesByGroup(
+            @RequestParam String groupId
+    ){
+        List<GroupElement> groups = groupElementRepository.findByGroupId(groupId);
+        ArrayList<String> employeeIds = new ArrayList<>();
+        for (GroupElement i:
+                groups
+        ) {
+            employeeIds.add(i.getEmployeeId());
+        }
+        return employeeIds.toArray(new String[employeeIds.size()]);
+    }
+
+    @RequestMapping(value = "/delete-group", method = RequestMethod.GET)
+    public boolean deleteGroup(
+            @RequestHeader(value = "department") String departmentId,
+            @RequestParam String groupId
+    ){
+        Group group = groupRepository.deleteByIdAAndDepartmentId(groupId,departmentId);
+        System.out.println("deleted group: " + group.toString());
+        List<GroupElement> groupElementList = groupElementRepository.deleteByGroupId(group.getId());
+        System.out.println("deleted group elements: " + Arrays.toString(groupElementList.toArray(new GroupElement[0])));
+        return true;
+    }
+}

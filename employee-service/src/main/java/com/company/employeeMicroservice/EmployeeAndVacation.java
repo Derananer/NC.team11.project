@@ -1,5 +1,8 @@
 package com.company.employeeMicroservice;
 
+import com.company.employeeMicroservice.employee.Employee;
+import com.company.employeeMicroservice.vacation.Vacation;
+
 import java.util.Arrays;
 
 public class EmployeeAndVacation {

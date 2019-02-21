@@ -1,10 +1,10 @@
-package com.company.authorisationservice;
+package com.company.authorisationservice.user;
 
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 
-public class UserApp {
+public class ApplicationUser {
 
     @Id
     private String id;
@@ -17,7 +17,7 @@ public class UserApp {
     private String username;
     private String password;
 
-    public UserApp(
+    public ApplicationUser(
             @NotNull
             String firstName,
             @NotNull
@@ -66,7 +66,7 @@ public class UserApp {
 
     @Override
     public String toString() {
-        return "UserApp{" +
+        return "ApplicationUser{" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

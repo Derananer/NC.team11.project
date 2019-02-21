@@ -1,6 +1,7 @@
-package com.example.ruleservice;
+package com.example.ruleservice.group;
 
 
+import com.example.ruleservice.group.GroupElement;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
@@ -9,4 +10,5 @@ public interface GroupElementRepository extends MongoRepository<GroupElement, St
     GroupElement findByGroupIdAndEmployeeId(String groupId, String employeeId);
     GroupElement deleteByEmployeeId(String employeeId);
     List<GroupElement> findByGroupId(String groupId);
+    List<GroupElement> deleteByGroupId(String groupId);
 }

@@ -1,4 +1,4 @@
-package com.example.ruleservice;
+package com.example.ruleservice.group;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;

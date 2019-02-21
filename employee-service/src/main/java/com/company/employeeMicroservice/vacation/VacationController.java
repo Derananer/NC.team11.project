@@ -1,6 +1,10 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.vacation;
 
 
+import com.company.employeeMicroservice.*;
+import com.company.employeeMicroservice.employee.Employee;
+import com.company.employeeMicroservice.employee.EmployeeController;
+import com.company.employeeMicroservice.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,41 +15,23 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @RestController
-@RequestMapping("/vacation")
+@RequestMapping("/vacations")
 public class VacationController {
 
     @Autowired
     RestTemplate restTemplate;
 
     @Autowired
-    private MainController mainController;
+    private EmployeeController employeeController;
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
-
-    @Autowired
     private VacationRepository vacationRepository;
 
 
-    /*@RequestMapping(value = "/split-vacation", method = RequestMethod.POST)
-    public Vacation[] splitVacation(
-            @RequestHeader (value = "department") String departmentId,
-            @RequestParam (value = "employeeId") String employeeId,
-            @RequestParam (value = "splitDays1") String splitDays1,
-            @RequestParam (value = "splitDays2") String splitDays2
-    ) throws Exception {
-        List<Vacation> vacations = vacationRepository.deleteByEmployeeId(employeeId);
-        if(vacations.size() > 1) throw new Exception("splited already");
-        vacations.clear();
-        vacations.add(vacationRepository.save(new Vacation(employeeId, Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, Integer.parseInt(splitDays1))));
-        vacations.add(vacationRepository.save(new Vacation(employeeId, Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, Integer.parseInt(splitDays2))));
-        System.out.println("split vacs : " + Arrays.toString(vacations.toArray(new Vacation[0])));
-        return vacations.toArray(new Vacation[0]);
-    }*/
-    @RequestMapping(value = "/update-vac", method = RequestMethod.POST)
+    @RequestMapping(value = "/update-vacation", method = RequestMethod.POST)
     public Vacation updateVac(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody Vacation vacation
@@ -55,7 +41,7 @@ public class VacationController {
         return vacation;
     }
 
-   @RequestMapping(value = "/delete-vac", method = RequestMethod.GET)
+   @RequestMapping(value = "/delete-vacation", method = RequestMethod.GET)
    public boolean deleteVac(
            @RequestHeader (value = "department") String departmentId,
            @RequestBody Vacation vacation
@@ -64,7 +50,16 @@ public class VacationController {
         return true;
    }
 
-    @RequestMapping(value = "/set-new-date", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-vacation", method = RequestMethod.POST)
+    public boolean deleteVacation(
+            @RequestHeader (value = "department") String departmentId,
+            @RequestBody Vacation vacation
+    ){
+        vacationRepository.deleteById(vacation.getId());
+        return true;
+    }
+
+    @RequestMapping(value = "/set-vacation-date", method = RequestMethod.POST)
     public Vacation setDate(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody Vacation vacation
@@ -86,7 +81,7 @@ public class VacationController {
             @RequestHeader(value = "department") String departmentId,
             @RequestParam(value = "days") int countOfDays
     ){
-        EmployeeAndVacation[] employees = mainController.getEmployees(departmentId);
+        EmployeeAndVacation[] employees = employeeController.getEmployees(departmentId);
         for (EmployeeAndVacation emp:
                 employees
              ) {
@@ -113,16 +108,15 @@ public class VacationController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("department", departmentId);
         HttpEntity entity = new HttpEntity(headers);
-        List<EmployeeAndVacation> employeeAndVacationList = Arrays.asList(mainController.getEmployees(departmentId));
+        List<EmployeeAndVacation> employeeAndVacationList = Arrays.asList(employeeController.getEmployees(departmentId));
         HttpEntity<RuledGroup[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, RuledGroup[].class);
         for (RuledGroup ruledGroup:
                 response.getBody()
         ) {
             ArrayList<VacationedEmployee> vacationedEmpls = new ArrayList<>();
             for (Employee employee :
-                    mainController.getEmployeeByGroup(ruledGroup.getGroupId(), departmentId)
+                    employeeController.getEmployeeByGroup(ruledGroup.getGroupId(), departmentId)
             ) {
-                //employeeAndVacationList.
                 List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
                 Date[] vacationDates = new Date[vacations.size()];
                 int[] numbersOfVacationDays = new int[vacations.size()];
@@ -173,14 +167,7 @@ public class VacationController {
         return employeeAndVacations.toArray(new EmployeeAndVacation[0]);
     }
 
-    @RequestMapping(value = "/delete-vacation", method = RequestMethod.POST)
-    public boolean deleteVacation(
-            @RequestHeader (value = "department") String departmentId,
-            @RequestBody Vacation vacation
-    ){
-        vacationRepository.deleteById(vacation.getId());
-        return true;
-    }
+
     /*public Vacation addEmptyVacation(String employeeId){
         return vacationRepository.save(new Vacation(employeeId, null, 0));
     }*/

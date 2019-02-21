@@ -5,33 +5,28 @@
         <input type='text' ng-model="employee.lastName">
         <input type='text' ng-model="employee.secondName">
         <input type="button" ng-click="addEmployee(employee)" value="Add employee">
-        <input type="button" ng-click="updateEmployee()" value="Update employee">
         <ul>
             <li ng-repeat="emp in employeeAndVacation">
                 <span  ng-click="addEmpToGroup(emp.employee)">
-                    {{emp.employee.firstName}}
-                    {{emp.employee.lastName}}
-                    {{emp.employee.secondName}}
+                    <input type='text' ng-model="emp.employee.firstName">
+                    <input type='text' ng-model="emp.employee.lastName">
+                    <input type='text' ng-model="emp.employee.secondName">
+                    <input type="button" ng-click="updateEmployee(emp)" value="Update employee">
                     vac:
                     <ul>
                         <li ng-repeat="vac in emp.vacations">
-                        d{{vac.day}}
-                        m{{vac.month}}
-                        y{{vac.year}}
-                        nd{{vac.numberOfDays}}
                             <input type='text' ng-model="vac.day">
-                <input type='text' ng-model="vac.month">
-                <input type='text' ng-model="vac.year">
-                <input type='text' ng-model="vac.count">
-                <input type="button" class="button3" ng-click="updateVac(vac)" value="up vac" >
-
+                            <input type='text' ng-model="vac.month">
+                            <input type='text' ng-model="vac.year">
+                            <input type='text' ng-model="vac.numberOfDays">
+                            <input type="button" class="button3" ng-click="updateVac(vac)" value="up vac" >
                         </li>
                     </ul>
                 </span>
                 <input type='text' ng-model="vacation.day">
                 <input type='text' ng-model="vacation.month">
                 <input type='text' ng-model="vacation.year">
-                <input type='text' ng-model="vacation.count">
+                <input type='text' ng-model="vacation.numberOfDays">
                 <input type="button" class="button3" ng-click="setDate(emp,vacation)" value="set date" >
             </li>
 

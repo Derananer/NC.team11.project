@@ -1,9 +1,7 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.department;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.company.employeeMicroservice.department.Department;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.List;
 
 
 public interface DepartmentRepository extends MongoRepository<Department, String> {

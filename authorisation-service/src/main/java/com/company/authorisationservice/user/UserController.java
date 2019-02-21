@@ -1,16 +1,17 @@
-package com.company.authorisationservice;
+package com.company.authorisationservice.user;
 
 
+import com.company.authorisationservice.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class MainController {
+public class UserController {
 
     @Autowired
-    UserAppRepository userAppRepository;
+    ApplicationUserRepository applicationUserRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -20,13 +21,13 @@ public class MainController {
             @RequestBody UserCreation userCreation
             ) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
-        if(userAppRepository.findByUsername(userCreation.username) != null)
+        if(applicationUserRepository.findByUsername(userCreation.username) != null)
             throw new Exception("username already exist");
-        if(userAppRepository.findByEmail(userCreation.email) != null)
+        if(applicationUserRepository.findByEmail(userCreation.email) != null)
             throw new Exception("email already exist");
         String departmentId = restTemplate.getForObject("http://localhost:8081/create-new-department?name={name}",String.class,userCreation.departmentName);
 
-        UserApp userApp = new UserApp(
+        ApplicationUser applicationUser = new ApplicationUser(
                 userCreation.firstName,
                 userCreation.lastName,
                 userCreation.secondName,
@@ -35,9 +36,9 @@ public class MainController {
                 userCreation.username,
                 encoder.encode(userCreation.password)
         );
-        userApp.setRole(Roles.USER);
-        if((userApp = userAppRepository.save(userApp)) != null)
-            System.out.println(userApp.toString());
+        applicationUser.setRole(Roles.USER);
+        if((applicationUser = applicationUserRepository.save(applicationUser)) != null)
+            System.out.println(applicationUser.toString());
         else throw new Exception("don`t save");
 
     }

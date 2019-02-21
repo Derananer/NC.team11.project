@@ -1,5 +1,10 @@
 package com.example.ruleservice;
 
+import com.example.ruleservice.group.GroupElementRepository;
+import com.example.ruleservice.group.GroupRepository;
+import com.example.ruleservice.rule.Rule;
+import com.example.ruleservice.rule.RuleRepository;
+import com.example.ruleservice.rule.Rules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +22,7 @@ public class RuleServiceApplication
 	GroupElementRepository groupElementRepository;
 
 	@Autowired
-	GroupRepository groupRepository;
+    GroupRepository groupRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RuleServiceApplication.class, args);

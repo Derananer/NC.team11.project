@@ -1,4 +1,4 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.vacation;
 
 import org.springframework.data.annotation.Id;
 

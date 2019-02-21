@@ -48,4 +48,14 @@ public class RuledGroup {
     public void setRuleDescription(String ruleDescription) {
         this.ruleDescription = ruleDescription;
     }
+
+    @Override
+    public String toString() {
+        return "RuledGroup{" +
+                "groupId='" + groupId + '\'' +
+                ", ruleName='" + ruleName + '\'' +
+                ", ruleDescription='" + ruleDescription + '\'' +
+                ", ruleNumber=" + ruleNumber +
+                '}';
+    }
 }

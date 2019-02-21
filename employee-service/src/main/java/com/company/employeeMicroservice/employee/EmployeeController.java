@@ -1,5 +1,13 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.employee;
 
+import com.company.employeeMicroservice.EmployeeAndVacation;
+import com.company.employeeMicroservice.department.Department;
+import com.company.employeeMicroservice.department.DepartmentRepository;
+import com.company.employeeMicroservice.employee.Employee;
+import com.company.employeeMicroservice.employee.EmployeeRepository;
+import com.company.employeeMicroservice.vacation.Vacation;
+import com.company.employeeMicroservice.vacation.VacationController;
+import com.company.employeeMicroservice.vacation.VacationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -9,82 +17,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @RestController
-public class MainController {
+public class EmployeeController {
 
     @Autowired
     VacationController vacationController;
-    @Autowired
-    private EmployeeRepository employeeRepository;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private VacationRepository vacationRepository;
 
     @Autowired
     RestTemplate restTemplate;
-
-
-    @RequestMapping(value = "/create-new-department", method = RequestMethod.GET)
-    public String createDepartment(
-            @RequestParam(value = "name") String departmentName
-            //@RequestParam(value = "info") String someInfo
-    ) throws Exception {
-        Department dep = departmentRepository.save(new Department(departmentName, null));
-        if( dep == null)
-            throw new Exception("didn`t save");
-        else return dep.getId();
-
-
-
-    }
-
-    /*@RequestMapping(value = "/vacation-employees", method = RequestMethod.GET)
-    public VacationedEmployee[] vacationedEmployees(
-            @RequestHeader("department") String departmentId
-    ){
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("department", departmentId);
-        HttpEntity entity = new HttpEntity(headers);
-        HttpEntity<RuledGroup[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, RuledGroup[].class);
-        ArrayList<VacationedEmployee> vacationedEmployees = new ArrayList<>();
-        for (RuledGroup ruledGroup:
-                response.getBody()
-        ) {
-            for(Employee employee :
-                    getEmployeeByGroup(ruledGroup.getGroupId(),departmentId)
-            ) {
-                List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
-                Date[] vacationDates = new Date[vacations.size()];
-                int[] numbersOfVacationDays = new int[vacations.size()];
-                int i = 0;
-                for (Vacation vacation:
-                        vacations
-                ) {
-                    vacationDates[i] = vacation.getVacationDate();
-                    numbersOfVacationDays[i++] = vacation.getNumberOfDays();
-                }
-                vacationedEmployees.add(new VacationedEmployee(
-                        employee.getId(),
-                        departmentId,
-                        vacationDates,
-                        numbersOfVacationDays,
-                        ruledGroup.getRuleNumber(),
-                        ruledGroup.getGroupId()
-                        )
-                );
-            }
-        }
-        return vacationedEmployees.toArray(new VacationedEmployee[0]);
-    }*/
-
-
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public EmployeeAndVacation[] getEmployees(
@@ -102,16 +50,10 @@ public class MainController {
 
     @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
     public Employee[] getEmployeeByGroup(
-
             @RequestHeader("department") String departmentId,
             @RequestParam String groupId
     ){
-        //HttpHeaders headers = new HttpHeaders();
-        //headers.set("token", token);
-        //System.out.println("token from eployees-by=groups : " + token);
-        String[] empsId = restTemplate.getForObject(
-                //"http://localhost:8079/services/rule-service/emp-ids-by-group",
-                "http://localhost:8082/emp-ids-by-group?groupId={groupId}", String[].class, groupId);
+        String[] empsId = restTemplate.getForObject("http://localhost:8082/emp-ids-by-group?groupId={groupId}", String[].class, groupId);
         ArrayList<Employee> employees = new ArrayList<>();
         for (String empId:
                 empsId
@@ -138,8 +80,9 @@ public class MainController {
         System.out.println(employee.toString());
         employee.setDepartmentId(departmentId);
         employee = employeeRepository.save(employee);
+        Vacation[] vacations = new Vacation[0];
         //System.out.println(vacationController.addEmptyVacation(emp.getId()));
-        EmployeeAndVacation employeeAndVacation = new EmployeeAndVacation(employee, null);
+        EmployeeAndVacation employeeAndVacation = new EmployeeAndVacation(employee, vacations);
         return employeeAndVacation;
     }
 

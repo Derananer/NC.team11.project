@@ -1,4 +1,4 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.employee;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
@@ -69,9 +69,13 @@ public class Employee {
     }
 
     @Override
-    public String toString(){
-        return String.format(
-                "Employee[id=%s, firstName='%s', lastName='%s', secondName='%s', departmentId='%s']",
-                id, firstName, lastName, secondName, departmentId);
+    public String toString() {
+        return "Employee{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                '}';
     }
 }

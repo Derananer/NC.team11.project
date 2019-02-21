@@ -1,4 +1,4 @@
-package com.company.authorisationservice;
+package com.company.authorisationservice.security;
 
 public class Roles {
     public static final String USER = "USER";

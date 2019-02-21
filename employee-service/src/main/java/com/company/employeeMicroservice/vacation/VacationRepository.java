@@ -1,5 +1,6 @@
-package com.company.employeeMicroservice;
+package com.company.employeeMicroservice.vacation;
 
+import com.company.employeeMicroservice.vacation.Vacation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
