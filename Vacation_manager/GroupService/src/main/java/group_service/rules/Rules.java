@@ -1,4 +1,4 @@
-package com.example.ruleservice.rule;
+package group_service.rules;
 
 public class Rules {
     public static final int NO_REPETITIONS = 1;

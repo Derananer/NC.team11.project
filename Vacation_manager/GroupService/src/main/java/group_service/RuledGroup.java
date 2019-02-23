@@ -1,4 +1,4 @@
-package com.example.ruleservice;
+package group_service;
 
 public class RuledGroup {
 

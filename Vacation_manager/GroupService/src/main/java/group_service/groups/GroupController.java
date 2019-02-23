@@ -1,4 +1,4 @@
-package com.example.ruleservice.group;
+package group_service.groups;
 
 import com.example.ruleservice.*;
 import com.example.ruleservice.rule.Rule;
@@ -37,7 +37,7 @@ public class GroupController {
             Optional<Rule> rule = ruleRepository.findById(group.getRuleId());
             if(rule.isPresent()) {
                 ruledGroups.add(new RuledGroup(group.getId(), rule.get().getRuleName(), rule.get().getDescription(),rule.get().getRuleNumber()));
-                System.out.println("rule " + rule.get().toString());
+                System.out.println("group_service/rules " + rule.get().toString());
                 System.out.println("ruledGroup " + ruledGroups.get(ruledGroups.size() - 1));
             }
         }
@@ -45,7 +45,7 @@ public class GroupController {
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
 
-    @RequestMapping(value = "/create-group", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-group_service.groups", method = RequestMethod.POST)
     public RuledGroup createGroup(
             @RequestHeader("department") String departmentId,
             @RequestBody String ruleId
@@ -57,10 +57,10 @@ public class GroupController {
         newGroup = groupRepository.save(newGroup);
         Optional<Rule> rule = ruleRepository.findById(newGroup.getRuleId());
         if(rule.isPresent())return new RuledGroup(groupRepository.save(newGroup).getId(),rule.get().getRuleName(),rule.get().getDescription(),rule.get().getRuleNumber() );
-        else throw new Exception("no such rule");
+        else throw new Exception("no such group_service.rules");
     }
 
-    @RequestMapping(value = "/add-group-elem", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-group_service.groups-elem", method = RequestMethod.POST)
     public GroupElement addGroupElem(
             @RequestHeader("department") String departmentId,
             @RequestBody GroupElement groupElement
@@ -80,29 +80,29 @@ public class GroupController {
         }
     }
 
-    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-group_service.groups-elem", method = RequestMethod.GET)
     public Boolean deleteGroupElement(
             @RequestHeader(value = "department") String departmentId,
             @RequestParam String employeeId
     ){
         groupElementRepository.deleteByEmployeeId(employeeId);
         List<GroupElement> groupElements = groupElementRepository.findByGroupId(employeeId);
-        System.out.println("delete group elem: is last: " + groupElements == null);
+        System.out.println("delete group_service.groups elem: is last: " + groupElements == null);
         return true;
     }
 
-    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-group_service.groups-elem", method = RequestMethod.POST)
     public Boolean deleteGroupElement(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody GroupElement groupElement
     ){
         groupElement = groupElementRepository.deleteByEmployeeId(groupElement.getEmployeeId());
         List<GroupElement> groupElements = groupElementRepository.findByGroupId(groupElement.getGroupId());
-        System.out.println("delete group elem: is last: " + groupElements == null);
+        System.out.println("delete group_service.groups elem: is last: " + groupElements == null);
         return true;
     }
 
-    @RequestMapping(value = "/emp-ids-by-group", method = RequestMethod.GET)
+    @RequestMapping(value = "/emp-ids-by-group_service.groups", method = RequestMethod.GET)
     public String[] getEmployeesByGroup(
             @RequestParam String groupId
     ){
@@ -116,15 +116,15 @@ public class GroupController {
         return employeeIds.toArray(new String[employeeIds.size()]);
     }
 
-    @RequestMapping(value = "/delete-group", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-group_service.groups", method = RequestMethod.GET)
     public boolean deleteGroup(
             @RequestHeader(value = "department") String departmentId,
             @RequestParam String groupId
     ){
-        Group group = groupRepository.deleteByIdAAndDepartmentId(groupId,departmentId);
-        System.out.println("deleted group: " + group.toString());
+        Group group = groupRepository.deleteByIdAndDepartmentId(groupId,departmentId);
+        System.out.println("deleted group_service.groups: " + group.toString());
         List<GroupElement> groupElementList = groupElementRepository.deleteByGroupId(group.getId());
-        System.out.println("deleted group elements: " + Arrays.toString(groupElementList.toArray(new GroupElement[0])));
+        System.out.println("deleted group_service.groups elements: " + Arrays.toString(groupElementList.toArray(new GroupElement[0])));
         return true;
     }
 }

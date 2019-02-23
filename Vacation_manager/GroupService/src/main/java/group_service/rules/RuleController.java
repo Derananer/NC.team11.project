@@ -1,4 +1,4 @@
-package com.example.ruleservice.rule;
+package group_service.rules;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class RuleController {
     @Autowired
     RuleRepository ruleRepository;
 
-    @RequestMapping(value = "/rule", method = RequestMethod.GET)
+    @RequestMapping(value = "/group_service/rules", method = RequestMethod.GET)
     public Rule getRule(
             @RequestParam String id
     ){

@@ -1,10 +1,10 @@
-package com.example.ruleservice;
+package group_service;
 
-import com.example.ruleservice.group.GroupElementRepository;
-import com.example.ruleservice.group.GroupRepository;
-import com.example.ruleservice.rule.Rule;
-import com.example.ruleservice.rule.RuleRepository;
-import com.example.ruleservice.rule.Rules;
+import group_service.groups.GroupElementRepository;
+import group_service.groups.GroupRepository;
+import group_service.rules.Rule;
+import group_service.rules.RuleRepository;
+import group_service.rules.Rules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
