@@ -6,15 +6,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="authorisation-service" />
         <module name="AuthorisationService" />
+        <module name="employee-service" />
         <module name="EmployeeService" />
+        <module name="gateway" />
         <module name="Gateway" />
+        <module name="group-service" />
         <module name="GroupService" />
+        <module name="set-vacation-service" />
         <module name="SetVacationService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="authorisation-service" target="1.8" />
+      <module name="employee-service" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="group-service" target="1.8" />
       <module name="RuleService" target="1.5" />
+      <module name="set-vacation-service" target="1.8" />
+      <module name="vacation_manager" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

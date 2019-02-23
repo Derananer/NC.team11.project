@@ -1,8 +1,13 @@
 package group_service.groups;
 
-import com.example.ruleservice.*;
-import com.example.ruleservice.rule.Rule;
-import com.example.ruleservice.rule.RuleRepository;
+
+import group_service.RuledGroup;
+import group_service.groups.Group;
+import group_service.groups.GroupElement;
+import group_service.groups.GroupElementRepository;
+import group_service.groups.GroupRepository;
+import group_service.rules.Rule;
+import group_service.rules.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

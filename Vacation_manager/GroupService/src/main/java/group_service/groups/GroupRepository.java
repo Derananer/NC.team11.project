@@ -1,6 +1,6 @@
 package group_service.groups;
 
-import com.example.ruleservice.group.Group;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
