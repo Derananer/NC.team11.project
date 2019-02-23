@@ -1,0 +1,84 @@
+<div id="empl">
+    <div ng-controller="EmployeeListCtrl">
+        <p>New employee</p>
+        <input type='text' ng-model="employee.firstName">
+        <input type='text' ng-model="employee.lastName">
+        <input type='text' ng-model="employee.secondName">
+        <input type="button" ng-click="addEmployee(employee)" value="Add employee">
+        <ul>
+            <li ng-repeat="emp in employeeAndVacation">
+                <span  ng-click="addEmpToGroup(emp.employee)">
+                    <input type='text' ng-model="emp.employee.firstName">
+                    <input type='text' ng-model="emp.employee.lastName">
+                    <input type='text' ng-model="emp.employee.secondName">
+                    <input type="button" ng-click="updateEmployee(emp)" value="Update employee">
+                    vac:
+                    <ul>
+                        <li ng-repeat="vac in emp.vacations">
+                            <input type='text' ng-model="vac.day">
+                            <input type='text' ng-model="vac.month">
+                            <input type='text' ng-model="vac.year">
+                            <input type='text' ng-model="vac.numberOfDays">
+                            <input type="button" class="button3" ng-click="updateVac(vac)" value="up vac" >
+                        </li>
+                    </ul>
+                </span>
+                <input type='text' ng-model="vacation.day">
+                <input type='text' ng-model="vacation.month">
+                <input type='text' ng-model="vacation.year">
+                <input type='text' ng-model="vacation.numberOfDays">
+                <input type="button" class="button3" ng-click="setDate(emp,vacation)" value="set date" >
+            </li>
+
+        </ul>
+    </div>
+    <div ng-controller="EmployeeListCtrl">
+        <div>
+            <input type='text' ng-model="days">
+            <input type="button" ng-click="setDaysForAll(days)">
+        </div>
+        <div>
+            <input type="button" class="button3" ng-click="generate()" value="generate">
+            <ul>
+                <li ng-repeat="emp in employeeAndVacation">
+                    {{emp.employee.firstName}}
+                    {{emp.employee.lastName}}
+                    {{emp.employee.secondName}}
+                    d{{emp.vacations[0].day}}
+                    m{{emp.vacations[0].month}}
+                    y{{emp.vacations[0].year}}
+                    nd{{emp.vacations[0].numberOfDays}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div id="grooper" ng-controller="EmployeeListCtrl">
+    <div ng-controller="GroupListCtrl">
+        <p>Rules list</p>
+        <div ng-repeat="rule in rules">
+            {{rule.ruleName}}
+            {{rule.description}}
+            <input type="button" ng-click="createGroup(rule)" value="Add group">
+        </div>
+        <p>Groups</p>
+        <div ng-repeat="group in groups" >
+            <p><div ng-click="groupInfo(group)">{{group.ruleName}}</div>
+                <!-- your code -->
+            <input type="button" class="button3" ng-click="addEmpsToGroup(group, this)" ng-style="group.customStyle" value="add emp" ></p>
+            <ul>
+                <li ng-repeat="employee in group.employees">
+                    {{employee.firstName}}
+                    {{employee.lastName}}
+                    {{employee.secondName}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+
