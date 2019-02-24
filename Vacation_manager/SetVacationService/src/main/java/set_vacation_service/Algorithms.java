@@ -1,5 +1,7 @@
 package set_vacation_service;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 public class Algorithms {
@@ -26,6 +28,17 @@ public class Algorithms {
     }
 
 
+    private void randomizeEmployees(@NotNull List<VacationedEmployee> vacationedEmployees){
+        Random random = new Random(new Date().getTime());
+        int randomInt = 0;
+        VacationedEmployee temp;
+        for (int i = 0; i < vacationedEmployees.size(); i++) {
+            randomInt = random.nextInt(vacationedEmployees.size());
+            temp = vacationedEmployees.get(i);
+            vacationedEmployees.add(i, vacationedEmployees.get(randomInt));
+            vacationedEmployees.add(randomInt, temp);
+        }
+    }
 
     public void setVacations() throws Exception {
         if (this.ruleNumber == Rules.NO_REPETITIONS) {
@@ -34,11 +47,26 @@ public class Algorithms {
     }
 
 
-    private void setOther(){
+    private void setStandard(@NotNull List<VacationedEmployee> vacationedEmployees){
+        for(VacationedEmployee employee:
+                vacationedEmployees
+        ){
+            for (int i = 0; i < employee.getNumberOfDays().length; i++) {
+                //koef = emp.getNumberOfDays()[i] / (double)totalDaysCount;
+                System.out.println("koef : " + koef);
+                daysPool = (int) Math.floor(koef * DAYS_IN_YEAR);
+                System.out.println("daysPool : " + daysPool);
+                System.out.println("startVacation : " + startVacation);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(this.YEAR,Calendar.JANUARY ,startVacation);
+                employee.getVacationDate()[i] = calendar.getTime();
+                startVacation += daysPool;
+            }
+        }
 
     }
 
-    private void setWithNoRepetitions(@org.jetbrains.annotations.NotNull List<VacationedEmployee> vacationedEmployees) throws Exception {
+    private void setWithNoRepetitions(@NotNull List<VacationedEmployee> vacationedEmployees) throws Exception {
         int totalDaysCount = 0;
         double koef = 0;
         //int totalVacationCount = 0;
@@ -49,7 +77,7 @@ public class Algorithms {
                 totalDaysCount += count;
             }
         }
-        if(totalDaysCount > DAYS_IN_YEAR) throw new Exception("невозможна расставить");
+        if(totalDaysCount > DAYS_IN_YEAR) throw new Exception("невозможно расставить");
         int daysPool = 0;
         int startVacation = 1;
         for (VacationedEmployee emp :

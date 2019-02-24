@@ -50,11 +50,19 @@ public class GroupController {
         return ruledGroups.toArray(new RuledGroup[ruledGroups.size()]);
     }
 
-    @RequestMapping(value = "/create-group_service.groups", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-standard-group", method = RequestMethod.GET)
+    public String createStandardGroup(
+            @RequestParam("department") String departmentId
+    ){
+        Rule rule = ruleRepository.findByRuleNumber(3);
+        Group group = groupRepository.save(new Group(departmentId, rule.getId()));
+        return group.getId();
+    }
+
+    @RequestMapping(value = "/create-group", method = RequestMethod.GET)
     public RuledGroup createGroup(
             @RequestHeader("department") String departmentId,
-            @RequestBody String ruleId
-
+            @RequestParam String ruleId
     ) throws Exception {
         Group newGroup = new Group(departmentId,ruleId);
         //newGroup.setDepartmentId(departmentId);
@@ -65,11 +73,10 @@ public class GroupController {
         else throw new Exception("no such group_service.rules");
     }
 
-    @RequestMapping(value = "/add-group_service.groups-elem", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-group-elem", method = RequestMethod.POST)
     public GroupElement addGroupElem(
             @RequestHeader("department") String departmentId,
             @RequestBody GroupElement groupElement
-
     ) throws Exception {
         GroupElement GE = null;
         try {
@@ -85,7 +92,7 @@ public class GroupController {
         }
     }
 
-    @RequestMapping(value = "/delete-group_service.groups-elem", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.GET)
     public Boolean deleteGroupElement(
             @RequestHeader(value = "department") String departmentId,
             @RequestParam String employeeId
@@ -96,7 +103,7 @@ public class GroupController {
         return true;
     }
 
-    @RequestMapping(value = "/delete-group_service.groups-elem", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.POST)
     public Boolean deleteGroupElement(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody GroupElement groupElement
@@ -107,7 +114,7 @@ public class GroupController {
         return true;
     }
 
-    @RequestMapping(value = "/emp-ids-by-group_service.groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/emp-ids-by-group", method = RequestMethod.GET)
     public String[] getEmployeesByGroup(
             @RequestParam String groupId
     ){
@@ -121,7 +128,7 @@ public class GroupController {
         return employeeIds.toArray(new String[employeeIds.size()]);
     }
 
-    @RequestMapping(value = "/delete-group_service.groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-group", method = RequestMethod.GET)
     public boolean deleteGroup(
             @RequestHeader(value = "department") String departmentId,
             @RequestParam String groupId

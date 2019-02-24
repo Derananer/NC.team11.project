@@ -1,6 +1,9 @@
 package employee_service.employee;
 
 import employee_service.EmployeeAndVacation;
+import employee_service.GroupElement;
+import employee_service.department.Department;
+import employee_service.department.DepartmentRepository;
 import employee_service.vacation.Vacation;
 import employee_service.vacation.VacationController;
 import employee_service.vacation.VacationRepository;
@@ -14,12 +17,16 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class EmployeeController {
 
     @Autowired
     VacationController vacationController;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -72,13 +79,26 @@ public class EmployeeController {
     public EmployeeAndVacation addEmployee(
             @RequestHeader("department") String departmentId,
             @RequestBody Employee employee
-    ){
+    ) throws Exception {
         System.out.println(employee.toString());
         employee.setDepartmentId(departmentId);
         employee = employeeRepository.save(employee);
         Vacation[] vacations = new Vacation[0];
         //System.out.println(vacationController.addEmptyVacation(emp.getId()));
         EmployeeAndVacation employeeAndVacation = new EmployeeAndVacation(employee, vacations);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("department", departmentId);
+        Optional<Department> department = departmentRepository.findById(departmentId);
+        try {
+            if (department.isPresent()) {
+                GroupElement groupElement = new GroupElement(department.get().getStandardGroupId(), employee.getId());
+                HttpEntity entity = new HttpEntity(groupElement, headers);
+                HttpEntity<Boolean> response = restTemplate.exchange("http://localhost:8082/add-group-elem", HttpMethod.GET, entity, Boolean.class, employee.getId());
+            } else throw new Exception("No such exception");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw e;
+        }
         return employeeAndVacation;
     }
 
@@ -116,7 +136,7 @@ public class EmployeeController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("department", departmentId);
         HttpEntity entity = new HttpEntity(headers);
-        HttpEntity<Boolean> response = restTemplate.exchange("http://localhost:8082/delete-groupelem", HttpMethod.GET, entity, Boolean.class, employee.getId());
+        HttpEntity<Boolean> response = restTemplate.exchange("http://localhost:8082/delete-group-elem", HttpMethod.GET, entity, Boolean.class, employee.getId());
         return response.getBody();
     }
 

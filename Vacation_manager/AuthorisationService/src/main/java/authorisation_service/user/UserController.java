@@ -26,7 +26,6 @@ public class UserController {
         if(applicationUserRepository.findByEmail(userCreation.email) != null)
             throw new Exception("email already exist");
         String departmentId = restTemplate.getForObject("http://localhost:8081/create-new-department?name={name}",String.class,userCreation.departmentName);
-
         ApplicationUser applicationUser = new ApplicationUser(
                 userCreation.firstName,
                 userCreation.lastName,
