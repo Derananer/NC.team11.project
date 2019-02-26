@@ -140,9 +140,4 @@ public class EmployeeController {
         return response.getBody();
     }
 
-
-    @Bean(name = "restTemplate")
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
 }

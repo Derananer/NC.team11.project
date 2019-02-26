@@ -99,7 +99,7 @@ public class GroupController {
     ){
         groupElementRepository.deleteByEmployeeId(employeeId);
         List<GroupElement> groupElements = groupElementRepository.findByGroupId(employeeId);
-        System.out.println("delete group_service.groups elem: is last: " + groupElements == null);
+        System.out.println("delete group_service.groups elem: is last: " + groupElements.isEmpty());
         return true;
     }
 
@@ -110,7 +110,7 @@ public class GroupController {
     ){
         groupElement = groupElementRepository.deleteByEmployeeId(groupElement.getEmployeeId());
         List<GroupElement> groupElements = groupElementRepository.findByGroupId(groupElement.getGroupId());
-        System.out.println("delete group_service.groups elem: is last: " + groupElements == null);
+        System.out.println("delete group_service.groups elem: is last: " + groupElements.isEmpty());
         return true;
     }
 

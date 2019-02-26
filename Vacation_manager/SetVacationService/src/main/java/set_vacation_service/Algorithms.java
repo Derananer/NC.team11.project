@@ -52,19 +52,22 @@ public class Algorithms {
                 vacationedEmployees
         ){
             for (int i = 0; i < employee.getNumberOfDays().length; i++) {
-                //koef = emp.getNumberOfDays()[i] / (double)totalDaysCount;
-                System.out.println("koef : " + koef);
-                daysPool = (int) Math.floor(koef * DAYS_IN_YEAR);
-                System.out.println("daysPool : " + daysPool);
-                System.out.println("startVacation : " + startVacation);
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(this.YEAR,Calendar.JANUARY ,startVacation);
-                employee.getVacationDate()[i] = calendar.getTime();
-                startVacation += daysPool;
+                //koef = emp.getNumberOfDays()[i] / (double)totalDaysC
+
             }
         }
 
     }
+
+    class DaysPool{
+        private int[] numberOfDays;
+        private void loadToDaysPool(int[] numbersOfDays){
+            this.numberOfDays = numbersOfDays;
+
+        }
+    }
+
+
 
     private void setWithNoRepetitions(@NotNull List<VacationedEmployee> vacationedEmployees) throws Exception {
         int totalDaysCount = 0;
@@ -80,23 +83,25 @@ public class Algorithms {
         if(totalDaysCount > DAYS_IN_YEAR) throw new Exception("невозможно расставить");
         int daysPool = 0;
         int startVacation = 1;
+        Random random = new Random(new Date().getTime());
+        Calendar calendar = Calendar.getInstance();
         for (VacationedEmployee emp :
                 vacationedEmployees
         ) {
             for (int i = 0; i < emp.getNumberOfDays().length; i++) {
                 koef = emp.getNumberOfDays()[i] / (double)totalDaysCount;
-                System.out.println("koef : " + koef);
+                //System.out.println("koef : " + koef);
                 daysPool = (int) Math.floor(koef * DAYS_IN_YEAR);
-                System.out.println("daysPool : " + daysPool);
-                System.out.println("startVacation : " + startVacation);
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(this.YEAR,Calendar.JANUARY ,startVacation);
+                //System.out.println("daysPool : " + daysPool);
+                //System.out.println("startVacation : " + startVacation);
+                calendar.set(this.YEAR,Calendar.JANUARY ,startVacation + random.nextInt(daysPool - emp.getNumberOfDays()[i]));
                 emp.getVacationDate()[i] = calendar.getTime();
                 startVacation += daysPool;
             }
         }
 
     }
+
     private boolean check(VacationedEmployee vacationedEmployee) {
 
         for (Date date :
