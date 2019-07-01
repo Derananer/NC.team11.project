@@ -1,6 +1,5 @@
-package employee_service.vacation;
+package employee_service.vacations.model;
 
-import employee_service.vacation.Vacation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

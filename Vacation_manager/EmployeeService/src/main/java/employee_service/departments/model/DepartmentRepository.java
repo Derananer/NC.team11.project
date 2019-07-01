@@ -1,4 +1,4 @@
-package employee_service.department;
+package employee_service.departments.model;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

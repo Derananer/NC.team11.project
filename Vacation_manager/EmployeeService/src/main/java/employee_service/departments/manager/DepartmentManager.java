@@ -1,19 +1,18 @@
-package employee_service.department;
+package employee_service.departments.manager;
 
 
+import employee_service.departments.model.Department;
+import employee_service.departments.model.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequestMapping(value = "/departments")
-public class DepartmentController {
+@Component
+public class DepartmentManager {
 
     @Autowired
     DepartmentRepository departmentRepository;
@@ -21,7 +20,9 @@ public class DepartmentController {
     @Autowired
     RestTemplate restTemplate;
 
-    @RequestMapping(value = "/create-new-department", method = RequestMethod.GET)
+    public DepartmentManager() {
+    }
+
     public String createDepartment(
             @RequestParam(value = "name") String departmentName
             //@RequestParam(value = "info") String someInfo
@@ -36,8 +37,5 @@ public class DepartmentController {
         if( dep == null)
             throw new Exception("didn`t save");
         else return dep.getId();
-
-
-
     }
 }

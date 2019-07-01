@@ -1,29 +1,33 @@
-package employee_service.vacation;
-
+package employee_service.vacations.manager;
 
 import employee_service.EmployeeAndVacation;
 import employee_service.RuledGroup;
-import employee_service.employee.Employee;
-import employee_service.employee.EmployeeController;
-import employee_service.employee.EmployeeRepository;
+import employee_service.employees.manager.EmployeeManager;
+import employee_service.employees.model.Employee;
+import employee_service.employees.model.EmployeeRepository;
+import employee_service.vacations.model.Vacation;
+import employee_service.vacations.model.VacationRepository;
+import employee_service.vacations.model.VacationedEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
-@RestController
-@RequestMapping("/vacations")
-public class VacationController {
+@Component
+public class VacationManager {
 
     @Autowired
     RestTemplate restTemplate;
 
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeManager employeeManager;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -32,44 +36,40 @@ public class VacationController {
     private VacationRepository vacationRepository;
 
 
-    @RequestMapping(value = "/update-vacation", method = RequestMethod.POST)
-    public Vacation updateVac(
-            @RequestHeader(value = "department") String departmentId,
-            @RequestBody Vacation vacation
+    public Vacation updateVac( String departmentId, Vacation vacation
     ){
         vacationRepository.deleteById(vacation.getId());
         vacation = vacationRepository.save(vacation);
         return vacation;
     }
 
-   @RequestMapping(value = "/delete-vacation", method = RequestMethod.GET)
-   public boolean deleteVac(
-           @RequestHeader (value = "department") String departmentId,
-           @RequestBody Vacation vacation
-   ){
-        vacationRepository.deleteById(vacation.getId());
-        return true;
-   }
 
-    @RequestMapping(value = "/delete-vacation", method = RequestMethod.POST)
-    public boolean deleteVacation(
-            @RequestHeader (value = "department") String departmentId,
-            @RequestBody Vacation vacation
+    public boolean deleteVac(
+             String departmentId,
+            Vacation vacation
     ){
         vacationRepository.deleteById(vacation.getId());
         return true;
     }
 
-    @RequestMapping(value = "/set-vacation-date", method = RequestMethod.POST)
+    public boolean deleteVacation(
+             String departmentId,
+             Vacation vacation
+    ){
+        vacationRepository.deleteById(vacation.getId());
+        return true;
+    }
+
+
     public Vacation setDate(
-            @RequestHeader(value = "department") String departmentId,
-            @RequestBody Vacation vacation
+             String departmentId,
+            Vacation vacation
     ) throws Exception {
         try {
             if (employeeRepository.findByIdAndDepartmentId(vacation.getEmployeeId(), departmentId) == null)
                 throw new Exception("Employee with id=" + vacation.getEmployeeId() + " does not exist.");
             vacation = vacationRepository.save(vacation);
-            System.out.println("set vacation : " + vacation.toString());
+            System.out.println("set vacations : " + vacation.toString());
             return vacation;
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -77,46 +77,46 @@ public class VacationController {
         }
     }
 
-    @RequestMapping(value = "/set-days-for-all-emps", method = RequestMethod.GET)
+
     public void setDaysForAllEmployees(
-            @RequestHeader(value = "department") String departmentId,
-            @RequestParam(value = "days") int countOfDays
+             String departmentId,
+             int countOfDays
     ){
-        EmployeeAndVacation[] employees = employeeController.getEmployees(departmentId);
+        EmployeeAndVacation[] employees = employeeManager.getEmployees(departmentId);
         for (EmployeeAndVacation emp:
                 employees
-             ) {
-             List<Vacation> vacations = vacationRepository.deleteByEmployeeId(emp.employee.getId());
-             System.out.println("deleted vac :" );
-             if(vacations.isEmpty() == false) {
-                 for (Vacation vacation :
-                         vacations
-                 ) {
-                     vacationRepository.save(new Vacation(vacation.getEmployeeId(), vacation.getDay(),vacation.getMonth(),vacation.getYear(),countOfDays));
-                 }
-             }
-             else{
-                 Vacation vacation = vacationRepository.save(new Vacation(emp.employee.getId(), Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, countOfDays));
-                 System.out.println("saved vac : "  + vacation);
-             }
+        ) {
+            List<Vacation> vacations = vacationRepository.deleteByEmployeeId(emp.employee.getId());
+            System.out.println("deleted vac :" );
+            if(vacations.isEmpty() == false) {
+                for (Vacation vacation :
+                        vacations
+                ) {
+                    vacationRepository.save(new Vacation(vacation.getEmployeeId(), vacation.getDay(),vacation.getMonth(),vacation.getYear(),countOfDays));
+                }
+            }
+            else{
+                Vacation vacation = vacationRepository.save(new Vacation(emp.employee.getId(), Vacation.NO_DATE, Vacation.NO_DATE, Vacation.NO_DATE, countOfDays));
+                System.out.println("saved vac : "  + vacation);
+            }
         }
     }
 
-    @RequestMapping(value = "/generate-vacations", method = RequestMethod.GET)
+
     public EmployeeAndVacation[] generateVacations(
-            @RequestHeader (value = "department") String departmentId
+             String departmentId
     ){
         HttpHeaders headers = new HttpHeaders();
-        headers.set("department", departmentId);
+        headers.set("departments", departmentId);
         HttpEntity entity = new HttpEntity(headers);
-        List<EmployeeAndVacation> employeeAndVacationList = Arrays.asList(employeeController.getEmployees(departmentId));
+        List<EmployeeAndVacation> employeeAndVacationList = Arrays.asList(employeeManager.getEmployees(departmentId));
         HttpEntity<RuledGroup[]> response = restTemplate.exchange("http://localhost:8082/groups", HttpMethod.GET, entity, RuledGroup[].class);
         for (RuledGroup ruledGroup:
                 response.getBody()
         ) {
             ArrayList<VacationedEmployee> vacationedEmpls = new ArrayList<>();
             for (Employee employee :
-                    employeeController.getEmployeeByGroup(ruledGroup.getGroupId(), departmentId)
+                    employeeManager.getEmployeeByGroup(ruledGroup.getGroupId(), departmentId)
             ) {
                 List<Vacation> vacations = vacationRepository.findByEmployeeId(employee.getId());
                 Date[] vacationDates = new Date[vacations.size()];
@@ -141,7 +141,7 @@ public class VacationController {
             HttpEntity entity1 = new HttpEntity(vacationedEmployees, headers1);
             HttpEntity<VacationedEmployee[]> response1 = restTemplate.exchange("http://localhost:8085/generate", HttpMethod.POST, entity1, VacationedEmployee[].class);
             vacationedEmployees = response1.getBody();
-            System.out.println("get from vacation-service : " + Arrays.toString(vacationedEmployees));
+            System.out.println("get from vacations-service : " + Arrays.toString(vacationedEmployees));
             for (VacationedEmployee employee :
                     vacationedEmployees
             ) {

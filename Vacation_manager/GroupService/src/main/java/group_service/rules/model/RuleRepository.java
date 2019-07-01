@@ -1,4 +1,4 @@
-package group_service.rules;
+package group_service.rules.model;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

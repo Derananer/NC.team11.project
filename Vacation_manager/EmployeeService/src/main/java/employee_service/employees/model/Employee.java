@@ -1,4 +1,4 @@
-package employee_service.employee;
+package employee_service.employees.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;

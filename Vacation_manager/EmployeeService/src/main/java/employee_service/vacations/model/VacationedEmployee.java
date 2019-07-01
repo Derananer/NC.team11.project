@@ -1,4 +1,4 @@
-package employee_service.vacation;
+package employee_service.vacations.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

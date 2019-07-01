@@ -1,4 +1,4 @@
-package group_service.groups;
+package group_service.groups.model;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;

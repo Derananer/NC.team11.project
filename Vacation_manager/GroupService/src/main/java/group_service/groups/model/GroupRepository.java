@@ -1,6 +1,7 @@
-package group_service.groups;
+package group_service.groups.model;
 
 
+import group_service.groups.model.Group;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 

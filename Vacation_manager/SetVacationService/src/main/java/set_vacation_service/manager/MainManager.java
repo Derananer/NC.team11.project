@@ -1,31 +1,34 @@
-package set_vacation_service;
-
+package set_vacation_service.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
+import set_vacation_service.Algorithms;
+import set_vacation_service.VacationedEmployee;
 
-@RestController
-public class MainController {
+@Component
+public class MainManager {
 
     @Autowired
     RestTemplate restTemplate;
 
-    @RequestMapping(value="/check", method = RequestMethod.POST)
+
     public boolean check(
 
     ){
         return true;
     }
 
-    @RequestMapping(value = "/generate",method = RequestMethod.POST)
     public VacationedEmployee[] generate(
-            @RequestHeader(value = "rule") String ruleNumber,
-            @RequestBody VacationedEmployee[] vacationedEmployees
+             String ruleNumber,
+             VacationedEmployee[] vacationedEmployees
     ){
         //HttpHeaders headers = new HttpHeaders();
-        //headers.set("department", department);
+        //headers.set("departments", departments);
 
         /*
         Map<String, String> params = new HashMap<String, String>();
@@ -37,7 +40,7 @@ public class MainController {
         params.put("applicationName", applicationName);
 */
 
-       // HttpEntity entity = new HttpEntity(headers);
+        // HttpEntity entity = new HttpEntity(headers);
         //HttpEntity<VacationedEmployee[]> response = restTemplate.exchange("http://localhost:8081/vacation-employees", HttpMethod.GET, entity, VacationedEmployee[].class);
         Algorithms algorithms = new Algorithms(vacationedEmployees, 2017);
         algorithms.setRuleNumber(Integer.parseInt(ruleNumber));
@@ -55,11 +58,4 @@ public class MainController {
         //System.out.println(response.getBody().toString());
     }
 
-
-
-
-    @Bean(name = "restTemplate")
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
 }

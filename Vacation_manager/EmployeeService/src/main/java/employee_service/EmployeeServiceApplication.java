@@ -1,8 +1,8 @@
 package employee_service;
 
-import employee_service.department.DepartmentRepository;
-import employee_service.employee.EmployeeRepository;
-import employee_service.vacation.VacationRepository;
+import employee_service.departments.model.DepartmentRepository;
+import employee_service.employees.model.EmployeeRepository;
+import employee_service.vacations.model.VacationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -97,6 +97,7 @@ public class EmployeeServiceApplication {
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
 	}
+
 
 }
 

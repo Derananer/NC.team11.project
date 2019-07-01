@@ -69,6 +69,8 @@ public class Algorithms {
 
 
 
+
+
     private void setWithNoRepetitions(@NotNull List<VacationedEmployee> vacationedEmployees) throws Exception {
         int totalDaysCount = 0;
         double koef = 0;

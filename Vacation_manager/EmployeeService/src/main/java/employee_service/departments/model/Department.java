@@ -1,4 +1,4 @@
-package employee_service.department;
+package employee_service.departments.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;

@@ -1,7 +1,7 @@
 package employee_service;
 
-import employee_service.employee.Employee;
-import employee_service.vacation.Vacation;
+import employee_service.employees.model.Employee;
+import employee_service.vacations.model.Vacation;
 
 import java.util.Arrays;
 
@@ -37,7 +37,7 @@ public class EmployeeAndVacation {
     @Override
     public String toString() {
         return "EmployeeAndVacation{" +
-                "employee=" + employee.toString() +
+                "employees=" + employee.toString() +
                 ", vacations=" + Arrays.toString(vacations) +
                 '}';
     }
