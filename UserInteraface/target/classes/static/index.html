@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="mainPage">
+<head>
+    <title>Hello AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="mainPageController.js"></script>
+</head>
+
+
+</div>
+<div ng-controller="EmployeeList">
+    <p>New employee</p>
+    <input type='text' ng-model="employee.firstName">
+    <input type='text' ng-model="employee.lastName">
+    <input type='text' ng-model="employee.secondName">
+    <input type="button" ng-click="addEmployee(employee)" value="Add employee">
+    <input type="button" ng-click="updateEmployee()" value="Update employee">
+    <ul>
+        <li ng-repeat="employee in employees" >
+            {{employee.id}}
+            {{employee.firstName}}
+            {{employee.lastName}}
+        </li>
+    </ul>
+</div>
+</body>
+</html>
