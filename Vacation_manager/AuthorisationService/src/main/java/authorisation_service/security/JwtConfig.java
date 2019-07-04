@@ -11,7 +11,7 @@ public class JwtConfig {
     @Value("${security.jwt.header:token}")
     private String tokenHeader;
 
-    @Value("${security.jwt.header:department}")
+    @Value("${security.jwt.header:departments}")
     private String departmentIdHeader;
 
     @Value("${security.jwt.prefix:Bearer }")
