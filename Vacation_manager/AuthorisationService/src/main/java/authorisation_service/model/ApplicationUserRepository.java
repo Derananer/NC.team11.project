@@ -1,5 +1,6 @@
-package authorisation_service.user;
+package authorisation_service.model;
 
+import authorisation_service.model.ApplicationUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ApplicationUserRepository extends MongoRepository<ApplicationUser, String> {

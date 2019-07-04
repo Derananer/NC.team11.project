@@ -1,4 +1,4 @@
-package authorisation_service.user;
+package authorisation_service.model;
 
 import org.springframework.data.annotation.Id;
 

@@ -1,7 +1,10 @@
-package authorisation_service.user;
+package authorisation_service.controllers;
 
 
 import authorisation_service.security.Roles;
+import authorisation_service.model.ApplicationUser;
+import authorisation_service.model.ApplicationUserRepository;
+import authorisation_service.model.UserCreation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package authorisation_service.security;
 
-import authorisation_service.user.ApplicationUser;
-import authorisation_service.user.ApplicationUserRepository;
+import authorisation_service.model.ApplicationUser;
+import authorisation_service.model.ApplicationUserRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
