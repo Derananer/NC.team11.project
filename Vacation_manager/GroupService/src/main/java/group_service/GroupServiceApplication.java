@@ -1,9 +1,9 @@
 package group_service;
 
-import group_service.groups.GroupElementRepository;
-import group_service.groups.GroupRepository;
-import group_service.rules.Rule;
-import group_service.rules.RuleRepository;
+import group_service.groups.model.GroupElementRepository;
+import group_service.groups.model.GroupRepository;
+import group_service.rules.model.Rule;
+import group_service.rules.model.RuleRepository;
 import group_service.rules.Rules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
