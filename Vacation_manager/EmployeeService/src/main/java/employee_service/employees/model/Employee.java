@@ -3,16 +3,26 @@ package employee_service.employees.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 
+import java.util.Arrays;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Employee {
 
     @Id
     private String id;
-
     private String firstName;
     private String lastName;
     private String secondName;
     private String departmentId;
+    private Vacation[] vacations;
+
+    public Vacation[] getVacations() {
+        return vacations;
+    }
+
+    public void setVacations(Vacation[] vacations) {
+        this.vacations = vacations;
+    }
 
     public Employee(){
         this.id = null;
@@ -76,6 +86,7 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", departmentId='" + departmentId + '\'' +
+                ", vacations=" + Arrays.toString(vacations) +
                 '}';
     }
 }

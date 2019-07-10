@@ -1,9 +1,5 @@
 package employee_service;
 
-import employee_service.departments.model.DepartmentRepository;
-import employee_service.employees.model.EmployeeRepository;
-import employee_service.vacations.model.VacationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,14 +19,6 @@ public class EmployeeServiceApplication {
 		//extends WebSecurityConfigurerAdapter
 		//implements CommandLineRunner {
 
-	@Autowired
-	private EmployeeRepository employeeRepository;
-
-	@Autowired
-	private DepartmentRepository departmentRepository;
-
-	@Autowired
-	private VacationRepository vacationRepository;
 
 	public static void main(String[] args) {
 

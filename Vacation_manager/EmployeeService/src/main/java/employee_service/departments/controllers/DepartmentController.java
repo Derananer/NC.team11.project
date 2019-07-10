@@ -17,7 +17,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/create-new-department", method = RequestMethod.GET)
     public String createDepartment(
-            @RequestParam(value = "name") String departmentName
+            @RequestParam("name") String departmentName
             //@RequestParam(value = "info") String someInfo
     ) throws Exception {
         return departmentManager.createDepartment(departmentName);
@@ -32,5 +32,12 @@ public class DepartmentController {
         if(dep == null)
             throw new Exception("didn`t save");
         else return dep.getId();*/
+    }
+
+    @RequestMapping(value = "/get-department", method = RequestMethod.GET)
+    public String getStandardGroupId(
+            @RequestParam("departmentId") String departmentId
+    ){
+        return departmentManager.getStandardGroupId(departmentId);
     }
 }

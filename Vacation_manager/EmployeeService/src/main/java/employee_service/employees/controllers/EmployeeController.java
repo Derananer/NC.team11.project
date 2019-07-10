@@ -1,6 +1,5 @@
 package employee_service.employees.controllers;
 
-import employee_service.EmployeeAndVacation;
 import employee_service.employees.manager.EmployeeManager;
 import employee_service.employees.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,13 @@ public class EmployeeController {
     EmployeeManager employeeManager;
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public EmployeeAndVacation[] getEmployees(
+    public Employee[] getEmployees(
             @RequestHeader("department") String departmentId
     ){
         return employeeManager.getEmployees(departmentId);
     }
 
-    @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)
+    @RequestMapping(value = "/employees-by-group", method = RequestMethod.GET)//maybe delete
     public Employee[] getEmployeeByGroup(
             @RequestHeader("department") String departmentId,
             @RequestParam String groupId
@@ -37,7 +36,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/add-employee")
-    public EmployeeAndVacation addEmployee(
+    public Employee addEmployee(
             @RequestHeader("department") String departmentId,
             @RequestBody Employee employee
     ) throws Exception {
@@ -45,19 +44,19 @@ public class EmployeeController {
     }
 
     @PostMapping("/update-employee")
-    public EmployeeAndVacation updateEmployee(
+    public Employee updateEmployee(
             @RequestHeader("department") String departmentId,
-            @RequestBody EmployeeAndVacation employeeAndVacation
+            @RequestBody Employee employee
     ){
-        return employeeManager.updateEmployee(departmentId, employeeAndVacation);
+        return employeeManager.updateEmployee(departmentId, employee);
     }
 
     @RequestMapping(value = "/delete-employee", method = RequestMethod.POST)
-    public Boolean deleteEmployee(
+    public void deleteEmployee(
             @RequestHeader(value = "department") String departmentId,
-            @RequestBody EmployeeAndVacation employeeAndVacation
+            @RequestBody Employee employee
     ) throws Exception {
-        return deleteEmployee(departmentId, employeeAndVacation);
+        employeeManager.deleteEmployee(departmentId, employee);
     }
 
 }

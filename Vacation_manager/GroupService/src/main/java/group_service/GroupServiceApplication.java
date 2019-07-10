@@ -1,6 +1,5 @@
 package group_service;
 
-import group_service.groups.model.GroupElementRepository;
 import group_service.groups.model.GroupRepository;
 import group_service.rules.model.Rule;
 import group_service.rules.model.RuleRepository;
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class GroupServiceApplication
@@ -17,9 +18,6 @@ public class GroupServiceApplication
 
 	@Autowired
 	RuleRepository ruleRepository;
-
-	@Autowired
-	GroupElementRepository groupElementRepository;
 
 	@Autowired
     GroupRepository groupRepository;
@@ -33,18 +31,21 @@ public class GroupServiceApplication
         ruleRepository.deleteAll();
 
         ruleRepository.save(new Rule(
-                        Rules.NO_REPETITIONS,
                         "onlyOneEmp",
                         "не могут пойти в отпуск вместе"
                 )
         );
 
         ruleRepository.save(new Rule(
-                        Rules.STANDARD_RULE,
                         "standard",
                         ""
                 )
         );
+    }
+
+    @Bean(name = "restTemplate")
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
 }

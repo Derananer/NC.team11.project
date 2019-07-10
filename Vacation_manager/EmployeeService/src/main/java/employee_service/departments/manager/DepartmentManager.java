@@ -38,4 +38,9 @@ public class DepartmentManager {
             throw new Exception("didn`t save");
         else return dep.getId();
     }
+
+    public String getStandardGroupId(String departmentId){
+        return departmentRepository.findById(departmentId).get().getStandardGroupId();
+
+    }
 }

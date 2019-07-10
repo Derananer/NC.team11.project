@@ -1,16 +1,10 @@
 package group_service.groups.controllers;
 
 
-import group_service.RuledGroup;
 import group_service.groups.manager.GroupManager;
 import group_service.groups.model.Group;
-import group_service.groups.model.GroupElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @RequestMapping(value = "/groups")
 @RestController
@@ -20,7 +14,7 @@ public class GroupController {
     GroupManager groupManager;
 
     @RequestMapping(value = "/all-groups", method = RequestMethod.GET)
-    public RuledGroup[] getGroups(
+    public Group[] getGroups(
             @RequestHeader("department") String departmentId
     ) {
         return groupManager.getGroups(departmentId);
@@ -34,35 +28,26 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/create-group", method = RequestMethod.GET)
-    public RuledGroup createGroup(
+    public Group createGroup(
             @RequestHeader("department") String departmentId,
             @RequestParam String ruleId
     ) throws Exception {
-       return groupManager.createGroup(departmentId, ruleId);
+        return groupManager.createGroup(departmentId, ruleId);
     }
 
-    @RequestMapping(value = "/add-group-elem", method = RequestMethod.POST)
-    public GroupElement addGroupElem(
-            @RequestHeader("department") String departmentId,
-            @RequestBody GroupElement groupElement
-    ) throws Exception {
-        return groupManager.addGroupElem(departmentId, groupElement);
-    }
-
-    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.GET)
-    public Boolean deleteGroupElement(
-            @RequestHeader(value = "department") String departmentId,
-            @RequestParam String employeeId
+    @RequestMapping(value = "/update-group", method = RequestMethod.POST)
+    public Group updateGroup(
+            @RequestBody Group group
     ) {
-        return groupManager.deleteGroupElement(departmentId, employeeId);
+        return groupManager.updateGroup(group);
     }
 
-    @RequestMapping(value = "/delete-group-elem", method = RequestMethod.POST)
-    public Boolean deleteGroupElement(
-            @RequestHeader(value = "department") String departmentId,
-            @RequestBody GroupElement groupElement
+    @RequestMapping(value = "/remove-employee-from-group", method = RequestMethod.GET)
+    public void moveEmployeeToStandardGroup(
+            @RequestParam("departmentId") String departmentId,
+            @RequestParam("employeeId") String employeeId
     ) {
-        return groupManager.deleteGroupElement(departmentId, groupElement);
+        groupManager.moveEmployeeToStandardGroup(departmentId, employeeId);
     }
 
     @RequestMapping(value = "/emp-ids-by-group", method = RequestMethod.GET)
@@ -78,5 +63,13 @@ public class GroupController {
             @RequestParam String groupId
     ) {
         return groupManager.deleteGroup(departmentId, groupId);
+    }
+
+    @RequestMapping(value = "/remove-employee", method = RequestMethod.GET)
+    public void removeEmployee(
+            @RequestParam("departmentId") String departmentId,
+            @RequestParam("employeeId") String employeeId
+    ){
+        groupManager.removeEmployee(departmentId, employeeId);
     }
 }

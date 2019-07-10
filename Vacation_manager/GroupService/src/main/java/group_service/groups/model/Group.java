@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Document(collection = "groups")
 public class Group {
 
@@ -11,6 +14,15 @@ public class Group {
     private String id;
     private String departmentId;
     private String ruleId;
+    private List<String> employeeIDs;
+
+    public List<String> getEmployeeIDs() {
+        return employeeIDs;
+    }
+
+    public void setEmployeeIDs(List<String> employeeIDs) {
+        this.employeeIDs = employeeIDs;
+    }
 
     public Group(){}
 
@@ -41,6 +53,7 @@ public class Group {
                 "id='" + id + '\'' +
                 ", departmentId='" + departmentId + '\'' +
                 ", ruleId='" + ruleId + '\'' +
+                ", employeeIDs=" + employeeIDs +
                 '}';
     }
 
