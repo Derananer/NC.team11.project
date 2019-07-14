@@ -1,18 +1,15 @@
 package employee_service.employees.manager;
 
-import employee_service.departments.model.Department;
 import employee_service.departments.model.DepartmentRepository;
-import employee_service.employees.model.Employee;
-import employee_service.employees.model.EmployeeRepository;
+import employee_service.employees.model.DBentity.Employee;
+import employee_service.employees.model.DBentity.EmployeeRepository;
+import employee_service.employees.model.RESTentity.RestEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 @Component
 public class EmployeeManager {
@@ -28,10 +25,16 @@ public class EmployeeManager {
     @Autowired
     RestTemplate restTemplate;
 
-    public Employee[] getEmployees(
+    public RestEmployee[] getEmployees(
             String departmentId
     ) {
-        return employeeRepository.findByDepartmentId(departmentId).toArray(new Employee[0]);
+        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
+        List<RestEmployee> restEmployees = new ArrayList<>(employees.size());
+        for (Employee employee: employees
+             ) {
+            restEmployees.add(new RestEmployee(employee));
+        }
+        return restEmployees.toArray(new RestEmployee[0]);
     }
 
 

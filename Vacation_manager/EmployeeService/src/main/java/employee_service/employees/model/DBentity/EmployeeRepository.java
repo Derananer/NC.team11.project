@@ -1,6 +1,7 @@
-package employee_service.employees.model;
+package employee_service.employees.model.DBentity;
 
 
+import employee_service.employees.model.DBentity.Employee;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 

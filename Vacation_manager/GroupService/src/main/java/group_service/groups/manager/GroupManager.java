@@ -57,6 +57,10 @@ public class GroupManager {
         return null;
     }
 
+    public Group addEmployeeToGroup(Group group, String employeeId){
+
+    }
+
     public Group updateGroup(Group group) {
         return groupRepository.save(group);
     }

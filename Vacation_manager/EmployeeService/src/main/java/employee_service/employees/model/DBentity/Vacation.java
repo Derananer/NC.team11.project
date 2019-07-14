@@ -1,4 +1,4 @@
-package employee_service.employees.model;
+package employee_service.employees.model.DBentity;
 
 import java.util.Calendar;
 import java.util.Date;

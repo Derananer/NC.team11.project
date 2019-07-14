@@ -1,19 +1,18 @@
-package employee_service.employees.model;
+package employee_service.employees.model.RESTentity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import employee_service.employees.model.DBentity.Employee;
+import employee_service.employees.model.DBentity.Vacation;
 import org.springframework.data.annotation.Id;
 
 import java.util.Arrays;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Employee {
-
+public class RestEmployee {
     @Id
     private String id;
     private String firstName;
     private String lastName;
     private String secondName;
-    private String departmentId;
     private Vacation[] vacations;
 
     public Vacation[] getVacations() {
@@ -24,20 +23,28 @@ public class Employee {
         this.vacations = vacations;
     }
 
-    public Employee(){
+    public RestEmployee() {
         this.id = null;
         this.firstName = null;
         this.lastName = null;
         this.secondName = null;
-        this.departmentId = null;
+
     }
 
-    public Employee(String firstName, String lastName, String secondName, String departmentId){
+    public RestEmployee(String firstName, String lastName, String secondName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.secondName = secondName;
-        this.departmentId = departmentId;
     }
+
+    public RestEmployee(Employee employee){
+        this.id = employee.getId();
+        this.firstName = employee.getFirstName();
+        this.secondName = employee.getSecondName();
+        this.lastName = employee.getLastName();
+        this.vacations = employee.getVacations();
+    }
+
     public String getId() {
         return id;
     }
@@ -48,10 +55,6 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
     }
 
     public String getSecondName() {
@@ -66,9 +69,6 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
@@ -85,8 +85,8 @@ public class Employee {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", secondName='" + secondName + '\'' +
-                ", departmentId='" + departmentId + '\'' +
                 ", vacations=" + Arrays.toString(vacations) +
                 '}';
     }
+
 }

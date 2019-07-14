@@ -1,7 +1,8 @@
 package employee_service.employees.controllers;
 
 import employee_service.employees.manager.EmployeeManager;
-import employee_service.employees.model.Employee;
+import employee_service.employees.model.DBentity.Employee;
+import employee_service.employees.model.RESTentity.RestEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ public class EmployeeController {
     EmployeeManager employeeManager;
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public Employee[] getEmployees(
+    public RestEmployee[] getEmployees(
             @RequestHeader("department") String departmentId
     ){
         return employeeManager.getEmployees(departmentId);
