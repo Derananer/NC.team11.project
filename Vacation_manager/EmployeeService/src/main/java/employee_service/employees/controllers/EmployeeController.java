@@ -52,7 +52,7 @@ public class EmployeeController {
         return employeeManager.updateEmployee(departmentId, employee);
     }
 
-    @RequestMapping(value = "/delete-employee", method = RequestMethod.POST)
+    @RequestMapping(value = "/remove-employee", method = RequestMethod.POST)
     public void deleteEmployee(
             @RequestHeader(value = "department") String departmentId,
             @RequestBody Employee employee

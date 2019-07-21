@@ -1,6 +1,7 @@
 package authorisation_service.security;
 
 import java.io.IOException;
+import java.security.Key;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -77,7 +78,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .claim("departmentId", ((DepartmentUser)auth.getPrincipal()).getDepartmentId())
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
-                .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
+                .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret())
                 .compact();
         System.out.println("user auth : " + auth.getPrincipal().toString());
         // Add token to header

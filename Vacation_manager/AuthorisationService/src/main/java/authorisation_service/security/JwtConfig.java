@@ -8,10 +8,10 @@ public class JwtConfig {
     @Value("${security.jwt.uri:/auth/**}")
     private String Uri;
 
-    @Value("${security.jwt.header:token}")
+    @Value("${security.jwt.header:Authorization}")
     private String tokenHeader;
 
-    @Value("${security.jwt.header:departments}")
+    @Value("${security.jwt.header:department}")
     private String departmentIdHeader;
 
     @Value("${security.jwt.prefix:Bearer }")
@@ -20,7 +20,7 @@ public class JwtConfig {
     @Value("${security.jwt.expiration:#{24*60*60}}")
     private int expiration;
 
-    @Value("${security.jwt.secret:JwtSecretKey1232456472364862131-48238462314284823165214-2341hfdhjsfsdfsdfsagdgas342asf}")
+    @Value("${security.jwt.secret:JwtSecretKey1232456472364862131-48238462314284823165214-2341hfdhjsfsdfsdfsagdgas342asf}")///research one user one key
     private String secret;
 
     public String getUri() {
